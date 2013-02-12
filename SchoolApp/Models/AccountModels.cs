@@ -18,11 +18,16 @@ namespace DefaultConnection.Models
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         public string Address { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         public string FullName { get { return FirstName + " " + LastName; } }
+
         public int GroupId { get; set; }
+
         [ForeignKey("GroupId")]
         public ICollection<Group> Groups { get; set; }
         }
