@@ -75,9 +75,6 @@ if (mvcHost.ReferenceScriptLibraries) {
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend><#= mvcHost.ViewDataType.Name #></legend>
-
 <#
 foreach (ModelProperty property in GetModelProperties(mvcHost.ViewDataType)) {
     if (property.Scaffold) {
@@ -122,14 +119,11 @@ foreach (ModelProperty property in GetModelProperties(mvcHost.ViewDataType)) {
 }
 #>
         <p>
-            <input type="submit" value="Save" />
+            <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+            <a href="@Url.Action("Index")" class="btn">Back to list</a>
         </p>
-    </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 <#
 if(mvcHost.IsContentPage && mvcHost.ReferenceScriptLibraries) {
 #>
