@@ -3717,7 +3717,7 @@ var i,
 	pop = arr.pop,
 	push = arr.push,
 	slice = arr.slice,
-	// Use a stripped-down indexOf if we can't use a native one
+	// Use a striped-down indexOf if we can't use a native one
 	indexOf = arr.indexOf || function( elem ) {
 		var i = 0,
 			len = this.length;
@@ -3806,7 +3806,7 @@ var i,
 				String.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
 	};
 
-// Use a stripped-down slice if we can't use a native one
+// Use a striped-down slice if we can't use a native one
 try {
 	slice.call( docElem.childNodes, 0 )[0].nodeType;
 } catch ( e ) {
