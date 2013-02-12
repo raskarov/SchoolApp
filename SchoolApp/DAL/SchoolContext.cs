@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using DefaultConnection.Models;
+using SchoolApp.Models;
 
 namespace DefaultConnection.DAL
 {
@@ -17,5 +18,7 @@ namespace DefaultConnection.DAL
         public DbSet<Classroom> Classrooms { get; set; }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
+
+        public DbSet<Group> Groups { get; set; }
     }
 }

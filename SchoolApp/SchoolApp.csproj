@@ -175,9 +175,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Migrations\201302120311492_GroupIndexViewModel.cs" />
+    <Compile Include="Migrations\201302120311492_GroupIndexViewModel.Designer.cs">
+      <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302120312503_GroupIndexViewModel1.cs" />
+    <Compile Include="Migrations\201302120312503_GroupIndexViewModel1.Designer.cs">
+      <DependentUpon>201302120312503_GroupIndexViewModel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\GroupIndexViewModel.cs" />
     <Content Include="Content\datatables.bootstrap.css" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClassroomController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\SchoolContext.cs" />
     <Compile Include="DAL\UserContext.cs" />
@@ -187,9 +197,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302120242343_addGroup.cs" />
+    <Compile Include="Migrations\201302120242343_addGroup.Designer.cs">
+      <DependentUpon>201302120242343_addGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Classroom.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\font-awesome-ie7.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -380,16 +397,31 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201302120242343_addGroup.resx">
+      <DependentUpon>201302120242343_addGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302120311492_GroupIndexViewModel.resx">
+      <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302120312503_GroupIndexViewModel1.resx">
+      <DependentUpon>201302120312503_GroupIndexViewModel1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

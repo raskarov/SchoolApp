@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using SchoolApp.Models;
 
 namespace DefaultConnection.Models
 {
@@ -20,7 +21,11 @@ namespace DefaultConnection.Models
         public string Email { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-    }
+        public string FullName { get { return FirstName + " " + LastName; } }
+        public int GroupId { get; set; }
+        [ForeignKey("GroupId")]
+        public ICollection<Group> Groups { get; set; }
+        }
 
     public class RegisterExternalLoginModel
     {
