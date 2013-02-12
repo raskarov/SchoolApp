@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace SchoolApp
+namespace DefaultConnection
 {
     public class FilterConfig
     {

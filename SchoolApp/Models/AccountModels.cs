@@ -6,18 +6,8 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 
-namespace SchoolApp.Models
+namespace DefaultConnection.Models
 {
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("DefaultConnection")
-        {
-        }
-
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
-
     [Table("UserProfile")]
     public class UserProfile
     {
@@ -25,6 +15,11 @@ namespace SchoolApp.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
     }
 
     public class RegisterExternalLoginModel

@@ -5,10 +5,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SchoolApp.Models;
-using SchoolApp.DAL;
+using DefaultConnection.Models;
+using DefaultConnection.DAL;
+using DefaultConnection.Filters;
 
-namespace SchoolApp.Controllers
+namespace DefaultConnection.Controllers
 {
     public class ClassroomController : Controller
     {
@@ -37,7 +38,7 @@ namespace SchoolApp.Controllers
 
         //
         // GET: /Classroom/Create
-
+        [Authorize(Roles="Administrator")]
         public ActionResult Create()
         {
             return View();

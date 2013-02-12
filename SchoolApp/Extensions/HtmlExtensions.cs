@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
-namespace SchoolApp
+namespace DefaultConnection
 {
     public static class HtmlExtensions
     {

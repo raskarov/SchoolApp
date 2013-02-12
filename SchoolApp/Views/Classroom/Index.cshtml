@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SchoolApp.Models.Classroom>
+﻿@model IEnumerable<DefaultConnection.Models.Classroom>
 
 @{
     ViewBag.Title = "Index";
@@ -11,7 +11,7 @@
     <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i> New Classroom</a>
 </p>
 <div class="well">
-<table class="table table-stripped datatable">
+<table class="table table-striped datatable">
     <thead>
         <th>
             @Html.DisplayNameFor(model => model.Name)

@@ -176,17 +176,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\datatables.bootstrap.css" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClassroomController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\SchoolContext.cs" />
+    <Compile Include="DAL\UserContext.cs" />
     <Compile Include="Extensions\Helpers.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302112223473_new.cs" />
-    <Compile Include="Migrations\201302112223473_new.Designer.cs">
-      <DependentUpon>201302112223473_new.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -369,6 +368,18 @@
     <Content Include="Views\Classroom\Create.cshtml" />
     <Content Include="Views\Classroom\Edit.cshtml" />
     <Content Include="Views\Classroom\Delete.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -376,11 +387,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201302112223473_new.resx">
-      <DependentUpon>201302112223473_new.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,31 +1,47 @@
-namespace SchoolApp.Migrations
+namespace DefaultConnection.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Web.Security;
+    using WebMatrix.WebData;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SchoolApp.DAL.SchoolContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DefaultConnection.DAL.SchoolContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(SchoolApp.DAL.SchoolContext context)
+        protected override void Seed(DefaultConnection.DAL.SchoolContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            if (!Roles.RoleExists("Administrator"))
+            {
+                Roles.CreateRole("Administrator");
+            }
+            if (!Roles.RoleExists("Teacher"))
+            {
+                Roles.CreateRole("Teacher");
+            }
+            if (!WebSecurity.UserExists("raskarov"))
+            {
+                WebSecurity.CreateUserAndAccount("raskarov", "password", new { FirstName = "Ruslan", LastName = "Askarov" });
+            }
+            if (!WebSecurity.UserExists("testteacher"))
+            {
+                WebSecurity.CreateUserAndAccount("testteacher", "password", new { FirstName = "Teacher", LastName = "Test", Email="askarru@gmail.com" });
+            }
+            if (!Roles.GetRolesForUser("raskarov").Contains("Administrator"))
+            {
+                Roles.AddUserToRole("raskarov", "Administrator");
+            }
+            if (!Roles.GetRolesForUser("testteacher").Contains("Teacher"))
+            {
+                Roles.AddUserToRole("testteacher", "Teacher");
+            }
         }
     }
 }

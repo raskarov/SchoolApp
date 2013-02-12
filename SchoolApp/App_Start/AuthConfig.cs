@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
-using SchoolApp.Models;
+using DefaultConnection.Models;
 
-namespace SchoolApp
+namespace DefaultConnection
 {
     public static class AuthConfig
     {

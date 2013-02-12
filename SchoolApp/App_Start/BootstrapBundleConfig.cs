@@ -1,8 +1,8 @@
 using System.Web.Optimization;
 
-[assembly: WebActivator.PostApplicationStartMethod(typeof(SchoolApp.App_Start.BootstrapBundleConfig), "RegisterBundles")]
+[assembly: WebActivator.PostApplicationStartMethod(typeof(DefaultConnection.App_Start.BootstrapBundleConfig), "RegisterBundles")]
 
-namespace SchoolApp.App_Start
+namespace DefaultConnection.App_Start
 {
 	public class BootstrapBundleConfig
 	{

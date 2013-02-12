@@ -4,9 +4,10 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using SchoolApp.Models;
+using DefaultConnection.Models;
+using DefaultConnection.DAL;
 
-namespace SchoolApp.Filters
+namespace DefaultConnection.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class InitializeSimpleMembershipAttribute : ActionFilterAttribute
@@ -25,11 +26,11 @@ namespace SchoolApp.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<SchoolContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new SchoolContext())
                     {
                         if (!context.Database.Exists())
                         {
@@ -37,8 +38,7 @@ namespace SchoolApp.Filters
                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
                         }
                     }
-
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                   
                 }
                 catch (Exception ex)
                 {
