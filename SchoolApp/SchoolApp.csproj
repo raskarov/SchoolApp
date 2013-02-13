@@ -176,8 +176,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Migrations\201302120311492_GroupIndexViewModel.cs" />
-    <Compile Include="Migrations\201302120311492_GroupIndexViewModel.Designer.cs">
+    <Compile Include="Images\201302120311492_GroupIndexViewModel.cs" />
+    <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201302120312503_GroupIndexViewModel1.cs" />
@@ -431,7 +431,7 @@
     <EmbeddedResource Include="Migrations\201302120242343_addGroup.resx">
       <DependentUpon>201302120242343_addGroup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302120311492_GroupIndexViewModel.resx">
+    <EmbeddedResource Include="Images\201302120311492_GroupIndexViewModel.resx">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302120312503_GroupIndexViewModel1.resx">

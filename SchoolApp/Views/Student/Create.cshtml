@@ -54,13 +54,10 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+                        <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+            <a href="@Url.Action("Index")" class="btn">Back to list</a>
         </p>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
