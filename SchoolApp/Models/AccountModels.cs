@@ -25,10 +25,6 @@ namespace DefaultConnection.Models
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         public string FullName { get { return FirstName + " " + LastName; } }
-
-        public int GroupId { get; set; }
-
-        [ForeignKey("GroupId")]
         public ICollection<Group> Groups { get; set; }
         }
 

@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<SchoolApp.ViewModels.GroupIndexViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Group List";
 }
 
-<h2>Index</h2>
-
 <p>
-    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
+    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i> New Group</a>
 </p>
 <div class="well">
 <table class="table table-striped datatable">
@@ -42,9 +40,9 @@
             }
         </td>
         <td>
-			<a href="@Url.Action("Edit", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
+			<a href="@Url.Action("Edit", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Edit group"><i class="icon-pencil"></i></a>
             <a href="@Url.Action("Details", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
-            <a href="@Url.Action("Delete", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+            <a href="@Url.Action("Delete", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Remove group"><i class="icon-remove"></i></a>
         </td>
     </tr>
 }

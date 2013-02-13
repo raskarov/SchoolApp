@@ -1,39 +1,36 @@
-﻿@model SchoolApp.Models.Group
+﻿@model SchoolApp.ViewModels.GroupEditViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Group";
 }
-
-<h2>Edit</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.GroupId)
+        @Html.HiddenFor(model => model.Group.GroupId)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.Group.Name)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.Group.Name)
+            @Html.ValidationMessageFor(model => model.Group.Name)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UserId)
-            @Html.ValidationMessageFor(model => model.UserId)
-        </div>
-
+    <div class="editor-field">
+        @Html.ListBoxFor(x=>x.SelectedTeacherIds, Model.Teachers, new{id="my-select", name="my-select[]"})
+    </div>
         <p>
             <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
             <a href="@Url.Action("Index")" class="btn">Back to list</a>
         </p>
 }
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    $('#my-select').multiSelect({
+        selectableHeader: "<div class='listbox-header'>Available teachers</div>",
+        selectionHeader: "<div class='listbox-header'>Selected teachers</div>"
+    });
+
+</script>

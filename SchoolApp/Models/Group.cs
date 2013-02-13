@@ -11,11 +11,6 @@ namespace SchoolApp.Models
     {
         public int GroupId { get; set; }
         public string Name { get; set; }
-
-        public int UserId { get; set; }
-
-        [ForeignKey("UserId")]
         public ICollection<UserProfile> Users { get; set; }
-
     }
 }

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using SchoolApp.Models;
 using DefaultConnection.DAL;
 using SchoolApp.ViewModels;
+using System.Web.Security;
 
 namespace SchoolApp.Controllers
 {
@@ -70,27 +71,66 @@ namespace SchoolApp.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Group group = db.Groups.Find(id);
+            Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
+            var AllStudents = Roles.GetUsersInRole("Student");
+            var GroupStudents = group.Users.Where(x=>Roles.IsUserInRole(x.UserName,"Student"));
+            var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
+            var AllTeachers = Roles.GetUsersInRole("Teacher");
+            var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Teacher")).Select(x=>x.UserId);
+            var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
+            var model = new GroupEditViewModel
+                {
+                    Students = new MultiSelectList(FilteredStudents, "UserId", "FullName", GroupStudents),
+                    Teachers= new MultiSelectList(FilteredTeachers, "UserId", "FullName", GroupTeachers),
+                    Group = group
+                };
             if (group == null)
             {
                 return HttpNotFound();
             }
-            return View(group);
+            return View(model);
         }
 
         //
         // POST: /Group/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Group group)
+        public ActionResult Edit(GroupEditViewModel groupView, FormCollection collection)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(group).State = EntityState.Modified;
+                db.Entry(groupView.Group).State = EntityState.Modified;
+                UpdateUsers(groupView);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(group);
+            return View(groupView);
+        }
+
+        private void UpdateUsers(GroupEditViewModel groupView)
+        {
+            var group = db.Groups.Include("Users").Where(x => x.GroupId == groupView.Group.GroupId).FirstOrDefault();
+            if (groupView.SelectedTeacherIds == null)
+            {
+                groupView.SelectedTeacherIds = new int[0];
+            }
+            foreach (var user in db.UserProfiles)
+            {
+                if (groupView.SelectedTeacherIds.Contains(user.UserId))
+                {
+                    if (!group.Users.Contains(user))
+                    {
+                        group.Users.Add(user);
+                    }
+                }
+                else
+                {
+                    if (group.Users.Contains(user))
+                    {
+                        group.Users.Remove(user);
+                    }
+                }
+            }
         }
 
         //

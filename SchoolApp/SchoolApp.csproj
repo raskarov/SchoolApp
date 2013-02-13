@@ -175,6 +175,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Migrations\201302120311492_GroupIndexViewModel.cs" />
     <Compile Include="Migrations\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
@@ -183,7 +184,14 @@
     <Compile Include="Migrations\201302120312503_GroupIndexViewModel1.Designer.cs">
       <DependentUpon>201302120312503_GroupIndexViewModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302122344541_removeGroupIdanduserId.cs" />
+    <Compile Include="Migrations\201302122344541_removeGroupIdanduserId.Designer.cs">
+      <DependentUpon>201302122344541_removeGroupIdanduserId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\GroupCreateViewModel.cs" />
+    <Compile Include="ViewModels\GroupEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
+    <Content Include="Content\Custom.css" />
     <Content Include="Content\datatables.bootstrap.css" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClassroomController.cs" />
@@ -205,8 +213,6 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Classroom.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\font-awesome-ie7.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -402,6 +408,11 @@
     <Content Include="Views\Group\Create.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\Details.cshtml" />
+    <Content Include="Views\Student\Create.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Student\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -421,6 +432,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302120312503_GroupIndexViewModel1.resx">
       <DependentUpon>201302120312503_GroupIndexViewModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302122344541_removeGroupIdanduserId.resx">
+      <DependentUpon>201302122344541_removeGroupIdanduserId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

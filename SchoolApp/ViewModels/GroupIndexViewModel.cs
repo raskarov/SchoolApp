@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using SchoolApp.Models;
 
 namespace SchoolApp.ViewModels
@@ -18,8 +19,8 @@ namespace SchoolApp.ViewModels
         {
             this.GroupId = group.GroupId;
             this.Name = group.Name;
-            this.Teachers = group.Users.Select(x => x.FullName).ToList(); //TODO: figure out how to filter by role
-            this.Students = group.Users.Select(x => x.FullName).ToList(); //TODO: figure out how to filter by role
+            this.Teachers = group.Users.Where(x=>Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.FullName).ToList();
+            this.Students = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Student")).Select(x => x.FullName).ToList(); 
         }
     }
 }

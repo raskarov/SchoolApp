@@ -26,6 +26,10 @@ namespace DefaultConnection.Migrations
             {
                 Roles.CreateRole("Teacher");
             }
+            if (!Roles.RoleExists("Student"))
+            {
+                Roles.CreateRole("Student");
+            }
             if (!WebSecurity.UserExists("raskarov"))
             {
                 WebSecurity.CreateUserAndAccount("raskarov", "password", new { FirstName = "Ruslan", LastName = "Askarov" });
