@@ -47,23 +47,25 @@ namespace SchoolApp.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(GetGroupCreateRecords());
         }
 
         //
         // POST: /Group/Create
 
         [HttpPost]
-        public ActionResult Create(Group group)
+        public ActionResult Create(GroupEditViewModel groupView)
         {
             if (ModelState.IsValid)
             {
-                db.Groups.Add(group);
+                db.Groups.Add(groupView.Group);
+                db.SaveChanges();
+                UpdateUsers(groupView);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(group);
+            return View(groupView);
         }
 
         //
@@ -71,26 +73,45 @@ namespace SchoolApp.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
-            var AllStudents = Roles.GetUsersInRole("Student");
-            var GroupStudents = group.Users.Where(x=>Roles.IsUserInRole(x.UserName,"Student")).Select(x=>x.UserId);
-            var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
-            var AllTeachers = Roles.GetUsersInRole("Teacher");
-            var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Teacher")).Select(x=>x.UserId);
-            var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
-            var model = new GroupEditViewModel
-                {
-                    Students = new MultiSelectList(FilteredStudents, "UserId", "FullName", GroupStudents),
-                    Teachers= new MultiSelectList(FilteredTeachers, "UserId", "FullName", GroupTeachers),
-                    Group = group
-                };
-            if (group == null)
+            var model = GetGroupEditRecords(id);
+
+            if (model == null)
             {
                 return HttpNotFound();
             }
             return View(model);
         }
 
+        private GroupEditViewModel GetGroupEditRecords(int id)
+        {
+            Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
+            var AllStudents = Roles.GetUsersInRole("Student");
+            var GroupStudents = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student")).Select(x => x.UserId);
+            var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
+            var AllTeachers = Roles.GetUsersInRole("Teacher");
+            var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.UserId);
+            var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
+            var model = new GroupEditViewModel
+            {
+                Students = new MultiSelectList(FilteredStudents, "UserId", "FullName", GroupStudents),
+                Teachers = new MultiSelectList(FilteredTeachers, "UserId", "FullName", GroupTeachers),
+                Group = group
+            };
+            return model;
+        }
+        private GroupEditViewModel GetGroupCreateRecords()
+        {
+            var AllStudents = Roles.GetUsersInRole("Student");
+            var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
+            var AllTeachers = Roles.GetUsersInRole("Teacher");
+            var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
+            var model = new GroupEditViewModel
+            {
+                Students = new MultiSelectList(FilteredStudents, "UserId", "FullName"),
+                Teachers = new MultiSelectList(FilteredTeachers, "UserId", "FullName")
+            };
+            return model;
+        }
         //
         // POST: /Group/Edit/5
 
@@ -136,7 +157,6 @@ namespace SchoolApp.Controllers
                 }
             }
         }
-
         //
         // GET: /Group/Delete/5
 
