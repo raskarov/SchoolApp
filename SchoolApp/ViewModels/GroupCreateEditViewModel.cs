@@ -7,7 +7,7 @@ using SchoolApp.Models;
 
 namespace SchoolApp.ViewModels
 {
-    public class GroupEditViewModel
+    public class GroupCreateEditViewModel
     {
         public Group Group { get; set; }
         public int[] SelectedTeacherIds { get; set; }

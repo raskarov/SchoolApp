@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SchoolApp.Models.PaymentRule>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
+</p>
+<div class="well">
+<table class="table table-striped datatable">
+    <thead>
+        <th>
+            @Html.DisplayNameFor(model => model.Rule)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EffectiveDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Variable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentProfile.Name)
+        </th>
+        <th></th>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rule)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EffectiveDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Variable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentProfile.Name)
+        </td>
+        <td>
+			<a href="@Url.Action("Edit", new { id=item.PaymentRuleId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
+            <a href="@Url.Action("Details", new { id=item.PaymentRuleId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
+            <a href="@Url.Action("Delete", new { id=item.PaymentRuleId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+        </td>
+    </tr>
+}
+
+</table>
+</div>

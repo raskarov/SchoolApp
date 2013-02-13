@@ -1,0 +1,59 @@
+﻿@model SchoolApp.Models.PaymentRule
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Rule)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Rule)
+            @Html.ValidationMessageFor(model => model.Rule)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EffectiveDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EffectiveDate)
+            @Html.ValidationMessageFor(model => model.EffectiveDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Amount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Amount)
+            @Html.ValidationMessageFor(model => model.Amount)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Variable)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Variable)
+            @Html.ValidationMessageFor(model => model.Variable)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PaymentProfileId, "PaymentProfile")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("PaymentProfileId", String.Empty)
+            @Html.ValidationMessageFor(model => model.PaymentProfileId)
+        </div>
+
+        <p>
+            <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+            <a href="@Url.Action("Index")" class="btn">Back to list</a>
+        </p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

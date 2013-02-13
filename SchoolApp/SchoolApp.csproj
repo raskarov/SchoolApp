@@ -175,6 +175,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\PaymentProfileController.cs" />
+    <Compile Include="Controllers\PaymentRuleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.cs" />
@@ -193,8 +195,17 @@
     <Compile Include="Migrations\201302130211228_AddDataAnnotationsToUserProfile.Designer.cs">
       <DependentUpon>201302130211228_AddDataAnnotationsToUserProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\GroupCreateViewModel.cs" />
-    <Compile Include="ViewModels\GroupEditViewModel.cs" />
+    <Compile Include="Migrations\201302130254246_addPaymentProfile.cs" />
+    <Compile Include="Migrations\201302130254246_addPaymentProfile.Designer.cs">
+      <DependentUpon>201302130254246_addPaymentProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302130257529_AddPaymentRule.cs" />
+    <Compile Include="Migrations\201302130257529_AddPaymentRule.Designer.cs">
+      <DependentUpon>201302130257529_AddPaymentRule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentProfile.cs" />
+    <Compile Include="Models\PaymentRule.cs" />
+    <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\datatables.bootstrap.css" />
@@ -423,6 +434,16 @@
     <Content Include="Views\Teacher\Create.cshtml" />
     <Content Include="Views\Teacher\Edit.cshtml" />
     <Content Include="Views\Teacher\Delete.cshtml" />
+    <Content Include="Views\PaymentProfile\Index.cshtml" />
+    <Content Include="Views\PaymentProfile\Details.cshtml" />
+    <Content Include="Views\PaymentProfile\Create.cshtml" />
+    <Content Include="Views\PaymentProfile\Edit.cshtml" />
+    <Content Include="Views\PaymentProfile\Delete.cshtml" />
+    <Content Include="Views\PaymentRule\Index.cshtml" />
+    <Content Include="Views\PaymentRule\Details.cshtml" />
+    <Content Include="Views\PaymentRule\Create.cshtml" />
+    <Content Include="Views\PaymentRule\Edit.cshtml" />
+    <Content Include="Views\PaymentRule\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -448,6 +469,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302130211228_AddDataAnnotationsToUserProfile.resx">
       <DependentUpon>201302130211228_AddDataAnnotationsToUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302130254246_addPaymentProfile.resx">
+      <DependentUpon>201302130254246_addPaymentProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302130257529_AddPaymentRule.resx">
+      <DependentUpon>201302130257529_AddPaymentRule.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

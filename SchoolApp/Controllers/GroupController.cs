@@ -54,7 +54,7 @@ namespace SchoolApp.Controllers
         // POST: /Group/Create
 
         [HttpPost]
-        public ActionResult Create(GroupEditViewModel groupView)
+        public ActionResult Create(GroupCreateEditViewModel groupView)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace SchoolApp.Controllers
             return View(model);
         }
 
-        private GroupEditViewModel GetGroupEditRecords(int id)
+        private GroupCreateEditViewModel GetGroupEditRecords(int id)
         {
             Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
             var AllStudents = Roles.GetUsersInRole("Student");
@@ -91,7 +91,7 @@ namespace SchoolApp.Controllers
             var AllTeachers = Roles.GetUsersInRole("Teacher");
             var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.UserId);
             var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
-            var model = new GroupEditViewModel
+            var model = new GroupCreateEditViewModel
             {
                 Students = new MultiSelectList(FilteredStudents, "UserId", "FullName", GroupStudents),
                 Teachers = new MultiSelectList(FilteredTeachers, "UserId", "FullName", GroupTeachers),
@@ -99,13 +99,13 @@ namespace SchoolApp.Controllers
             };
             return model;
         }
-        private GroupEditViewModel GetGroupCreateRecords()
+        private GroupCreateEditViewModel GetGroupCreateRecords()
         {
             var AllStudents = Roles.GetUsersInRole("Student");
             var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
             var AllTeachers = Roles.GetUsersInRole("Teacher");
             var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
-            var model = new GroupEditViewModel
+            var model = new GroupCreateEditViewModel
             {
                 Students = new MultiSelectList(FilteredStudents, "UserId", "FullName"),
                 Teachers = new MultiSelectList(FilteredTeachers, "UserId", "FullName")
@@ -116,7 +116,7 @@ namespace SchoolApp.Controllers
         // POST: /Group/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(GroupEditViewModel groupView, FormCollection collection)
+        public ActionResult Edit(GroupCreateEditViewModel groupView, FormCollection collection)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace SchoolApp.Controllers
             return View(groupView);
         }
 
-        private void UpdateUsers(GroupEditViewModel groupView)
+        private void UpdateUsers(GroupCreateEditViewModel groupView)
         {
             var group = db.Groups.Include("Users").Where(x => x.GroupId == groupView.Group.GroupId).FirstOrDefault();
             if (groupView.SelectedTeacherIds == null)

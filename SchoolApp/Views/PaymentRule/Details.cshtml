@@ -1,0 +1,50 @@
+﻿@model SchoolApp.Models.PaymentRule
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>PaymentRule</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Rule)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Rule)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EffectiveDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EffectiveDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Amount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Amount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Variable)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Variable)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PaymentProfile.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PaymentProfile.Name)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.PaymentRuleId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

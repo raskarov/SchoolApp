@@ -20,5 +20,9 @@ namespace DefaultConnection.DAL
         public DbSet<UserProfile> UserProfiles { get; set; }
 
         public DbSet<Group> Groups { get; set; }
+
+        public DbSet<PaymentProfile> PaymentProfiles { get; set; }
+
+        public DbSet<PaymentRule> PaymentRules { get; set; }
     }
 }
