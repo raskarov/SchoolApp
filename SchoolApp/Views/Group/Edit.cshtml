@@ -17,7 +17,10 @@
             @Html.ValidationMessageFor(model => model.Group.Name)
         </div>
     <div class="editor-field">
-        @Html.ListBoxFor(x=>x.SelectedTeacherIds, Model.Teachers, new{id="my-select", name="my-select[]"})
+        @Html.ListBoxFor(x=>x.SelectedTeacherIds, Model.Teachers, new{@id="teacherSelect", name="teacherSelect[]"})
+    </div>
+     <div class="editor-field">
+        @Html.ListBoxFor(x=>x.SelectedStudentIds, Model.Students, new{@id="studentSelect", name="studentSelect[]"})
     </div>
         <p>
             <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
@@ -28,9 +31,12 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
-    $('#my-select').multiSelect({
+    $('#teacherSelect').multiSelect({
         selectableHeader: "<div class='listbox-header'>Available teachers</div>",
         selectionHeader: "<div class='listbox-header'>Selected teachers</div>"
     });
-
+    $('#studentSelect').multiSelect({
+        selectableHeader: "<div class='listbox-header'>Available students</div>",
+        selectionHeader: "<div class='listbox-header'>Selected students</div>"
+    });
 </script>

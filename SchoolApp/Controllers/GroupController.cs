@@ -73,7 +73,7 @@ namespace SchoolApp.Controllers
         {
             Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
             var AllStudents = Roles.GetUsersInRole("Student");
-            var GroupStudents = group.Users.Where(x=>Roles.IsUserInRole(x.UserName,"Student"));
+            var GroupStudents = group.Users.Where(x=>Roles.IsUserInRole(x.UserName,"Student")).Select(x=>x.UserId);
             var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
             var AllTeachers = Roles.GetUsersInRole("Teacher");
             var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Teacher")).Select(x=>x.UserId);
@@ -114,9 +114,13 @@ namespace SchoolApp.Controllers
             {
                 groupView.SelectedTeacherIds = new int[0];
             }
+            if (groupView.SelectedStudentIds == null)
+            {
+                groupView.SelectedStudentIds = new int[0];
+            }
             foreach (var user in db.UserProfiles)
             {
-                if (groupView.SelectedTeacherIds.Contains(user.UserId))
+                if (groupView.SelectedTeacherIds.Contains(user.UserId) || groupView.SelectedStudentIds.Contains(user.UserId))
                 {
                     if (!group.Users.Contains(user))
                     {

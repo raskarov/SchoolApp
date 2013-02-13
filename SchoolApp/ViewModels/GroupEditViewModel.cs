@@ -12,6 +12,7 @@ namespace SchoolApp.ViewModels
         public Group Group { get; set; }
         public int[] SelectedTeacherIds { get; set; }
         public MultiSelectList Teachers { get; set; }
+        public int[] SelectedStudentIds { get; set; }
         public MultiSelectList Students { get; set; }
     }
 }
