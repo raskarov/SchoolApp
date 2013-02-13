@@ -188,6 +188,10 @@
     <Compile Include="Migrations\201302122344541_removeGroupIdanduserId.Designer.cs">
       <DependentUpon>201302122344541_removeGroupIdanduserId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302130211228_AddDataAnnotationsToUserProfile.cs" />
+    <Compile Include="Migrations\201302130211228_AddDataAnnotationsToUserProfile.Designer.cs">
+      <DependentUpon>201302130211228_AddDataAnnotationsToUserProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\GroupCreateViewModel.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
@@ -435,6 +439,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302122344541_removeGroupIdanduserId.resx">
       <DependentUpon>201302122344541_removeGroupIdanduserId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302130211228_AddDataAnnotationsToUserProfile.resx">
+      <DependentUpon>201302130211228_AddDataAnnotationsToUserProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -15,18 +15,40 @@ namespace DefaultConnection.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
+        
+        [Required]
         public string UserName { get; set; }
+
+        [Required]
+        [Display(Name="First Name")]
+        [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string FirstName { get; set; }
+        
+        [Required]
+        [Display(Name="Last Name")]
+        [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string LastName { get; set; }
+
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
         public string Address { get; set; }
 
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression("([1-9][0-9]*)",ErrorMessage="Invalid phone format")]
         public string Phone { get; set; }
-        public string FullName { get { return FirstName + " " + LastName; } }
+      
         public ICollection<Group> Groups { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
         }
+    }
 
     public class RegisterExternalLoginModel
     {
