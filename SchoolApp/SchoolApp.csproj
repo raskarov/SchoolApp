@@ -203,10 +203,15 @@
     <Compile Include="Migrations\201302130257529_AddPaymentRule.Designer.cs">
       <DependentUpon>201302130257529_AddPaymentRule.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302130633225_PaymentProfileRules.cs" />
+    <Compile Include="Migrations\201302130633225_PaymentProfileRules.Designer.cs">
+      <DependentUpon>201302130633225_PaymentProfileRules.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\PaymentProfile.cs" />
     <Compile Include="Models\PaymentRule.cs" />
     <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
+    <Compile Include="ViewModels\PaymentProfileEditViewModel.cs" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\datatables.bootstrap.css" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -475,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302130257529_AddPaymentRule.resx">
       <DependentUpon>201302130257529_AddPaymentRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302130633225_PaymentProfileRules.resx">
+      <DependentUpon>201302130633225_PaymentProfileRules.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using SchoolApp.Models;
 using DefaultConnection.DAL;
+using SchoolApp.ViewModels;
 
 namespace SchoolApp.Controllers
 {
@@ -19,7 +20,16 @@ namespace SchoolApp.Controllers
 
         public ActionResult Index()
         {
-            return View(db.PaymentProfiles.ToList());
+            var paymentModel = new List<PaymentProfileEditViewModel>();
+
+            foreach (var PaymentProfile in db.PaymentProfiles.ToList())
+            {
+                var p = new PaymentProfileEditViewModel();
+                p.PaymentProfile = PaymentProfile;
+                p.CurrentPaymentRule = db.PaymentRules.Where(x => x.PaymentProfileId == PaymentProfile.PaymentProfileId).FirstOrDefault();
+                paymentModel.Add(p);
+            }
+            return View(paymentModel);
         }
 
         //
@@ -64,27 +74,42 @@ namespace SchoolApp.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            PaymentProfile paymentprofile = db.PaymentProfiles.Find(id);
-            if (paymentprofile == null)
+            var paymentProfile = new PaymentProfileEditViewModel();
+            paymentProfile.PaymentProfile = db.PaymentProfiles.Find(id);
+            var paymentRules = db.PaymentRules.Where(x => x.PaymentProfileId == id).ToList();
+            paymentProfile.PaymentRules = db.PaymentRules.ToList();
+            paymentProfile.CurrentPaymentRule = paymentRules.FirstOrDefault();
+            if (paymentProfile.PaymentProfile == null)
             {
                 return HttpNotFound();
             }
-            return View(paymentprofile);
+            return View(paymentProfile);
         }
 
         //
         // POST: /PaymentProfile/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(PaymentProfile paymentprofile)
+        public ActionResult Edit(PaymentProfileEditViewModel pvm)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(paymentprofile).State = EntityState.Modified;
+                db.Entry(pvm.PaymentProfile).State = EntityState.Modified;
+                db.SaveChanges();
+                if (!db.PaymentRules.Where(x => x.PaymentRuleId == pvm.CurrentPaymentRule.PaymentRuleId).Any())
+                {
+                    pvm.CurrentPaymentRule.CreatedDate = DateTime.Today.Date;
+                    pvm.CurrentPaymentRule.PaymentProfileId = pvm.PaymentProfile.PaymentProfileId;
+                    db.PaymentRules.Add(pvm.CurrentPaymentRule);
+                }
+                else
+                {
+                    db.Entry(pvm.CurrentPaymentRule).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(paymentprofile);
+            return View(pvm);
         }
 
         //

@@ -1,4 +1,4 @@
-﻿@model SchoolApp.Models.PaymentProfile
+﻿@model SchoolApp.ViewModels.PaymentProfileEditViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -8,24 +8,53 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.PaymentProfileId)
-
+        @Html.HiddenFor(model => model.PaymentProfile.PaymentProfileId)
+        @Html.HiddenFor(model=>model.CurrentPaymentRule.PaymentRuleId)
+        @Html.HiddenFor(model=>model.CurrentPaymentRule.PaymentProfileId)
+        @Html.HiddenFor(model => model.CurrentPaymentRule.CreatedDate)
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.PaymentProfile.Name)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.PaymentProfile.Name)
+            @Html.ValidationMessageFor(model => model.PaymentProfile.Name)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Comments)
+            @Html.LabelFor(model => model.PaymentProfile.Comments)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Comments)
-            @Html.ValidationMessageFor(model => model.Comments)
+            @Html.EditorFor(model => model.PaymentProfile.Comments)
+            @Html.ValidationMessageFor(model => model.PaymentProfile.Comments)
         </div>
-
+       <div class="editor-label">
+            Price(Per person)
+        </div>
+         <div class="editor-field">
+            @Html.EditorFor(model => model.CurrentPaymentRule.Amount)
+            @Html.ValidationMessageFor(model => model.CurrentPaymentRule.Amount)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model=>model.CurrentPaymentRule.EffectiveDate)
+        </div>
+         <div class="editor-field">
+                     <div class="input-append date datepicker" id="dp3" data-date="@Model.CurrentPaymentRule.EffectiveDate.ToString("MM-dd-yyyy") data-date-format="MM-dd-yyyy">
+                      <input class="span2" size="16" type="text" name="CurrentPaymentRule.EffectiveDate" value="@Model.CurrentPaymentRule.EffectiveDate.ToString("MM-dd-yyyy")" readonly>
+                      <span class="add-on"><i class="icon-calendar" style="padding-top:2px"></i></span>
+        </div>
+            @Html.ValidationMessageFor(model => model.CurrentPaymentRule.EffectiveDate)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model=>model.CurrentPaymentRule.Variable)
+        </div>
+         <div class="editor-field">
+            @Html.EditorFor(model => model.CurrentPaymentRule.Variable)
+            @Html.ValidationMessageFor(model => model.CurrentPaymentRule.Variable)
+        </div>
+    foreach (var p in Model.PaymentRules)
+    {
+        <span class="label">@p.Amount</span>
+    }
         <p>
             <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
             <a href="@Url.Action("Index")" class="btn">Back to list</a>
@@ -36,3 +65,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    $('.datepicker').datepicker();
+</script>

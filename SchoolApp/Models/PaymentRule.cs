@@ -16,6 +16,9 @@ namespace SchoolApp.Models
         [DataType(DataType.Date)]
         public DateTime EffectiveDate { get; set; }
 
+        [DataType(DataType.Date)]
+        public DateTime CreatedDate { get; set; }
+
         [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
 
