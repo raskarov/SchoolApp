@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SchoolApp.Models.PaymentProfile>
+﻿@model IEnumerable<SchoolApp.ViewModels.PaymentProfileEditViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -11,10 +11,13 @@
 <table class="table table-striped datatable">
     <thead>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.PaymentProfile.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Comments)
+            @Html.DisplayNameFor(model => model.PaymentProfile.Comments)
+        </th>
+        <th>
+            Price
         </th>
         <th></th>
     </thead>
@@ -22,15 +25,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.PaymentProfile.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Comments)
+            @Html.DisplayFor(modelItem => item.PaymentProfile.Comments)
         </td>
+        <td>@Html.DisplayFor(modelItem=>item.CurrentPaymentRule.Amount)</td>
         <td>
-			<a href="@Url.Action("Edit", new { id=item.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
-            <a href="@Url.Action("Details", new { id=item.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
-            <a href="@Url.Action("Delete", new { id=item.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+			<a href="@Url.Action("Edit", new { id=item.PaymentProfile.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
+            <a href="@Url.Action("Details", new { id=item.PaymentProfile.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
+            <a href="@Url.Action("Delete", new { id=item.PaymentProfile.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
         </td>
     </tr>
 }
