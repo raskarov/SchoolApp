@@ -9,11 +9,14 @@ namespace SchoolApp.ViewModels
     public class PaymentProfileEditViewModel
     {
         public PaymentProfile PaymentProfile { get; set; }
-        public List<PaymentRule> PaymentRules { get; set; }
+        public List<PaymentRule> OldPaymentRules { get; set; }
+        public PaymentRule FuturePaymentRule { get; set; }
         public PaymentRule CurrentPaymentRule { get; set; }
         public PaymentProfileEditViewModel()
         {
-            PaymentRules = new List<PaymentRule>();
+            OldPaymentRules = new List<PaymentRule>();
+            FuturePaymentRule = new PaymentRule();
+            CurrentPaymentRule = new PaymentRule();
         }
     }
 }

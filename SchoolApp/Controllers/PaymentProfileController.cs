@@ -46,6 +46,38 @@ namespace SchoolApp.Controllers
         }
 
         //
+        //Get: /PaymentProfile/EditPaymentRule/5
+
+        public ActionResult EditPaymentRule(int id=0, bool current=false)
+        {
+            PaymentRule paymentrule = db.PaymentRules.Find(id);
+            if (paymentrule == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.IsCurrent = current;
+            return PartialView(paymentrule);
+        }
+
+        //
+        //POST: /PaymentProfile/EditPaymentRule/5
+        [HttpPost]
+        public ActionResult EditPaymentRule(PaymentRule paymentrule)
+        {
+            if (ModelState.IsValid)
+            {
+                paymentrule.CreatedDate = DateTime.Today;
+                db.Entry(paymentrule).State = EntityState.Modified;
+                db.SaveChanges();
+                return Content(Boolean.TrueString);
+            }
+            else
+            {
+                return Content("Please review your form");
+            }
+        }
+
+        //
         // GET: /PaymentProfile/Create
 
         public ActionResult Create()
@@ -77,8 +109,10 @@ namespace SchoolApp.Controllers
             var paymentProfile = new PaymentProfileEditViewModel();
             paymentProfile.PaymentProfile = db.PaymentProfiles.Find(id);
             var paymentRules = db.PaymentRules.Where(x => x.PaymentProfileId == id).ToList();
-            paymentProfile.PaymentRules = db.PaymentRules.ToList();
-            paymentProfile.CurrentPaymentRule = paymentRules.FirstOrDefault();
+            var oldOrCurrent = paymentRules.Where(x => x.EffectiveDate <= DateTime.Today).OrderByDescending(x => x.CreatedDate);
+            paymentProfile.OldPaymentRules = oldOrCurrent.Skip(1).Take(5).ToList();
+            paymentProfile.CurrentPaymentRule = oldOrCurrent.Take(1).FirstOrDefault();
+            paymentProfile.FuturePaymentRule = paymentRules.Where(x => x.EffectiveDate >DateTime.Today).FirstOrDefault();
             if (paymentProfile.PaymentProfile == null)
             {
                 return HttpNotFound();
@@ -95,17 +129,6 @@ namespace SchoolApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(pvm.PaymentProfile).State = EntityState.Modified;
-                db.SaveChanges();
-                if (!db.PaymentRules.Where(x => x.PaymentRuleId == pvm.CurrentPaymentRule.PaymentRuleId).Any())
-                {
-                    pvm.CurrentPaymentRule.CreatedDate = DateTime.Today.Date;
-                    pvm.CurrentPaymentRule.PaymentProfileId = pvm.PaymentProfile.PaymentProfileId;
-                    db.PaymentRules.Add(pvm.CurrentPaymentRule);
-                }
-                else
-                {
-                    db.Entry(pvm.CurrentPaymentRule).State = EntityState.Modified;
-                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

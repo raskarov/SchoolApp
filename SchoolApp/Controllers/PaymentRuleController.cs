@@ -91,7 +91,37 @@ namespace SchoolApp.Controllers
             ViewBag.PaymentProfileId = new SelectList(db.PaymentProfiles, "PaymentProfileId", "Name", paymentrule.PaymentProfileId);
             return View(paymentrule);
         }
+        //
+        // GET: /PaymentRule/EditPartial/5
 
+        public ActionResult EditPartial(int id = 0)
+        {
+            PaymentRule paymentrule = db.PaymentRules.Find(id);
+            if (paymentrule == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.PaymentProfileId = new SelectList(db.PaymentProfiles, "PaymentProfileId", "Name", paymentrule.PaymentProfileId);
+            return View(paymentrule);
+        }
+
+        //
+        // POST: /PaymentRule/EditPartial/5
+
+        [HttpPost]
+        public ActionResult EditPartial(PaymentRule paymentrule)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(paymentrule).State = EntityState.Modified;
+                db.SaveChanges();
+                return Content(Boolean.TrueString);
+            }
+            else
+            {
+                return Content("Please review your form");
+            }
+        }
         //
         // GET: /PaymentRule/Delete/5
 

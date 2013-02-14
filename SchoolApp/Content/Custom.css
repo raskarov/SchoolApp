@@ -3,3 +3,11 @@
 text-align: center;
 font-weight: bold;
 }
+.table-min
+{
+    width:auto;
+}
+.row-transparent
+{
+    opacity:0.4;
+}
