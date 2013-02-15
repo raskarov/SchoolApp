@@ -1,0 +1,155 @@
+﻿@model IEnumerable<SchoolApp.Models.GroupInstance>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
+</p>
+<div class="well">
+
+    <div id="calendar"></div>
+    <div id="dialogContainer"></div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/scripts/fullcalendar.js")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+<script type="text/javascript">
+    var linkObj;
+    $(document).ready(function () {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'agendaWeek,agendaDay'
+            },
+            events: function (start, end, callback) {
+                $.getJSON("@Url.Action("GetEvents")", function (locationsArray) {
+                    var result = $(locationsArray).map(function () {
+                        return {
+                            title: this.title,
+                            start: this.start,
+                            end: this.end,
+                            allDay: this.editable
+                        };
+                    }).toArray();
+                    callback(result);
+                });
+            },
+
+            allDaySlot: false,
+            editable: true,
+            defaultView: 'agendaDay',
+            droppable: true,
+            selectable: true,
+            selectHelper: true,
+            select: function (start, end, allDay) {
+                showDialog("@Url.Action("Create")", $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"), $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT"));
+                //if (title) {
+                //    calendar.fullCalendar('renderEvent',
+				//		{
+				//		    title: title,
+				//		    start: start,
+				//		    end: end,
+				//		    allDay: allDay
+				//		},
+				//		true // make the event "stick"
+				//	);
+                //}
+                //calendar.fullCalendar('unselect');
+            },
+            drop: function (date, allDay) { // this function is called when something is dropped
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+
+            }
+        });
+        $("#dialogContainer").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 'auto',
+            modal: true,
+            buttons: {
+                "Update":
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $("#update-message").html('');
+                            $("#createGroupInstanceForm").submit();
+                        },
+                        html: 'Update'
+                    },
+                Cancel:
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        html: 'Cancel'
+                    }
+            }
+        });
+    });
+    function showDialog(href,start,end) {
+        var dialogDiv = $("#dialogContainer");
+        var viewUrl = href;
+        $.get(viewUrl, function (data) {
+            dialogDiv.html(data);
+            dialogDiv.find("#StartDateTime").val(start);
+            dialogDiv.find("#EndDateTime").val(end);
+            //$('.datepicker').datepicker();
+            ////validation
+            //var $form = $("#updateCarForm");
+            ////Unbind existing validation
+            //$form.unbind();
+            //$form.data("validatior", null);
+            ////check document for changes
+            //$.validator.unobtrusive.parse(document);
+            ////Readd validation with changes
+            //$form.validate();
+            dialogDiv.dialog('open');
+        });
+            return false;
+    }
+    function updateSuccess() {
+        if ($("#update-message").html() == "True") {
+
+            //var parent = linkObj.closest("tr");
+            //parent.find(".Amount").html($("#Amount").val());
+            //parent.find(".EffectiveDate").html($("#EffectiveDate").val());
+            $('#calendar').fullCalendar('refetchEvents');
+            $('#dialogContainer').dialog("close");
+        }
+        else {
+
+        }
+
+    }
+</script>

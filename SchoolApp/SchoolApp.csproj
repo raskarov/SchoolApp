@@ -175,6 +175,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\GroupInstanceController.cs" />
     <Compile Include="Controllers\PaymentProfileController.cs" />
     <Compile Include="Controllers\PaymentRuleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -191,6 +192,11 @@
     <Compile Include="Migrations\201302150028148_InitialSchema.Designer.cs">
       <DependentUpon>201302150028148_InitialSchema.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302150125539_NonRequiredUsername.cs" />
+    <Compile Include="Migrations\201302150125539_NonRequiredUsername.Designer.cs">
+      <DependentUpon>201302150125539_NonRequiredUsername.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event.cs" />
     <Compile Include="Models\GroupInstance.cs" />
     <Compile Include="Models\PaymentProfile.cs" />
     <Compile Include="Models\PaymentRule.cs" />
@@ -434,6 +440,11 @@
     <Content Include="Views\PaymentRule\Edit.cshtml" />
     <Content Include="Views\PaymentRule\Delete.cshtml" />
     <Content Include="Views\PaymentProfile\EditPaymentRule.cshtml" />
+    <Content Include="Views\GroupInstance\Index.cshtml" />
+    <Content Include="Views\GroupInstance\Details.cshtml" />
+    <Content Include="Views\GroupInstance\Create.cshtml" />
+    <Content Include="Views\GroupInstance\Edit.cshtml" />
+    <Content Include="Views\GroupInstance\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -453,6 +464,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302150028148_InitialSchema.resx">
       <DependentUpon>201302150028148_InitialSchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302150125539_NonRequiredUsername.resx">
+      <DependentUpon>201302150125539_NonRequiredUsername.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

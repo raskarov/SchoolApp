@@ -53,7 +53,11 @@ namespace SchoolApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Todo: currently requires two trips to db to autogenerate username.
                 db.UserProfiles.Add(userprofile);
+                db.SaveChanges();
+                userprofile.UserName = "Student" + userprofile.UserId;
+                db.Entry(userprofile).State = EntityState.Modified;
                 db.SaveChanges();
                 Roles.AddUserToRole(userprofile.UserName, "Student");
                 return RedirectToAction("Index");

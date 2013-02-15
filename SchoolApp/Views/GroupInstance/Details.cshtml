@@ -1,0 +1,43 @@
+﻿@model SchoolApp.Models.GroupInstance
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>GroupInstance</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StartDateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartDateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EndDateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndDateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Group.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Group.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Classroom.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Classroom.Name)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.GroupInstanceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

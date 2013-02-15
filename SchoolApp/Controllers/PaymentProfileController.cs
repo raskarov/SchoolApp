@@ -55,7 +55,7 @@ namespace SchoolApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IsCurrent = current;
+            ViewBag.IsCurrent = current; //Used to hide effective date field for the current payment rule. 
             return PartialView(paymentrule);
         }
 
