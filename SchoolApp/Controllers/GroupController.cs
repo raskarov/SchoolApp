@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SchoolApp.Models;
-using DefaultConnection.DAL;
+using SchoolApp.DAL;
 using SchoolApp.ViewModels;
 using System.Web.Security;
 

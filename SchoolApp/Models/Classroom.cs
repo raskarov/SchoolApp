@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DefaultConnection.Models
+namespace SchoolApp.Models
 {
     public class Classroom
     {

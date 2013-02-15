@@ -5,11 +5,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DefaultConnection.Models;
-using DefaultConnection.DAL;
-using DefaultConnection.Filters;
+using SchoolApp.Models;
+using SchoolApp.DAL;
+using SchoolApp.Filters;
 
-namespace DefaultConnection.Controllers
+namespace SchoolApp.Controllers
 {
     public class ClassroomController : Controller
     {

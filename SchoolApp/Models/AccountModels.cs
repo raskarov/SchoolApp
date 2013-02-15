@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Web.Security;
 using SchoolApp.Models;
 
-namespace DefaultConnection.Models
+namespace SchoolApp.Models
 {
     [Table("UserProfile")]
     public class UserProfile

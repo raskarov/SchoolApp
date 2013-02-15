@@ -1,4 +1,4 @@
-namespace DefaultConnection.Migrations
+namespace SchoolApp.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -7,14 +7,19 @@ namespace DefaultConnection.Migrations
     using System.Web.Security;
     using WebMatrix.WebData;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DefaultConnection.DAL.SchoolContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SchoolApp.DAL.SchoolContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DefaultConnection.DAL.SchoolContext context)
+        protected override void Seed(SchoolApp.DAL.SchoolContext context)
+        {
+            SeedRolesAndUsers();
+
+        }
+        private void SeedRolesAndUsers()
         {
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
 
@@ -32,11 +37,11 @@ namespace DefaultConnection.Migrations
             }
             if (!WebSecurity.UserExists("raskarov"))
             {
-                WebSecurity.CreateUserAndAccount("raskarov", "password", new { FirstName = "Ruslan", LastName = "Askarov" });
+                WebSecurity.CreateUserAndAccount("raskarov", "password", new { FirstName = "Ruslan", LastName = "Askarov", Email = "askarru@gmail.com" });
             }
             if (!WebSecurity.UserExists("testteacher"))
             {
-                WebSecurity.CreateUserAndAccount("testteacher", "password", new { FirstName = "Teacher", LastName = "Test", Email="askarru@gmail.com" });
+                WebSecurity.CreateUserAndAccount("testteacher", "password", new { FirstName = "Teacher", LastName = "Test", Email = "askarru@gmail.com" });
             }
             if (!Roles.GetRolesForUser("raskarov").Contains("Administrator"))
             {

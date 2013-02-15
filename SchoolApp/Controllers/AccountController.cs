@@ -8,8 +8,9 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using DefaultConnection.Filters;
-using DefaultConnection.Models;
+using SchoolApp.Filters;
+using SchoolApp.Models;
+using SchoolApp.DAL;
 namespace SchoolApp.Controllers
 {
     [Authorize]
@@ -262,7 +263,7 @@ namespace SchoolApp.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (SchoolContext db = new SchoolContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists

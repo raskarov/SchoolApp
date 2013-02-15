@@ -6,7 +6,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace DefaultConnection.Extensions
+namespace SchoolApp.Extensions
 {
     public static class Helpers
     {

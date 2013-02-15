@@ -5,8 +5,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DefaultConnection.Models;
-using DefaultConnection.DAL;
+using SchoolApp.Models;
+using SchoolApp.DAL;
 using System.Web.Security;
 
 namespace SchoolApp.Controllers

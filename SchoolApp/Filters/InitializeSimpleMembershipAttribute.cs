@@ -4,10 +4,10 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using DefaultConnection.Models;
-using DefaultConnection.DAL;
+using SchoolApp.Models;
+using SchoolApp.DAL;
 
-namespace DefaultConnection.Filters
+namespace SchoolApp.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class InitializeSimpleMembershipAttribute : ActionFilterAttribute
@@ -26,7 +26,7 @@ namespace DefaultConnection.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<SchoolContext>(null);
+                Database.SetInitializer<SchoolContext>(new DropCreateDatabaseIfModelChanges<SchoolContext>());
 
                 try
                 {

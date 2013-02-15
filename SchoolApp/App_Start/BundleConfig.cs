@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace DefaultConnection
+namespace SchoolApp
 {
     public class BundleConfig
     {
