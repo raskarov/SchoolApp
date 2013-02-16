@@ -11,3 +11,9 @@ font-weight: bold;
 {
     opacity:0.4;
 }
+.removeEvent
+{
+    color:white;
+    float: right;
+padding-right: 10px;
+}

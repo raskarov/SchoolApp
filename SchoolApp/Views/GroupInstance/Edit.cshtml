@@ -1,12 +1,19 @@
 ﻿@model SchoolApp.Models.GroupInstance
 
-@{
-    ViewBag.Title = "Edit";
-}
-
-
-@using (Html.BeginForm()) {
+@using (Ajax.BeginForm(
+    "Edit",
+    "GroupInstance",
+    new AjaxOptions
+    {
+        UpdateTargetId = "update-message",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "Post",
+        OnSuccess = "updateSuccess"
+    },
+    new { @id = "editGroupInstanceForm" }))
+{
     @Html.ValidationSummary(true)
+    <div id="update-message"></div>
 
         @Html.HiddenFor(model => model.GroupInstanceId)
 

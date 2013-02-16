@@ -76,7 +76,7 @@ namespace SchoolApp.Controllers
             }
             ViewBag.GroupId = new SelectList(db.Groups, "GroupId", "Name", groupinstance.GroupId);
             ViewBag.ClassroomId = new SelectList(db.Classrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
-            return View(groupinstance);
+            return PartialView(groupinstance);
         }
 
         //
@@ -91,13 +91,9 @@ namespace SchoolApp.Controllers
                 db.SaveChanges();
                 return Content(Boolean.TrueString);
             }
-            else
-            {
-                return Content("Review your form");
-            }
-            //ViewBag.GroupId = new SelectList(db.Groups, "GroupId", "Name", groupinstance.GroupId);
-            //ViewBag.ClassroomId = new SelectList(db.Classrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
-            //return View(groupinstance);
+            ViewBag.GroupId = new SelectList(db.Groups, "GroupId", "Name", groupinstance.GroupId);
+            ViewBag.ClassroomId = new SelectList(db.Classrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
+            return Content("Review your form");
         }
 
         //
@@ -110,7 +106,7 @@ namespace SchoolApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(groupinstance);
+            return PartialView(groupinstance);
         }
 
         //
@@ -122,10 +118,13 @@ namespace SchoolApp.Controllers
             GroupInstance groupinstance = db.GroupInstances.Find(id);
             db.GroupInstances.Remove(groupinstance);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Content(Boolean.TrueString);
         }
 
-
+        /// <summary>
+        /// Get scheduled events into calendar
+        /// </summary>
+        /// <returns>Formatted Json events</returns>
         public ActionResult GetEvents()
         {
             var groupInstances = db.GroupInstances.ToList();
@@ -135,7 +134,8 @@ namespace SchoolApp.Controllers
                 title = "Test",
                 start = x.StartDateTime.ToString("s"),
                 end = x.EndDateTime.ToString("s"),
-                editable = false
+                editable = false,
+                GroupInstanceId = x.GroupInstanceId
             });
 
             return Json(events, JsonRequestBehavior.AllowGet);

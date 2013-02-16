@@ -18,14 +18,13 @@
     @Scripts.Render("~/bundles/jqueryui")
 }
 <script type="text/javascript">
-    var linkObj;
+    var formId;
     $(document).ready(function () {
 
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
         var y = date.getFullYear();
-
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -39,7 +38,8 @@
                             title: this.title,
                             start: this.start,
                             end: this.end,
-                            allDay: this.editable
+                            allDay: this.editable,
+                            GroupInstanceId: this.GroupInstanceId
                         };
                     }).toArray();
                     callback(result);
@@ -53,6 +53,7 @@
             selectable: true,
             selectHelper: true,
             select: function (start, end, allDay) {
+                formId = "createGroupInstanceForm";
                 showDialog("@Url.Action("Create")", $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"), $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT"));
                 //if (title) {
                 //    calendar.fullCalendar('renderEvent',
@@ -66,6 +67,15 @@
 				//	);
                 //}
                 //calendar.fullCalendar('unselect');
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                if (jsEvent.target.className === "icon-remove" || jsEvent.target.className === "removeEvent") //We handle remove button ourselves
+                {
+                    jsEvent.preventDefault();
+                    return;
+                }
+                formId = "editGroupInstanceForm";
+                showDialogEditRemove("@Url.Action("Edit")/" + calEvent.GroupInstanceId);
             },
             drop: function (date, allDay) { // this function is called when something is dropped
 
@@ -89,6 +99,11 @@
                     $(this).remove();
                 }
 
+            },
+            eventRender: function (event, element) {
+                var eventId = event.GroupInstanceId;
+                element.find(".fc-event-time").append($("<a href='#' data-event-id='" + eventId + "' rel='tooltip' class='removeEvent' data-toggle='tooltip' title='Remove event'></a>")
+                .html("<i class='icon-remove'></i>"));
             }
         });
         $("#dialogContainer").dialog({
@@ -102,7 +117,7 @@
                         class: 'btn btn-primary',
                         click: function () {
                             $("#update-message").html('');
-                            $("#createGroupInstanceForm").submit();
+                            $("#"+formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                         },
                         html: 'Update'
                     },
@@ -117,6 +132,29 @@
             }
         });
     });
+    $(document).on("click", ".removeEvent", function () {
+        formId = "deleteGroupInstanceForm";
+        showDialogEditRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
+    });
+    function showDialogEditRemove(href) {
+        var dialogDiv = $("#dialogContainer");
+        var viewUrl = href;
+        $.get(viewUrl, function (data) {
+            dialogDiv.html(data);
+            //$('.datepicker').datepicker();
+            ////validation
+            //var $form = $("#updateCarForm");
+            ////Unbind existing validation
+            //$form.unbind();
+            //$form.data("validatior", null);
+            ////check document for changes
+            //$.validator.unobtrusive.parse(document);
+            ////Readd validation with changes
+            //$form.validate();
+            dialogDiv.dialog('open');
+        });
+        return false;
+    }
     function showDialog(href,start,end) {
         var dialogDiv = $("#dialogContainer");
         var viewUrl = href;
