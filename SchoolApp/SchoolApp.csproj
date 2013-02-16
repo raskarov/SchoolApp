@@ -209,7 +209,7 @@
     <Compile Include="Controllers\ClassroomController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAL\SchoolContext.cs" />
+    <Compile Include="Controllers\DAL\SchoolContext.cs" />
     <Compile Include="Extensions\Helpers.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -439,7 +439,6 @@
     <Content Include="Views\PaymentRule\Create.cshtml" />
     <Content Include="Views\PaymentRule\Edit.cshtml" />
     <Content Include="Views\PaymentRule\Delete.cshtml" />
-    <Content Include="Views\PaymentProfile\EditPaymentRule.cshtml" />
     <Content Include="Views\GroupInstance\Index.cshtml" />
     <Content Include="Views\GroupInstance\Details.cshtml" />
     <Content Include="Views\GroupInstance\Create.cshtml" />

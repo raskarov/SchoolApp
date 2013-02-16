@@ -1,57 +1,82 @@
-﻿@model IEnumerable<SchoolApp.Models.PaymentRule>
+﻿@model SchoolApp.ViewModels.PaymentProfileEditViewModel    
+    @if(Model.CurrentPaymentRule!=null)
+        {
+        if (Model.FuturePaymentRule == null)
+        {
+            @Html.ActionLink("Add new payment rule", "Create", "PaymentRule", new { id = Model.PaymentProfile.PaymentProfileId }, new {@class="editLink"});
+        }
+        <table class="table table-condensed table-min">
+            <thead>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentPaymentRule.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CurrentPaymentRule.EffectiveDate)
+                </th>
+                <th></th>
+            </thead>
+            @if (Model.FuturePaymentRule != null)
+            {
+                <tr class="error row-transparent">
+                    <td><span class="label label-error">Upcoming</span></td>
+                    <td class="Amount">
+                        @Html.DisplayFor(modelItem => Model.FuturePaymentRule.Amount)
+                    </td>
+                    <td class="EffectiveDate">
+                        @Html.DisplayFor(modelItem => Model.FuturePaymentRule.EffectiveDate)
+                    </td>
+                    <td>
+                         @Html.ActionLink("Edit", "Edit","PaymentRule",
+                                new { id = Model.FuturePaymentRule.PaymentRuleId },
+                                new { @class = "editLink" }
+                                )
+                    </td>
+                </tr>
+            }
+            @using (Ajax.BeginForm(null))
+            {
+                if (Model.CurrentPaymentRule != null)
+                {
+                <tr class="success">
+                  <td><span class="label label-success">Current</span></td>
+                    <td class="Amount">
+                        @Html.DisplayFor(modelItem => Model.CurrentPaymentRule.Amount)
+                    </td>
+                    <td class="EffectiveDate">
+                        @Html.DisplayFor(modelItem => Model.CurrentPaymentRule.EffectiveDate)
+                    </td>
+                      <td>
+                        @Html.ActionLink("Edit", "Edit","PaymentRule",
+                                new { id = Model.CurrentPaymentRule.PaymentRuleId, current=true },
+                                new { @class = "editLink" }
+                                )
+                     </td>
+                </tr>
+                }
+            }
+            @foreach (var payment in Model.OldPaymentRules)
+            {
+                <tr class="info row-transparent">
+                    <td>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<p>
-    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
-</p>
-<div class="well">
-<table class="table table-striped datatable">
-    <thead>
-        <th>
-            @Html.DisplayNameFor(model => model.Rule)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EffectiveDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Variable)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentProfile.Name)
-        </th>
-        <th></th>
-    </thead>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rule)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EffectiveDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Variable)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentProfile.Name)
-        </td>
-        <td>
-			<a href="@Url.Action("Edit", new { id=item.PaymentRuleId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
-            <a href="@Url.Action("Details", new { id=item.PaymentRuleId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
-            <a href="@Url.Action("Delete", new { id=item.PaymentRuleId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
-        </td>
-    </tr>
-}
-
-</table>
-</div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => payment.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => payment.EffectiveDate)
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+        }
+        else
+        {
+        //If no payment rules exist add initial payment rule here.
+         @Html.ActionLink("Create Payment Rule", "Create","PaymentRule",
+                                new { id = Model.PaymentProfile.PaymentProfileId, isCurrent = true },
+                                new { @class = "editLink" }
+                                )
+        }

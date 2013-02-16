@@ -46,42 +46,11 @@ namespace SchoolApp.Controllers
         }
 
         //
-        //Get: /PaymentProfile/EditPaymentRule/5
-
-        public ActionResult EditPaymentRule(int id=0, bool current=false)
-        {
-            PaymentRule paymentrule = db.PaymentRules.Find(id);
-            if (paymentrule == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.IsCurrent = current; //Used to hide effective date field for the current payment rule. 
-            return PartialView(paymentrule);
-        }
-
-        //
-        //POST: /PaymentProfile/EditPaymentRule/5
-        [HttpPost]
-        public ActionResult EditPaymentRule(PaymentRule paymentrule)
-        {
-            if (ModelState.IsValid)
-            {
-                paymentrule.CreatedDate = DateTime.Today;
-                db.Entry(paymentrule).State = EntityState.Modified;
-                db.SaveChanges();
-                return Content(Boolean.TrueString);
-            }
-            else
-            {
-                return Content("Please review your form");
-            }
-        }
-
-        //
         // GET: /PaymentProfile/Create
 
         public ActionResult Create()
         {
+
             return View();
         }
 

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using SchoolApp.Models;
 using SchoolApp.DAL;
+using SchoolApp.ViewModels;
 
 namespace SchoolApp.Controllers
 {
@@ -17,10 +18,16 @@ namespace SchoolApp.Controllers
         //
         // GET: /PaymentRule/
 
-        public ActionResult Index()
+        public ActionResult Index(int id=0)
         {
-            var paymentrules = db.PaymentRules.Include(p => p.PaymentProfile);
-            return View(paymentrules.ToList());
+            var paymentProfile = new PaymentProfileEditViewModel();
+            paymentProfile.PaymentProfile = db.PaymentProfiles.Find(id);
+            var paymentRules = db.PaymentRules.Where(x => x.PaymentProfileId == id).ToList();
+            var oldOrCurrent = paymentRules.Where(x => x.EffectiveDate <= DateTime.Today).OrderByDescending(x => x.CreatedDate);
+            paymentProfile.OldPaymentRules = oldOrCurrent.Skip(1).Take(5).ToList();
+            paymentProfile.CurrentPaymentRule = oldOrCurrent.Take(1).FirstOrDefault();
+            paymentProfile.FuturePaymentRule = paymentRules.Where(x => x.EffectiveDate > DateTime.Today).FirstOrDefault();
+            return PartialView(paymentProfile);
         }
 
         //
@@ -39,41 +46,46 @@ namespace SchoolApp.Controllers
         //
         // GET: /PaymentRule/Create
 
-        public ActionResult Create()
+        public ActionResult Create(bool isCurrent= false)
         {
-            ViewBag.PaymentProfileId = new SelectList(db.PaymentProfiles, "PaymentProfileId", "Name");
-            return View();
+            ViewBag.IsCurrent = isCurrent;
+            return PartialView();
         }
 
         //
         // POST: /PaymentRule/Create
 
         [HttpPost]
-        public ActionResult Create(PaymentRule paymentrule)
+        public ActionResult Create(PaymentRule paymentrule, int id=0, bool isCurrent=false)
         {
             if (ModelState.IsValid)
             {
+                paymentrule.CreatedDate = DateTime.Today;
+                paymentrule.PaymentProfileId = id;
+                if (isCurrent)
+                {
+                    paymentrule.EffectiveDate = DateTime.Today;
+                }
                 db.PaymentRules.Add(paymentrule);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content(Boolean.TrueString);
             }
-
-            ViewBag.PaymentProfileId = new SelectList(db.PaymentProfiles, "PaymentProfileId", "Name", paymentrule.PaymentProfileId);
-            return View(paymentrule);
+            return Content("Please review your form");
         }
 
         //
         // GET: /PaymentRule/Edit/5
 
-        public ActionResult Edit(int id = 0)
+
+        public ActionResult Edit(int id = 0, bool current = false)
         {
             PaymentRule paymentrule = db.PaymentRules.Find(id);
             if (paymentrule == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PaymentProfileId = new SelectList(db.PaymentProfiles, "PaymentProfileId", "Name", paymentrule.PaymentProfileId);
-            return View(paymentrule);
+            ViewBag.IsCurrent = current; //Used to hide effective date field for the current payment rule. 
+            return PartialView(paymentrule);
         }
 
         //
@@ -84,12 +96,15 @@ namespace SchoolApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                paymentrule.CreatedDate = DateTime.Today;
                 db.Entry(paymentrule).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Content(Boolean.TrueString);
             }
-            ViewBag.PaymentProfileId = new SelectList(db.PaymentProfiles, "PaymentProfileId", "Name", paymentrule.PaymentProfileId);
-            return View(paymentrule);
+            else
+            {
+                return Content("Please review your form");
+            }
         }
         //
         // GET: /PaymentRule/EditPartial/5

@@ -42,76 +42,8 @@
             </p>
         }
     </div>
-    <div class="span4">
-        <table class="table table-condensed table-min">
-            <thead>
-                <th></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CurrentPaymentRule.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CurrentPaymentRule.EffectiveDate)
-                </th>
-                <th></th>
-            </thead>
-            @if (Model.FuturePaymentRule != null)
-            {
-                <tr class="error row-transparent">
-                    <td><span class="label label-error">Upcoming</span></td>
-                    <td class="Amount">
-                        @Html.DisplayFor(modelItem => Model.FuturePaymentRule.Amount)
-                    </td>
-                    <td class="EffectiveDate">
-                        @Html.DisplayFor(modelItem => Model.FuturePaymentRule.EffectiveDate)
-                    </td>
-                    <td>
-                         @Ajax.ActionLink("Edit", "EditPaymentRule",
-                                new { id = Model.FuturePaymentRule.PaymentRuleId },
-                                new AjaxOptions { UpdateTargetId = "result", InsertionMode = InsertionMode.Replace },
-                                new { @class = "editLink" }
-                                )
-                    </td>
-                </tr>
-            }
-
-            @using (Ajax.BeginForm(null))
-            {
-                if (Model.CurrentPaymentRule != null)
-                {
-                <tr class="success">
-                  <td><span class="label label-success">Current</span></td>
-                    <td class="Amount">
-                        @Html.DisplayFor(modelItem => Model.CurrentPaymentRule.Amount)
-                    </td>
-                    <td class="EffectiveDate">
-                        @Html.DisplayFor(modelItem => Model.CurrentPaymentRule.EffectiveDate)
-                    </td>
-                      <td>
-                        @Ajax.ActionLink("Edit", "EditPaymentRule",
-                                new { id = Model.CurrentPaymentRule.PaymentRuleId, current=true },
-                                new AjaxOptions { UpdateTargetId = "result", InsertionMode = InsertionMode.Replace },
-                                new { @class = "editLink" }
-                                )
-                     </td>
-                </tr>
-                }
-            }
-            @foreach (var payment in Model.OldPaymentRules)
-            {
-                <tr class="info row-transparent">
-                    <td>
-
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => payment.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => payment.EffectiveDate)
-                    </td>
-                    <td></td>
-                </tr>
-            }
-        </table>
+    <div class="span4" id="paymentRulePlaceholder">
+        @{Html.RenderPartial("~/Views/PaymentRule/Index.cshtml");}
         </div>
         <div id="result"></div>
         </div>
@@ -151,7 +83,7 @@
                     }
             }
         });
-        $(".editLink").click(function () {
+        $(document).on("click",".editLink", function(){
             linkObj = $(this);
             var dialogDiv = $("#dialogContainer");
             var viewUrl = linkObj.attr('href');
@@ -174,9 +106,8 @@
     });
     function updateSuccess() {
         if ($("#update-message").html() == "True") {
-            var parent = linkObj.closest("tr");
-            parent.find(".Amount").html($("#Amount").val());
-            parent.find(".EffectiveDate").html($("#EffectiveDate").val());
+            //Reload partial view.
+            $("#paymentRulePlaceholder").load("@Url.Action("Index", "PaymentRule", new { id = @Model.PaymentProfile.PaymentProfileId })");
             $('#dialogContainer').dialog("close");
         }
         else {

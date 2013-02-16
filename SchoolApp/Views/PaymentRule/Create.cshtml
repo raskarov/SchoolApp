@@ -1,13 +1,23 @@
 ﻿@model SchoolApp.Models.PaymentRule
 
 @{
-    ViewBag.Title = "Create";
+bool isCurrent = ViewBag.IsCurrent;
 }
-
-
-@using (Html.BeginForm()) {
+@using (Ajax.BeginForm(
+    "Create",
+    "PaymentRule",
+    new AjaxOptions
+    {
+        UpdateTargetId = "update-message",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "Post",
+        OnSuccess = "updateSuccess"
+    },
+    new { @id = "updatePaymentRuleForm" }))
+{
     @Html.ValidationSummary(true)
-
+    @Html.Hidden("isCurrent", isCurrent)
+    <div id="update-message"></div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Rule)
         </div>
@@ -15,7 +25,8 @@
             @Html.EditorFor(model => model.Rule)
             @Html.ValidationMessageFor(model => model.Rule)
         </div>
-
+    if (!ViewBag.IsCurrent)
+    {
         <div class="editor-label">
             @Html.LabelFor(model => model.EffectiveDate)
         </div>
@@ -23,7 +34,7 @@
             @Html.EditorFor(model => model.EffectiveDate)
             @Html.ValidationMessageFor(model => model.EffectiveDate)
         </div>
-
+}
         <div class="editor-label">
             @Html.LabelFor(model => model.Amount)
         </div>
@@ -39,21 +50,4 @@
             @Html.EditorFor(model => model.Variable)
             @Html.ValidationMessageFor(model => model.Variable)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PaymentProfileId, "PaymentProfile")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("PaymentProfileId", String.Empty)
-            @Html.ValidationMessageFor(model => model.PaymentProfileId)
-        </div>
-
-        <p>
-            <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
-            <a href="@Url.Action("Index")" class="btn">Back to list</a>
-        </p>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }
