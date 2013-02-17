@@ -3787,8 +3787,9 @@ function AgendaEventRenderer() {
 				outerWidth = availWidth / (levelI + forward + 1);
 			}else{
 				if (forward) {
-					// moderately wide, aligned left still
-					outerWidth = ((availWidth / (forward + 1)) - (12/2)) * 2; // 12 is the predicted width of resizer =
+				    // moderately wide, aligned left still
+				    ///NOTE: overlapping fix from here: http://code.google.com/p/fullcalendar/issues/detail?id=218
+				    outerWidth = availWidth / (forward + 1); // 12 is the predicted width of resizer =
 				}else{
 					// can be entire width, aligned left
 					outerWidth = availWidth;
@@ -3799,7 +3800,8 @@ function AgendaEventRenderer() {
 				* dis + (rtl ? availWidth - outerWidth : 0);   // rtl
 			seg.top = top;
 			seg.left = left;
-			seg.outerWidth = outerWidth;
+		    ///NOTE: overlapping fix from here: http://code.google.com/p/fullcalendar/issues/detail?id=218
+			seg.outerWidth = outerWidth-1;
 			seg.outerHeight = bottom - top;
 			html += slotSegHtml(event, seg);
 		}
