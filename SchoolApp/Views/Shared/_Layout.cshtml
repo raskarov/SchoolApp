@@ -9,7 +9,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/theme.css")
@@ -25,16 +24,12 @@
     @Scripts.Render("~/scripts/site.js")
     @Scripts.Render("~/scripts/datatables.bootstrap.js")
     @Scripts.Render("~/scripts/bootstrap-datepicker.js")
-    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
     @Styles.Render("~/content/fullcalendar.css")
-    @Scripts.Render("~/scripts/fullcalendar.js")
     <!--[if IE 7 ]> 
             @Styles.Render("~/Content/font-awesome-ie7.css.css")
         <![endif]-->
 
     @Styles.Render("~/Content/font-awesome.css")
-
-
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript">
         $(function () {
