@@ -13,9 +13,10 @@
     <div id="dialogContainer"></div>
 </div>
 @section Scripts{
-    @Scripts.Render("~/scripts/fullcalendar.js")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/fullcalendar")
+}
+@section Styles{
+    @Styles.Render("~/content/fullcalendar")
 }
 <script type="text/javascript">
     var formId;

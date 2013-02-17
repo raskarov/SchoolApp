@@ -19,12 +19,20 @@ namespace SchoolApp
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/fullcalendar").Include(
+                    "~/Scripts/fullcalendar*"));
+            bundles.Add(new ScriptBundle("~/bundles/site").Include(
+                "~/Scripts/Site.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                    "~/scripts/jquery.dataTables*",
+                    "~/scripts/datatables.bootstrap*"));
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/custom.css", "~/Content/theme.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -39,6 +47,10 @@ namespace SchoolApp
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+            bundles.Add(new StyleBundle("~/Content/font-awesome").Include("~/Content/font-awesome*"));
+
+            bundles.Add(new StyleBundle("~/Content/fullcalendar").Include("~/Content/fullcalendar*"));
+            bundles.Add(new StyleBundle("~/Content/datatables").Include("~/content/datatables.bootstrap.css"));
         }
     }
 }

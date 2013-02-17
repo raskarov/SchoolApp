@@ -9,28 +9,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
     @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/theme.css")
-    @Styles.Render("~/Content/elements.css")
-    @Styles.Render("~/Content/multi-select.css")
-    @Styles.Render("~/Content/themes/base/css")
-    @Scripts.Render("~/Scripts/jquery.multi-select.js")
-    @Scripts.Render("~/scripts/jquery.dataTables.js")
-    @Scripts.Render("~/scripts/bootstrap.js")
-    @Styles.Render("~/content/datatables.bootstrap.css")
-    @Styles.Render("~/content/custom.css")
-    @Styles.Render("~/content/datepicker.css")
-    @Scripts.Render("~/scripts/site.js")
-    @Scripts.Render("~/scripts/datatables.bootstrap.js")
-    @Scripts.Render("~/scripts/bootstrap-datepicker.js")
-    @Styles.Render("~/content/fullcalendar.css")
-    <!--[if IE 7 ]> 
-            @Styles.Render("~/Content/font-awesome-ie7.css.css")
-        <![endif]-->
-
-    @Styles.Render("~/Content/font-awesome.css")
+    @Scripts.Render("~/Bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/font-awesome")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Bundles/datatables")
+    @Styles.Render("~/Content/datatables")
+    @Styles.Render("~/Content/themes/base/css")
+    @RenderSection("scripts", required: false)
+    @RenderSection("styles", required:false)
     <script type="text/javascript">
         $(function () {
             $("[rel='tooltip']").tooltip();

@@ -144,3 +144,9 @@ if ($.fn.DataTable.TableTools) {
         }
     });
 }
+
+
+//Apply datatable to all tables with class datatable
+$(document).ready(function () {
+    $(".datatable").dataTable();
+});
