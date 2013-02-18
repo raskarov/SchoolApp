@@ -50,16 +50,11 @@
     </div>
 
         <div id="dialogContainer" title="Update payment"></div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jqueryui")
-}
 <script type="text/javascript">
     var linkObj;
     $(function () {
         $("#dialogContainer").dialog({
-            autoOpen:false,
+            autoOpen: false,
             resizable: false,
             height: 'auto',
             modal: true,
@@ -83,7 +78,7 @@
                     }
             }
         });
-        $(document).on("click",".editLink", function(){
+        $(document).on("click", ".editLink", function () {
             linkObj = $(this);
             var dialogDiv = $("#dialogContainer");
             var viewUrl = linkObj.attr('href');
@@ -111,8 +106,8 @@
             $('#dialogContainer').dialog("close");
         }
         else {
-
+//Do something!!
         }
-       
     }
+
 </script>

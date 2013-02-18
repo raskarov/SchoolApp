@@ -1,12 +1,8 @@
 ﻿@model IEnumerable<SchoolApp.Models.GroupInstance>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Schedule";
 }
-
-<p>
-    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
-</p>
 <div class="well">
 
     <div id="calendar"></div>
@@ -76,10 +72,9 @@
                     return;
                 }
                 formId = "editGroupInstanceForm";
-                showDialogEditRemove("@Url.Action("Edit")/" + calEvent.GroupInstanceId);
+                showDialogEditRemove("@Url.Action("Edit","GroupInstance")/" + calEvent.GroupInstanceId);
             },
             drop: function (date, allDay) { // this function is called when something is dropped
-
                 // retrieve the dropped element's stored Event Object
                 var originalEventObject = $(this).data('eventObject');
 
@@ -100,6 +95,33 @@
                     $(this).remove();
                 }
 
+            },
+            eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
+                //Send update to database TODO
+                //$.ajax({
+                //    url: '/GroupInstance/Edit/' + event.GroupInstanceId,
+                //    type: 'POST',
+                //    data: {
+                //        StartDateTime:event.StartDateTime,
+                //        EndDateTime: event.EndDateTime,
+                //        GroupInstanceId: event.GroupInstanceId
+                //    },
+                //    success: function (data) {
+                //        alert(data.success);
+                //    },
+                //    error: function () {
+                //        alert("error");
+                //    }
+                //});
+@*                $.post('@Url.Action("Edit")/' + event.GroupInstanceId,
+                    {
+                        GroupInstanceId: event.GroupInstanceId,
+                        StartDateTime: event.StartDateTime,
+                        EndDateTime: event.EndDateTime
+                    }).
+                    done(function () {
+                    alert('Update success');
+                });*@
             },
             eventRender: function (event, element) {
                 var eventId = event.GroupInstanceId;

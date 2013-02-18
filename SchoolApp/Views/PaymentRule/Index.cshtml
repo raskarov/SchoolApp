@@ -49,8 +49,9 @@
                       <td>
                         @Html.ActionLink("Edit", "Edit","PaymentRule",
                                 new { id = Model.CurrentPaymentRule.PaymentRuleId, current=true },
-                                new { @class = "editLink" }
+                                new { @class = "editLink", id="currentRule", rel="tooltip", data_toggle="tooltip", title="edit rule" }
                                 )
+                          		
                      </td>
                 </tr>
                 }
@@ -80,3 +81,16 @@
                                 new { @class = "editLink" }
                                 )
         }
+<script>
+    //function changeTooltipColorTo(color) {
+    //    $('.tooltip-inner').css('background-color', color)
+    //    $('.tooltip.top .tooltip-arrow').css('border-top-color', color);
+    //    $('.tooltip.right .tooltip-arrow').css('border-right-color', color);
+    //    $('.tooltip.left .tooltip-arrow').css('border-left-color', color);
+    //    $('.tooltip.bottom .tooltip-arrow').css('border-bottom-color', color);
+    //}
+    //$(document).ready(function () {
+    //    $("[rel=tooltip]").tooltip();
+    //    $('#currentRule').hover(function () { changeTooltipColorTo('#f00') });
+    //});
+</script>

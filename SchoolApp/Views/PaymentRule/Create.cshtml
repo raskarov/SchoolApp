@@ -18,13 +18,10 @@ bool isCurrent = ViewBag.IsCurrent;
     @Html.ValidationSummary(true)
     @Html.Hidden("isCurrent", isCurrent)
     <div id="update-message"></div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Rule)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Rule)
-            @Html.ValidationMessageFor(model => model.Rule)
-        </div>
+    <div class="btn-group" data-toggle="buttons-radio">
+           <button type="button" id="fixedRate" name="fixedRateToggle" class="btn active">Fixed Rate</button>
+           <button type="button" id="flexibleRate" name="flexibleRateToggle"  class="btn">Flexible Rate</button>
+       </div>
     if (!ViewBag.IsCurrent)
     {
         <div class="editor-label">
@@ -35,19 +32,62 @@ bool isCurrent = ViewBag.IsCurrent;
             @Html.ValidationMessageFor(model => model.EffectiveDate)
         </div>
 }
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Amount)
+        <div id="fixedRatePlaceholder">
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Amount)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Amount)
+        @Html.ValidationMessageFor(model => model.Amount)
+    </div>s
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Amount)
-            @Html.ValidationMessageFor(model => model.Amount)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Variable)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Variable)
-            @Html.ValidationMessageFor(model => model.Variable)
-        </div>
+    <div id="flexibleRatePlaceholder" hidden>
+        <table id="tableRules" class="table table-condensed table-striped">
+            <thead>
+                <th># Students</th>
+                <th>Price</th>
+            </thead>
+            <tbody>
+                     <tr>
+                    <td>
+                        <input type="text" name="ruleStudents" class="ruleStudents" />
+                    </td>
+                    <td>
+                        <input type="text" name="ruleAmount" class="ruleAmount" />
+                    </td>
+                    <td> <a href="#" class="removeRuleRow"><i class="icon-minus-sign"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="#" class="btn btn-small" id="addNewRule">Add row</a>
+    </div>
 }
+<script type="text/javascript">
+    $("#flexibleRate").click(function () {
+        $("#Variable").val(true);
+        showFlexibleRate();
+    });
+    $("#fixedRate").click(function () {
+        $("#Variable").val(false);
+        showFixedRate();
+    });
+    $("#addNewRule").click(function () {
+        $('#tableRules tr:last').after('<tr>\
+                                            <td><input type="text" class="ruleStudents" name="ruleStudents"  /></td> \
+                                            <td><input type="text" class="ruleAmount" name="ruleAmount"  /></td> \
+                                            <td> <a href="#" class="removeRuleRow"><i class="icon-minus-sign"></i></a></td> \
+                                            </tr>');
+    });
+    function showFlexibleRate() {
+        $("#flexibleRatePlaceholder").show();
+        $("#fixedRatePlaceholder").hide();
+    }
+    function showFixedRate() {
+        $("#flexibleRatePlaceholder").hide();
+        $("#fixedRatePlaceholder").show();
+    }
+    $(document).on("click", ".removeRuleRow", function () {
+        $(this).parent().parent().remove();
+    });
+</script>

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using SchoolApp.Models;
 using SchoolApp.DAL;
 using SchoolApp.ViewModels;
+using System.Xml.Linq;
 
 namespace SchoolApp.Controllers
 {
@@ -92,11 +93,29 @@ namespace SchoolApp.Controllers
         // POST: /PaymentRule/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(PaymentRule paymentrule)
+        public ActionResult Edit(PaymentRule paymentrule, int[] ruleStudents, int[] ruleAmount, bool? Variable)
         {
             if (ModelState.IsValid)
             {
-                paymentrule.CreatedDate = DateTime.Today;
+                if (Variable??false)
+                {
+                    var xelement = new XElement("Root");
+                    for (int i = 0; i < ruleStudents.Length; i++)
+                    {
+                        if (ruleStudents[i] > 0)
+                        {
+                            xelement.Add(new XElement("Rule", new XAttribute("NoOfStudents", ruleStudents[i]), new XAttribute("Amount", ruleAmount[i])));
+                        }
+                    }
+                    paymentrule.xRule = xelement;
+                    paymentrule.Amount = 0;
+                    paymentrule.Variable = true;
+                }
+                else
+                {
+                    paymentrule.CreatedDate = DateTime.Today;
+                    paymentrule.Variable = false;
+                }
                 db.Entry(paymentrule).State = EntityState.Modified;
                 db.SaveChanges();
                 return Content(Boolean.TrueString);

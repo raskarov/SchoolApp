@@ -17,3 +17,18 @@ font-weight: bold;
     float: right;
 padding-right: 10px;
 }
+.ruleStudents
+{
+    width:50px;
+}
+.ruleAmount
+{
+    width:75px;
+}
+#tableRules th, #tableRules td { 
+     border-top: none; 
+ }
+#updatePaymentRuleForm
+{
+    text-align:center;
+}

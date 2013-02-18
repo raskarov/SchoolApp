@@ -9,20 +9,19 @@
         HttpMethod = "Post",
         OnSuccess = "updateSuccess"
     },
-    new { @id = "updatePaymentRuleForm" }))
+    new { @id = "updatePaymentRuleForm"  }))
 {
     @Html.ValidationSummary(true)
     <div id="update-message"></div>
+    
     @Html.HiddenFor(model => model.PaymentRuleId)
     @Html.HiddenFor(model => model.CreatedDate)
     @Html.HiddenFor(model => model.PaymentProfileId)
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Rule)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Rule)
-        @Html.ValidationMessageFor(model => model.Rule)
-    </div>
+    @Html.HiddenFor(model=> model.Variable, new { Variable = "Variable" } )
+        <div class="btn-group" data-toggle="buttons-radio">
+           <button type="button" id="fixedRate" name="fixedRateToggle" class="btn btn-small">Fixed Rate</button>
+           <button type="button" id="flexibleRate" name="flexibleRateToggle"  class="btn btn-small">Flexible Rate</button>
+       </div>
     if (!ViewBag.IsCurrent) //Cannot change effective date for current payment
     {
     <div class="editor-label">
@@ -35,8 +34,10 @@
     }
     else
     {
-        @Html.HiddenFor(model=>model.EffectiveDate) //Need this
+        @Html.HiddenFor(model=>model.EffectiveDate) //Need to pass this to a controller, otherwise it will return 01/01/0001
     }
+    <div id="fixedRatePlaceholder">
+    
     <div class="editor-label">
         @Html.LabelFor(model => model.Amount)
     </div>
@@ -45,11 +46,80 @@
         @Html.ValidationMessageFor(model => model.Amount)
     </div>
 
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Variable)
+        </div>
+    <div id="flexibleRatePlaceholder">
+        <table id="tableRules" class="table table-condensed table-striped">
+            <thead>
+                <th># Students</th>
+                <th>Price</th>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.xRule.Elements("Rule"))
+                {
+                <tr>
+                    <td>
+                        <input type="text" name="ruleStudents" class="ruleStudents" value="@item.Attribute("NoOfStudents").Value" />
+                    </td>
+                    <td>
+                        <input type="text" name="ruleAmount" class="ruleAmount" value="@item.Attribute("Amount").Value" />
+                    </td>
+                    <td> <a href="#" class="removeRuleRow"><i class="icon-minus-sign"></i></a></td>
+                </tr>
+                }
+                @if (!Model.xRule.Elements("Rule").Any())
+                {
+                     <tr>
+                    <td>
+                        <input type="text" name="ruleStudents" class="ruleStudents" />
+                    </td>
+                    <td>
+                        <input type="text" name="ruleAmount" class="ruleAmount" />
+                    </td>
+                    <td> <a href="#" class="removeRuleRow"><i class="icon-minus-sign"></i></a></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <a href="#" class="btn btn-small" id="addNewRule">Add row</a>
     </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Variable)
-        @Html.ValidationMessageFor(model => model.Variable)
-    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ("@Model.Variable"=="true")
+            {
+                $("#flexibleRate").addClass("active");
+                showFlexibleRate();
+            }
+            else
+            {
+                $("#fixedRate").addClass("active");
+                showFixedRate();
+            }
+        });
+        $("#flexibleRate").click(function () {
+            $("#Variable").val(true);
+            showFlexibleRate();
+        });
+        $("#fixedRate").click(function () {
+            $("#Variable").val(false);
+            showFixedRate();
+        });
+        $("#addNewRule").click(function () {
+            $('#tableRules tr:last').after('<tr>\
+                                            <td><input type="text" class="ruleStudents" name="ruleStudents"  /></td> \
+                                            <td><input type="text" class="ruleAmount" name="ruleAmount"  /></td> \
+                                            <td> <a href="#" class="removeRuleRow"><i class="icon-minus-sign"></i></a></td> \
+                                            </tr>');
+        });
+        function showFlexibleRate(){
+            $("#flexibleRatePlaceholder").show();
+            $("#fixedRatePlaceholder").hide();
+        }
+            function showFixedRate(){
+                $("#flexibleRatePlaceholder").hide();
+                $("#fixedRatePlaceholder").show();
+            }
+            $(document).on("click", ".removeRuleRow", function () {
+                $(this).parent().parent().remove();
+            });
+    </script>
 }

@@ -49,7 +49,7 @@ namespace SchoolApp
                         "~/Content/themes/base/jquery.ui.theme.css"));
             bundles.Add(new StyleBundle("~/Content/font-awesome").Include("~/Content/font-awesome*"));
 
-            bundles.Add(new StyleBundle("~/Content/fullcalendar").Include("~/Content/fullcalendar*"));
+            bundles.Add(new StyleBundle("~/Content/fullcalendar").Include("~/Content/fullcalendar.css"));
             bundles.Add(new StyleBundle("~/Content/datatables").Include("~/content/datatables.bootstrap.css"));
         }
     }

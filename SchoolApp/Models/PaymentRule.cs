@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-
+using System.Xml.Linq;
 namespace SchoolApp.Models
 {
     public class PaymentRule
@@ -12,6 +12,29 @@ namespace SchoolApp.Models
         public int PaymentRuleId { get; set; }
 
         public string Rule { get; set; }
+
+        /// <summary>
+        /// Used as an intermediate column for Rule.
+        /// </summary>
+        [NotMapped]
+        public XElement xRule
+        {
+            get
+            {
+                try
+                {
+                    return XElement.Parse(Rule);
+                }
+                catch
+                {
+                    return new XElement("Root");
+                }
+            }
+            set
+            {
+                Rule = value.ToString();
+            }
+        }
 
         [DataType(DataType.Date)]
         public DateTime EffectiveDate { get; set; }
