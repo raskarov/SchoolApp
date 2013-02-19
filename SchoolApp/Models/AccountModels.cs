@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Globalization;
-using System.Web.Security;
-using SchoolApp.Models;
 
 namespace SchoolApp.Models
 {
@@ -15,16 +10,16 @@ namespace SchoolApp.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-       
+
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name="First Name")]
+        [Display(Name = "First Name")]
         [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string FirstName { get; set; }
-        
+
         [Required]
-        [Display(Name="Last Name")]
+        [Display(Name = "Last Name")]
         [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string LastName { get; set; }
 
@@ -35,9 +30,9 @@ namespace SchoolApp.Models
         public string Address { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression("([1-9][0-9]*)",ErrorMessage="Invalid phone format")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Invalid phone format")]
         public string Phone { get; set; }
-      
+
         public ICollection<Group> Groups { get; set; }
 
         public string FullName
@@ -95,6 +90,16 @@ namespace SchoolApp.Models
     public class RegisterModel
     {
         [Required]
+        [Display(Name = "First Name")]
+        [StringLength(50, ErrorMessage = "Must be under 50 characters")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        [StringLength(50, ErrorMessage = "Must be under 50 characters")]
+        public string LastName { get; set; }
+
+        [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
@@ -108,6 +113,11 @@ namespace SchoolApp.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        [StringLength(50, ErrorMessage = "Must be under 50 characters")]
+        public string Email { get; set; }
     }
 
     public class ExternalLogin

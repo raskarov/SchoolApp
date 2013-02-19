@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
-using WebMatrix.WebData;
+using SchoolApp.DAL;
 using SchoolApp.Filters;
 using SchoolApp.Models;
-using SchoolApp.DAL;
+using WebMatrix.WebData;
 namespace SchoolApp.Controllers
 {
     [Authorize]
@@ -79,7 +78,7 @@ namespace SchoolApp.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email });
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
