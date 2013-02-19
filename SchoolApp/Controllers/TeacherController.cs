@@ -20,8 +20,7 @@ namespace SchoolApp.Controllers
 
         public ActionResult Index()
         {
-            var AllTeachers = Roles.GetUsersInRole("Teacher");
-            return View(db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)));
+            return View(db.Teachers.ToList());
         }
 
         //

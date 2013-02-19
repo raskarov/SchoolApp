@@ -85,30 +85,22 @@ namespace SchoolApp.Controllers
         private GroupCreateEditViewModel GetGroupEditRecords(int id)
         {
             Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
-            var AllStudents = Roles.GetUsersInRole("Student");
             var GroupStudents = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student")).Select(x => x.UserId);
-            var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
-            var AllTeachers = Roles.GetUsersInRole("Teacher");
             var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.UserId);
-            var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
             var model = new GroupCreateEditViewModel
             {
-                Students = new MultiSelectList(FilteredStudents, "UserId", "FullName", GroupStudents),
-                Teachers = new MultiSelectList(FilteredTeachers, "UserId", "FullName", GroupTeachers),
+                Students = new MultiSelectList(db.Students.ToList(), "UserId", "FullName", GroupStudents),
+                Teachers = new MultiSelectList(db.Teachers.ToList(), "UserId", "FullName", GroupTeachers),
                 Group = group
             };
             return model;
         }
         private GroupCreateEditViewModel GetGroupCreateRecords()
         {
-            var AllStudents = Roles.GetUsersInRole("Student");
-            var FilteredStudents = db.UserProfiles.Where(x => AllStudents.Contains(x.UserName)).ToList();
-            var AllTeachers = Roles.GetUsersInRole("Teacher");
-            var FilteredTeachers = db.UserProfiles.Where(x => AllTeachers.Contains(x.UserName)).ToList();
             var model = new GroupCreateEditViewModel
             {
-                Students = new MultiSelectList(FilteredStudents, "UserId", "FullName"),
-                Teachers = new MultiSelectList(FilteredTeachers, "UserId", "FullName")
+                Students = new MultiSelectList(db.Students.ToList(), "UserId", "FullName"),
+                Teachers = new MultiSelectList(db.Teachers.ToList(), "UserId", "FullName")
             };
             return model;
         }

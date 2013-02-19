@@ -209,7 +209,7 @@
     <Compile Include="Controllers\ClassroomController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\DAL\SchoolContext.cs" />
+    <Compile Include="DAL\SchoolContext.cs" />
     <Compile Include="Extensions\Helpers.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
