@@ -1,10 +1,10 @@
-﻿@model IEnumerable<SchoolApp.Models.GroupInstance>
+﻿@model SchoolApp.ViewModels.GroupInstanceViewModel
 
 @{
     ViewBag.Title = "Schedule";
 }
 <div class="well">
-
+    filter by teacher: @Html.DropDownList("UserId", Model.TeachersList)
     <div id="calendar"></div>
     <div id="dialogContainer"></div>
 </div>
@@ -29,7 +29,7 @@
                 right: 'agendaWeek,agendaDay'
             },
             events: function (start, end, callback) {
-                $.getJSON("@Url.Action("GetEvents")", function (locationsArray) {
+                $.getJSON("@Url.Action("GetEvents")/" + $("#UserId").val(), function (locationsArray) {
                     var result = $(locationsArray).map(function () {
                         return {
                             title: this.title,
@@ -209,8 +209,9 @@
             $('#dialogContainer').dialog("close");
         }
         else {
-
         }
-
     }
+    $("#UserId").change(function () {
+        $("#calendar").fullCalendar('refetchEvents');
+    });
 </script>

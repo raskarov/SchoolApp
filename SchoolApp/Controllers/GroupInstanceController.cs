@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using SchoolApp.Models;
 using SchoolApp.DAL;
+using SchoolApp.ViewModels;
 
 namespace SchoolApp.Controllers
 {
@@ -19,8 +20,16 @@ namespace SchoolApp.Controllers
 
         public ActionResult Index()
         {
-            var groupinstances = db.GroupInstances.Include(g => g.Group).Include(g => g.Classroom);
-            return View(groupinstances.ToList());
+            GroupInstanceViewModel model = new GroupInstanceViewModel();
+            model.GroupInstances  = db.GroupInstances.Include(g => g.Group).Include(g => g.Classroom).ToList();
+            List<SelectListItem> sli = new List<SelectListItem>();
+            sli.Add(new SelectListItem { Text = "All", Value = "0", Selected = true });
+            foreach (var teacher in db.Teachers.ToList())
+            {
+                sli.Add(new SelectListItem { Text = teacher.FullName, Value = teacher.UserId.ToString() });
+            }
+            model.TeachersList = sli;
+            return View(model);
         }
 
         //
@@ -125,10 +134,20 @@ namespace SchoolApp.Controllers
         /// Get scheduled events into calendar
         /// </summary>
         /// <returns>Formatted Json events</returns>
-        public ActionResult GetEvents()
+        public JsonResult GetEvents(int id = 0)
         {
-            var groupInstances = db.GroupInstances.ToList();
-
+            IEnumerable<GroupInstance> groupInstances;
+            if (id > 0)
+            {
+                groupInstances = db.GroupInstances.Include(e=>e.Group)
+                                                  .Include(e=>e.Group.Users)
+                                                  .ToList()
+                                                  .Where(x => x.Group.Users.Where(y => y.UserId == id).Any());
+            }
+            else
+            {
+                groupInstances = db.GroupInstances.ToList();
+            }
             var events = groupInstances.Select(x => new
             {
                 title = "Test",

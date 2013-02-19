@@ -18,7 +18,9 @@
     @Styles.Render("~/Content/font-awesome")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/Bundles/datatables")
+    @Scripts.Render("~/bundles/multi-select")
     @Styles.Render("~/Content/datatables")
+    @Styles.Render("~/Content/multi-select")
     @Styles.Render("~/Content/themes/base/css")
     @RenderSection("scripts", required: false)
     @RenderSection("styles", required:false)
@@ -96,7 +98,7 @@
                     {
                     foreach(var stat in ViewBag.Stats)
                     {
-                        <p class="stat"><span class="number">@stat.Item1</span>@stat.Item2</p>
+                        <p class="stat"><span class="number">@stat.Value</span>@stat.Label</p>
                     }
                     }
                 }

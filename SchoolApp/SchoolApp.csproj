@@ -202,6 +202,7 @@
     <Compile Include="Models\PaymentRule.cs" />
     <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
+    <Compile Include="ViewModels\GroupInstanceViewModel.cs" />
     <Compile Include="ViewModels\PaymentProfileEditViewModel.cs" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\datatables.bootstrap.css" />

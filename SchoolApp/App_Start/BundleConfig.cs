@@ -27,6 +27,8 @@ namespace SchoolApp
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
                     "~/scripts/jquery.dataTables*",
                     "~/scripts/datatables.bootstrap*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/multi-select").Include("~/scripts/jquery.multi-select*"));
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -48,7 +50,7 @@ namespace SchoolApp
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
             bundles.Add(new StyleBundle("~/Content/font-awesome").Include("~/Content/font-awesome*"));
-
+            bundles.Add(new StyleBundle("~/Content/multi-select").Include("~/Content/multi-select*"));
             bundles.Add(new StyleBundle("~/Content/fullcalendar").Include("~/Content/fullcalendar.css"));
             bundles.Add(new StyleBundle("~/Content/datatables").Include("~/content/datatables.bootstrap.css"));
         }
