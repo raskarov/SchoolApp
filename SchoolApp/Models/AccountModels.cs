@@ -12,7 +12,6 @@ namespace SchoolApp.Models
         public int UserId { get; set; }
 
         public string UserName { get; set; }
-
         [Required]
         [Display(Name = "First Name")]
         [StringLength(50, ErrorMessage = "Must be under 50 characters")]

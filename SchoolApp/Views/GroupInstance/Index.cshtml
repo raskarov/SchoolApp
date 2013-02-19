@@ -125,8 +125,28 @@
             },
             eventRender: function (event, element) {
                 var eventId = event.GroupInstanceId;
-                element.find(".fc-event-time").append($("<a href='#' data-event-id='" + eventId + "' rel='tooltip' class='removeEvent' data-toggle='tooltip' title='Remove event'></a>")
-                .html("<i class='icon-remove'></i>"));
+                //Add remove & attendance icon
+                element.find(".fc-event-time")
+
+                .append($("<div class='scheduleToolbar'>\
+                    <a href='#' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon takeAttendance' data-toggle='tooltip' title='take attendance'>\
+                    <i class='icon-list-alt'></i> \
+                    </a> \
+                    <a href='#' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon removeEvent' data-toggle='tooltip' title='Remove event'>\
+                    <i class='icon-remove'></i>\
+                    </a>\
+                    </div>\
+                    "));
+               
+                $.get("@Url.Action("GroupInfo","showDialogEditRemove")", function (viewContent) {
+                    element.popover({
+                        title: 'Event details',
+                        placement: 'bottom',
+                        content: viewContent,
+                        trigger: 'hover',
+                    });
+                });
+               
             }
         });
         $("#dialogContainer").dialog({
@@ -213,5 +233,12 @@
     }
     $("#UserId").change(function () {
         $("#calendar").fullCalendar('refetchEvents');
+    });
+    $('*[data-ajaxload]').bind('hover', function () {
+        var e = $(this);
+        e.unbind('hover');
+        $.get(e.data('poload'), function (d) {
+            e.popover({ content: d }).popover('show');
+        });
     });
 </script>

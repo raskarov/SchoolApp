@@ -3,7 +3,7 @@ namespace SchoolApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialSchema : DbMigration
+    public partial class InitialMigration : DbMigration
     {
         public override void Up()
         {

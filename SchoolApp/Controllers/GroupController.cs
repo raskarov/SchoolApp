@@ -22,13 +22,18 @@ namespace SchoolApp.Controllers
         public ActionResult Index()
         {
             var gvm = new List<GroupIndexViewModel>();
-            foreach (var group in db.Groups.Include("Users"))
+            foreach (var group in db.Groups.Include(e=>e.Users))
             {
                 gvm.Add(new GroupIndexViewModel(group));
             }
             return View(gvm);
         }
-
+        //
+        //Get: /Group/GroupInfo
+        public ActionResult GroupInfo()
+        {
+            return PartialView();
+        }
         //
         // GET: /Group/Details/5
 
@@ -84,7 +89,7 @@ namespace SchoolApp.Controllers
 
         private GroupCreateEditViewModel GetGroupEditRecords(int id)
         {
-            Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
+            Group group = db.Groups.Include(e=>e.Users).Where(x => x.GroupId == id).FirstOrDefault();
             var GroupStudents = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student")).Select(x => x.UserId);
             var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.UserId);
             var model = new GroupCreateEditViewModel
@@ -122,7 +127,7 @@ namespace SchoolApp.Controllers
 
         private void UpdateUsers(GroupCreateEditViewModel groupView)
         {
-            var group = db.Groups.Include("Users").Where(x => x.GroupId == groupView.Group.GroupId).FirstOrDefault();
+            var group = db.Groups.Include(e=>e.Users).Where(x => x.GroupId == groupView.Group.GroupId).FirstOrDefault();
             if (groupView.SelectedTeacherIds == null)
             {
                 groupView.SelectedTeacherIds = new int[0];

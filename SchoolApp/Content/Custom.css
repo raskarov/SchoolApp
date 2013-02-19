@@ -11,11 +11,15 @@ font-weight: bold;
 {
     opacity:0.4;
 }
-.removeEvent
+.scheduleToolbar
+{
+    float: right;
+}
+.toolbarIcon
 {
     color:white;
-    float: right;
-padding-right: 10px;
+    padding-right:5px;
+    padding-left:5px;
 }
 .ruleStudents
 {
@@ -31,4 +35,10 @@ padding-right: 10px;
 #updatePaymentRuleForm
 {
     text-align:center;
+}
+.fc-event-skin
+{
+    border-color: #1393c0 !important;    
+	background-color: #1393c0 !important; 
+	color: #fff;           
 }

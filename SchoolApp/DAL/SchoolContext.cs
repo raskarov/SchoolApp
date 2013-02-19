@@ -11,6 +11,14 @@ namespace SchoolApp.DAL
 
         public DbSet<UserProfile> UserProfiles { get; set; }
 
+        public DbSet<Group> Groups { get; set; }
+
+        public DbSet<PaymentProfile> PaymentProfiles { get; set; }
+
+        public DbSet<PaymentRule> PaymentRules { get; set; }
+
+        public DbSet<GroupInstance> GroupInstances { get; set; }
+
         public IQueryable<UserProfile> Students
         {
             get
@@ -27,12 +35,6 @@ namespace SchoolApp.DAL
                 return UserProfiles.Where(x=>AllTeachers.Contains(x.UserName));
             }
         }
-        public DbSet<Group> Groups { get; set; }
-
-        public DbSet<PaymentProfile> PaymentProfiles { get; set; }
-
-        public DbSet<PaymentRule> PaymentRules { get; set; }
-
-        public DbSet<GroupInstance> GroupInstances { get; set; }
+      
     }
 }

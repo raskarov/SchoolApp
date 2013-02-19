@@ -184,17 +184,25 @@
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201302150024039_Initial.cs" />
-    <Compile Include="Migrations\201302150024039_Initial.Designer.cs">
-      <DependentUpon>201302150024039_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302150028148_InitialSchema.cs" />
-    <Compile Include="Migrations\201302150028148_InitialSchema.Designer.cs">
-      <DependentUpon>201302150028148_InitialSchema.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201302150125539_NonRequiredUsername.cs" />
     <Compile Include="Migrations\201302150125539_NonRequiredUsername.Designer.cs">
       <DependentUpon>201302150125539_NonRequiredUsername.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302192249304_nullableFirstName.cs" />
+    <Compile Include="Migrations\201302192249304_nullableFirstName.Designer.cs">
+      <DependentUpon>201302192249304_nullableFirstName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302192250034_notnullableFirstName.cs" />
+    <Compile Include="Migrations\201302192250034_notnullableFirstName.Designer.cs">
+      <DependentUpon>201302192250034_notnullableFirstName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302192255413_InitialMigration.cs" />
+    <Compile Include="Migrations\201302192255413_InitialMigration.Designer.cs">
+      <DependentUpon>201302192255413_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302192305049_requiredClassroomName.cs" />
+    <Compile Include="Migrations\201302192305049_requiredClassroomName.Designer.cs">
+      <DependentUpon>201302192305049_requiredClassroomName.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\GroupInstance.cs" />
@@ -444,6 +452,7 @@
     <Content Include="Views\GroupInstance\Create.cshtml" />
     <Content Include="Views\GroupInstance\Edit.cshtml" />
     <Content Include="Views\GroupInstance\Delete.cshtml" />
+    <Content Include="Views\Group\GroupInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -458,14 +467,20 @@
     <EmbeddedResource Include="Images\201302120311492_GroupIndexViewModel.resx">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302150024039_Initial.resx">
-      <DependentUpon>201302150024039_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302150028148_InitialSchema.resx">
-      <DependentUpon>201302150028148_InitialSchema.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302150125539_NonRequiredUsername.resx">
       <DependentUpon>201302150125539_NonRequiredUsername.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192249304_nullableFirstName.resx">
+      <DependentUpon>201302192249304_nullableFirstName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192250034_notnullableFirstName.resx">
+      <DependentUpon>201302192250034_notnullableFirstName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192255413_InitialMigration.resx">
+      <DependentUpon>201302192255413_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192305049_requiredClassroomName.resx">
+      <DependentUpon>201302192305049_requiredClassroomName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

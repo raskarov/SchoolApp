@@ -5,13 +5,13 @@ namespace SchoolApp.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class nullableFirstName : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(nullableFirstName));
         
         string IMigrationMetadata.Id
         {
-            get { return "201302150024039_Initial"; }
+            get { return "201302192249304_nullableFirstName"; }
         }
         
         string IMigrationMetadata.Source
