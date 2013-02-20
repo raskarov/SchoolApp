@@ -1,0 +1,36 @@
+﻿@model SchoolApp.Models.UserGroupInstance
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>UserGroupInstance</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AttendanceTaken)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AttendanceTaken)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.User.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.User.UserName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GroupInstance.GroupInstanceId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GroupInstance.GroupInstanceId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.UserGroupInstanceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

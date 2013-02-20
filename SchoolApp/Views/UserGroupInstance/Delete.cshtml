@@ -1,0 +1,39 @@
+﻿@model SchoolApp.Models.UserGroupInstance
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>UserGroupInstance</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AttendanceTaken)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AttendanceTaken)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.User.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.User.UserName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GroupInstance.GroupInstanceId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GroupInstance.GroupInstanceId)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

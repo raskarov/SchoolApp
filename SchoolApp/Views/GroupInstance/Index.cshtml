@@ -36,7 +36,9 @@
                             start: this.start,
                             end: this.end,
                             allDay: this.editable,
-                            GroupInstanceId: this.GroupInstanceId
+                            GroupInstanceId: this.GroupInstanceId,
+                            ClassroomId: this.ClassroomId,
+                            GroupId: this.GroupId
                         };
                     }).toArray();
                     callback(result);
@@ -74,54 +76,14 @@
                 formId = "editGroupInstanceForm";
                 showDialogEditRemove("@Url.Action("Edit","GroupInstance")/" + calEvent.GroupInstanceId);
             },
-            drop: function (date, allDay) { // this function is called when something is dropped
-                // retrieve the dropped element's stored Event Object
-                var originalEventObject = $(this).data('eventObject');
-
-                // we need to copy it, so that multiple events don't have a reference to the same object
-                var copiedEventObject = $.extend({}, originalEventObject);
-
-                // assign it the date that was reported
-                copiedEventObject.start = date;
-                copiedEventObject.allDay = allDay;
-
-                // render the event on the calendar
-                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
-                    $(this).remove();
-                }
-
+            eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view)
+            {
+                postEditCalendar(event);
+               
             },
-            eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
-                //Send update to database TODO
-                //$.ajax({
-                //    url: '/GroupInstance/Edit/' + event.GroupInstanceId,
-                //    type: 'POST',
-                //    data: {
-                //        StartDateTime:event.StartDateTime,
-                //        EndDateTime: event.EndDateTime,
-                //        GroupInstanceId: event.GroupInstanceId
-                //    },
-                //    success: function (data) {
-                //        alert(data.success);
-                //    },
-                //    error: function () {
-                //        alert("error");
-                //    }
-                //});
-@*                $.post('@Url.Action("Edit")/' + event.GroupInstanceId,
-                    {
-                        GroupInstanceId: event.GroupInstanceId,
-                        StartDateTime: event.StartDateTime,
-                        EndDateTime: event.EndDateTime
-                    }).
-                    done(function () {
-                    alert('Update success');
-                });*@
+            eventResize: function (event, dayDelta, minuteDelta, revertFunc)
+            {
+                postEditCalendar(event);
             },
             eventRender: function (event, element) {
                 var eventId = event.GroupInstanceId;
@@ -138,14 +100,14 @@
                     </div>\
                     "));
                
-                $.get("@Url.Action("GroupInfo","showDialogEditRemove")", function (viewContent) {
+                @*$.get("@Url.Action("GroupInfo","showDialogEditRemove")", function (viewContent) {
                     element.popover({
                         title: 'Event details',
                         placement: 'bottom',
                         content: viewContent,
                         trigger: 'hover',
                     });
-                });
+                });*@
                
             }
         });
@@ -230,6 +192,29 @@
         }
         else {
         }
+    }
+
+    function postEditCalendar(event) {
+        $.ajax({
+            url: '@Url.Action("Edit")',
+            type: "POST",
+            data: {
+                GroupInstanceId: event.GroupInstanceId,
+                StartDateTime: $.fullCalendar.formatDate(event.start, "yyyy/MM/dd hh:mm:ss TT"),
+                EndDateTime: $.fullCalendar.formatDate(event.end, "yyyy/MM/dd hh:mm:ss TT"),
+                GroupId: event.GroupId,
+                ClassroomId: event.ClassroomId
+                },
+            success: function () {
+                noty({
+                    text: "Saved successfully",
+                    type: "success"
+                });
+            },
+            error: function () {
+                noty({ text: "Update failed", type: "error" });
+            }
+        });
     }
     $("#UserId").change(function () {
         $("#calendar").fullCalendar('refetchEvents');

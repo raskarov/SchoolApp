@@ -104,7 +104,16 @@ namespace SchoolApp.Controllers
             ViewBag.ClassroomId = new SelectList(db.Classrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
             return Content("Review your form");
         }
-
+        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditFromResize(GroupInstance groupInstance)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+            return Json(true);
+        }
         //
         // GET: /GroupInstance/Delete/5
 
@@ -154,7 +163,9 @@ namespace SchoolApp.Controllers
                 start = x.StartDateTime.ToString("s"),
                 end = x.EndDateTime.ToString("s"),
                 editable = false,
-                GroupInstanceId = x.GroupInstanceId
+                GroupInstanceId = x.GroupInstanceId,
+                ClassroomId = x.ClassroomId,
+                GroupId = x.GroupId
             });
 
             return Json(events, JsonRequestBehavior.AllowGet);

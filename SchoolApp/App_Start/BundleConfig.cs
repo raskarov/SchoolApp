@@ -11,7 +11,7 @@ namespace SchoolApp
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-migrate-{version}.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/noty").Include("~/Scripts/jquery.noty*"));
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 

@@ -17,6 +17,8 @@ namespace SchoolApp.DAL
 
         public DbSet<PaymentRule> PaymentRules { get; set; }
 
+        public DbSet<UserGroupInstance> UserGroupInstances { get; set; }
+
         public DbSet<GroupInstance> GroupInstances { get; set; }
 
         public IQueryable<UserProfile> Students

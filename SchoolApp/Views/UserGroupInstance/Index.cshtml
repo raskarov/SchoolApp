@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SchoolApp.Models.UserGroupInstance>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
+</p>
+<div class="well">
+<table class="table table-striped datatable">
+    <thead>
+        <th>
+            @Html.DisplayNameFor(model => model.AttendanceTaken)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GroupInstance.GroupInstanceId)
+        </th>
+        <th></th>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AttendanceTaken)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GroupInstance.GroupInstanceId)
+        </td>
+        <td>
+			<a href="@Url.Action("Edit", new { id=item.UserGroupInstanceID })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
+            <a href="@Url.Action("Details", new { id=item.UserGroupInstanceID })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
+            <a href="@Url.Action("Delete", new { id=item.UserGroupInstanceID })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+        </td>
+    </tr>
+}
+
+</table>
+</div>

@@ -180,6 +180,7 @@
     <Compile Include="Controllers\PaymentRuleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
+    <Compile Include="Controllers\UserGroupInstanceController.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
@@ -204,6 +205,23 @@
     <Compile Include="Migrations\201302192305049_requiredClassroomName.Designer.cs">
       <DependentUpon>201302192305049_requiredClassroomName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302192321349_addUserGroupInstance.cs" />
+    <Compile Include="Migrations\201302192321349_addUserGroupInstance.Designer.cs">
+      <DependentUpon>201302192321349_addUserGroupInstance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302192323553_UserGroupInstance-AddForeignKeys.cs" />
+    <Compile Include="Migrations\201302192323553_UserGroupInstance-AddForeignKeys.Designer.cs">
+      <DependentUpon>201302192323553_UserGroupInstance-AddForeignKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302192335517_UserGroupInstance-UseEnum.cs" />
+    <Compile Include="Migrations\201302192335517_UserGroupInstance-UseEnum.Designer.cs">
+      <DependentUpon>201302192335517_UserGroupInstance-UseEnum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302192353463_UserGroupInstance-FixGroup.cs" />
+    <Compile Include="Migrations\201302192353463_UserGroupInstance-FixGroup.Designer.cs">
+      <DependentUpon>201302192353463_UserGroupInstance-FixGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserGroupInstance.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\GroupInstance.cs" />
     <Compile Include="Models\PaymentProfile.cs" />
@@ -366,6 +384,9 @@
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.multi-select.js" />
+    <Content Include="Scripts\jquery.noty.js" />
+    <Content Include="Scripts\jquery.noty.layout.topRight.js" />
+    <Content Include="Scripts\jquery.noty.themes.default.js" />
     <Content Include="Scripts\jquery.quicksearch.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -453,6 +474,11 @@
     <Content Include="Views\GroupInstance\Edit.cshtml" />
     <Content Include="Views\GroupInstance\Delete.cshtml" />
     <Content Include="Views\Group\GroupInfo.cshtml" />
+    <Content Include="Views\UserGroupInstance\Index.cshtml" />
+    <Content Include="Views\UserGroupInstance\Details.cshtml" />
+    <Content Include="Views\UserGroupInstance\Create.cshtml" />
+    <Content Include="Views\UserGroupInstance\Edit.cshtml" />
+    <Content Include="Views\UserGroupInstance\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -481,6 +507,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302192305049_requiredClassroomName.resx">
       <DependentUpon>201302192305049_requiredClassroomName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192321349_addUserGroupInstance.resx">
+      <DependentUpon>201302192321349_addUserGroupInstance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192323553_UserGroupInstance-AddForeignKeys.resx">
+      <DependentUpon>201302192323553_UserGroupInstance-AddForeignKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192335517_UserGroupInstance-UseEnum.resx">
+      <DependentUpon>201302192335517_UserGroupInstance-UseEnum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302192353463_UserGroupInstance-FixGroup.resx">
+      <DependentUpon>201302192353463_UserGroupInstance-FixGroup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
