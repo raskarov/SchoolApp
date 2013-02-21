@@ -7,7 +7,7 @@ using SchoolApp.DAL;
 using SchoolApp.Models;
 using SchoolApp.ViewModels;
 using SchoolApp.Helpers;
-
+using System.Data.Entity;
 namespace SchoolApp.Controllers
 {
     public class GroupController : Controller
@@ -87,15 +87,9 @@ namespace SchoolApp.Controllers
 
         private GroupCreateEditViewModel GetGroupEditRecords(int id)
         {
-<<<<<<< HEAD
             Group group = db.Groups.Include(e=>e.Users).Where(x => x.GroupId == id).FirstOrDefault();
-            var GroupStudents = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student")).Select(x => x.UserId);
-            var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.UserId);
-=======
-            Group group = db.Groups.Include("Users").Where(x => x.GroupId == id).FirstOrDefault();
             var GroupStudents = group.Users.Where(x => Roles.IsUserInRole(x.UserName, CoreHelper.STUDENT_ROLE)).Select(x => x.UserId);
             var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName, CoreHelper.TEACHER_ROLE)).Select(x => x.UserId);
->>>>>>> Added a Helper class with const Roles
             var model = new GroupCreateEditViewModel
             {
                 Students = new MultiSelectList(db.Students.ToList(), "UserId", "FullName", GroupStudents),
