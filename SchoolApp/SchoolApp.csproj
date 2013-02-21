@@ -181,6 +181,7 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\UserGroupInstanceController.cs" />
+    <Compile Include="Helpers\CoreHelper.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
@@ -425,7 +426,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Classroom\Index.cshtml" />
     <Content Include="Views\Classroom\Details.cshtml" />
     <Content Include="Views\Classroom\Create.cshtml" />

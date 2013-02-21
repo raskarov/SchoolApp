@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SchoolApp.Models;
-using SchoolApp.DAL;
 using System.Web.Security;
+using SchoolApp.DAL;
+using SchoolApp.Models;
+using SchoolApp.Helpers;
 
 namespace SchoolApp.Controllers
 {
@@ -54,7 +51,7 @@ namespace SchoolApp.Controllers
             {
                 db.UserProfiles.Add(userprofile);
                 db.SaveChanges();
-                Roles.AddUserToRole(userprofile.UserName, "Teacher");
+                Roles.AddUserToRole(userprofile.UserName, CoreHelper.TEACHER_ROLE);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

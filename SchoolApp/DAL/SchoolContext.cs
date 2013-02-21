@@ -1,11 +1,12 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Security;
+using SchoolApp.Helpers;
 using SchoolApp.Models;
 
 namespace SchoolApp.DAL
 {
-    public class SchoolContext :DbContext
+    public class SchoolContext : DbContext
     {
         public DbSet<Classroom> Classrooms { get; set; }
 
@@ -25,7 +26,7 @@ namespace SchoolApp.DAL
         {
             get
             {
-                var AllStudents = Roles.GetUsersInRole("Student");
+                var AllStudents = Roles.GetUsersInRole(CoreHelper.STUDENT_ROLE);
                 return UserProfiles.Where(x => AllStudents.Contains(x.UserName));
             }
         }
@@ -33,8 +34,8 @@ namespace SchoolApp.DAL
         {
             get
             {
-                var AllTeachers = Roles.GetUsersInRole("Teacher");
-                return UserProfiles.Where(x=>AllTeachers.Contains(x.UserName));
+                var AllTeachers = Roles.GetUsersInRole(CoreHelper.TEACHER_ROLE);
+                return UserProfiles.Where(x => AllTeachers.Contains(x.UserName));
             }
         }
       

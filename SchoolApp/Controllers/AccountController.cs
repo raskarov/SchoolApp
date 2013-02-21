@@ -8,8 +8,10 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using SchoolApp.DAL;
 using SchoolApp.Filters;
+using SchoolApp.Helpers;
 using SchoolApp.Models;
 using WebMatrix.WebData;
+
 namespace SchoolApp.Controllers
 {
     [Authorize]
@@ -78,8 +80,17 @@ namespace SchoolApp.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email });
-                    WebSecurity.Login(model.UserName, model.Password);
+                    if (!WebSecurity.UserExists(model.UserName))
+                    {
+                        //Create new user
+                        WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email });
+
+                        //And assign him to the default role
+                        Roles.AddUserToRole(model.UserName, CoreHelper.REGISTERED_USER_ROLE);
+
+                        //Loging the new user
+                        WebSecurity.Login(model.UserName, model.Password);
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SchoolApp.Models;
 using SchoolApp.DAL;
-using SchoolApp.Filters;
+using SchoolApp.Helpers;
+using SchoolApp.Models;
 
 namespace SchoolApp.Controllers
 {
@@ -38,7 +34,7 @@ namespace SchoolApp.Controllers
 
         //
         // GET: /Classroom/Create
-        [Authorize(Roles="Administrator")]
+        [Authorize(Roles = CoreHelper.ADMIN_ROLE)]
         public ActionResult Create()
         {
             return View();

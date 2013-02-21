@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SchoolApp.Models;
 using SchoolApp.DAL;
+using SchoolApp.Models;
 using SchoolApp.ViewModels;
 
 namespace SchoolApp.Controllers
@@ -21,7 +20,7 @@ namespace SchoolApp.Controllers
         public ActionResult Index()
         {
             GroupInstanceViewModel model = new GroupInstanceViewModel();
-            model.GroupInstances  = db.GroupInstances.Include(g => g.Group).Include(g => g.Classroom).ToList();
+            model.GroupInstances = db.GroupInstances.Include(g => g.Group).Include(g => g.Classroom).ToList();
             List<SelectListItem> sli = new List<SelectListItem>();
             sli.Add(new SelectListItem { Text = "All", Value = "0", Selected = true });
             foreach (var teacher in db.Teachers.ToList())
@@ -148,8 +147,8 @@ namespace SchoolApp.Controllers
             IEnumerable<GroupInstance> groupInstances;
             if (id > 0)
             {
-                groupInstances = db.GroupInstances.Include(e=>e.Group)
-                                                  .Include(e=>e.Group.Users)
+                groupInstances = db.GroupInstances.Include(e => e.Group)
+                                                  .Include(e => e.Group.Users)
                                                   .ToList()
                                                   .Where(x => x.Group.Users.Where(y => y.UserId == id).Any());
             }
