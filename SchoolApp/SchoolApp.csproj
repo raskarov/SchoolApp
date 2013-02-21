@@ -185,42 +185,6 @@
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201302150125539_NonRequiredUsername.cs" />
-    <Compile Include="Migrations\201302150125539_NonRequiredUsername.Designer.cs">
-      <DependentUpon>201302150125539_NonRequiredUsername.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192249304_nullableFirstName.cs" />
-    <Compile Include="Migrations\201302192249304_nullableFirstName.Designer.cs">
-      <DependentUpon>201302192249304_nullableFirstName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192250034_notnullableFirstName.cs" />
-    <Compile Include="Migrations\201302192250034_notnullableFirstName.Designer.cs">
-      <DependentUpon>201302192250034_notnullableFirstName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192255413_InitialMigration.cs" />
-    <Compile Include="Migrations\201302192255413_InitialMigration.Designer.cs">
-      <DependentUpon>201302192255413_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192305049_requiredClassroomName.cs" />
-    <Compile Include="Migrations\201302192305049_requiredClassroomName.Designer.cs">
-      <DependentUpon>201302192305049_requiredClassroomName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192321349_addUserGroupInstance.cs" />
-    <Compile Include="Migrations\201302192321349_addUserGroupInstance.Designer.cs">
-      <DependentUpon>201302192321349_addUserGroupInstance.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192323553_UserGroupInstance-AddForeignKeys.cs" />
-    <Compile Include="Migrations\201302192323553_UserGroupInstance-AddForeignKeys.Designer.cs">
-      <DependentUpon>201302192323553_UserGroupInstance-AddForeignKeys.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192335517_UserGroupInstance-UseEnum.cs" />
-    <Compile Include="Migrations\201302192335517_UserGroupInstance-UseEnum.Designer.cs">
-      <DependentUpon>201302192335517_UserGroupInstance-UseEnum.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302192353463_UserGroupInstance-FixGroup.cs" />
-    <Compile Include="Migrations\201302192353463_UserGroupInstance-FixGroup.Designer.cs">
-      <DependentUpon>201302192353463_UserGroupInstance-FixGroup.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\UserGroupInstance.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\GroupInstance.cs" />
@@ -494,33 +458,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\201302120311492_GroupIndexViewModel.resx">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302150125539_NonRequiredUsername.resx">
-      <DependentUpon>201302150125539_NonRequiredUsername.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192249304_nullableFirstName.resx">
-      <DependentUpon>201302192249304_nullableFirstName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192250034_notnullableFirstName.resx">
-      <DependentUpon>201302192250034_notnullableFirstName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192255413_InitialMigration.resx">
-      <DependentUpon>201302192255413_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192305049_requiredClassroomName.resx">
-      <DependentUpon>201302192305049_requiredClassroomName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192321349_addUserGroupInstance.resx">
-      <DependentUpon>201302192321349_addUserGroupInstance.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192323553_UserGroupInstance-AddForeignKeys.resx">
-      <DependentUpon>201302192323553_UserGroupInstance-AddForeignKeys.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192335517_UserGroupInstance-UseEnum.resx">
-      <DependentUpon>201302192335517_UserGroupInstance-UseEnum.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302192353463_UserGroupInstance-FixGroup.resx">
-      <DependentUpon>201302192353463_UserGroupInstance-FixGroup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
