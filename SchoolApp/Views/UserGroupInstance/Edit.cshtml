@@ -1,46 +1,55 @@
-﻿@model SchoolApp.Models.UserGroupInstance
+﻿@model IEnumerable<SchoolApp.Models.UserGroupInstance>
 
 @{
     ViewBag.Title = "Edit";
 }
 
+<table id="attendanceTable" class="table table-striped datatable">
+    <thead>
+        <th>
+            Student
+        </th>
+        <th>
+            Attendance
+        </th>
+        <th></th>
+    </thead>
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-
-        @Html.HiddenFor(model => model.UserGroupInstanceID)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AttendanceTaken)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.AttendanceTaken)
-            @Html.ValidationMessageFor(model => model.AttendanceTaken)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserId, "User")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("UserId", String.Empty)
-            @Html.ValidationMessageFor(model => model.UserId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.GroupInstanceId, "GroupInstance")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("GroupInstanceId", String.Empty)
-            @Html.ValidationMessageFor(model => model.GroupInstanceId)
-        </div>
-
-        <p>
-            <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
-            <a href="@Url.Action("Index")" class="btn">Back to list</a>
-        </p>
+@foreach (var item in Model) {
+    <tr class="attendanceRow">
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FullName)
+        </td>
+        <td>
+            <div class="btn-group" data-UserGroupInstance="@item.UserGroupInstanceID">
+              <button class="btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Present){<text>active btn-success</text>}" value="0">Present</button>
+              <button class="btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Absent){<text>active btn-success</text>}" value="1">Absent</button>
+              <button class="btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.AbsentWithExcuse){<text>active btn-success</text>}" value="2">Absent with excuse</button>
+            </div>
+        </td>
+        <td>
+            <a href="@Url.Action("Delete", new { id=item.UserGroupInstanceID })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+        </td>
+    </tr>
 }
-
-
+    </table>
+<button id="btnSave" class="btn btn-primary" value="Save">Save attendance</button>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script type="text/javascript">
+    $(document).on("click", ".btn", function () {
+        $(this).parent().find(".btn").removeClass("active btn-success");
+        $(this).addClass("active btn-success");
+    });
+    $("#btnSave").click(function () {
+        var groups = $(".attendanceRow").find(".btn.active");
+        var dict = new Object();
+        groups.each(function () {
+            dict[$(this).parent().data("usergroupinstance")] = $(this).val();
+        })
+        $.post('@Url.Action("Save")', {
+            groups:dict
+        })
+    });
+</script>

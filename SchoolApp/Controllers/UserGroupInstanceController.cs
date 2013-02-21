@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using SchoolApp.Models;
 using SchoolApp.DAL;
+using System.Web.Security;
 
 namespace SchoolApp.Controllers
 {
@@ -69,14 +70,25 @@ namespace SchoolApp.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            UserGroupInstance usergroupinstance = db.UserGroupInstances.Find(id);
-            if (usergroupinstance == null)
+            GroupInstance groupInstance = db.GroupInstances.Include(x => x.Group)
+                                            .Include(x => x.Group.Users)
+                                            .Where(x => x.GroupInstanceId == id).FirstOrDefault();
+            if (groupInstance != null)
             {
-                return HttpNotFound();
+                var studentsInInstance = groupInstance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student"));
+                var UserGroupInstances = db.UserGroupInstances.Include(x => x.GroupInstance).Include(x => x.User).ToList();
+                foreach (var student in studentsInInstance.Except(UserGroupInstances.Select(x => x.User)))
+                {
+                    var newUserGroupInstance = new UserGroupInstance();
+                    newUserGroupInstance.User = student;
+                    newUserGroupInstance.AttendanceTaken = DateTime.Now;
+                    newUserGroupInstance.Present = AttendanceType.Present;
+                    newUserGroupInstance.GroupInstance = groupInstance;
+                    db.UserGroupInstances.Add(newUserGroupInstance);
+                }
+                db.SaveChanges();
             }
-            ViewBag.UserId = new SelectList(db.UserProfiles, "UserId", "UserName", usergroupinstance.UserId);
-            ViewBag.GroupInstanceId = new SelectList(db.GroupInstances, "GroupInstanceId", "GroupInstanceId", usergroupinstance.GroupInstanceId);
-            return View(usergroupinstance);
+            return View(db.UserGroupInstances.Where(x=>x.GroupInstanceId==id).ToList());
         }
 
         //
@@ -121,6 +133,17 @@ namespace SchoolApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult Save(Dictionary<string,string> groups)
+        {
+
+            var groupInstances = db.UserGroupInstances.Where(x => groups.Keys.Contains(x.UserGroupInstanceID.ToString()));
+            foreach (KeyValuePair<string,string> kvp in groups)
+            {
+              
+            }
+            return Content(Boolean.TrueString);
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
