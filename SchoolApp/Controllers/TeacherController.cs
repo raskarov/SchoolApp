@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using SchoolApp.DAL;
 using SchoolApp.Models;
-using SchoolApp.Helpers;
+using SchoolApp.Extensions;
 
 namespace SchoolApp.Controllers
 {
@@ -51,7 +51,7 @@ namespace SchoolApp.Controllers
             {
                 db.UserProfiles.Add(userprofile);
                 db.SaveChanges();
-                Roles.AddUserToRole(userprofile.UserName, CoreHelper.TEACHER_ROLE);
+                Roles.AddUserToRole(userprofile.UserName, Helpers.TEACHER_ROLE);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

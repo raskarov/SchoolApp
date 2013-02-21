@@ -7,6 +7,12 @@ namespace SchoolApp.Extensions
 {
     public static class Helpers
     {
+        //Role constants
+        public const string ADMIN_ROLE = "Administrator";
+        public const string TEACHER_ROLE = "Teacher";
+        public const string STUDENT_ROLE = "Student";
+        public const string REGISTERED_USER_ROLE = "RegisteredUser";
+
         /// ---- SerializeAnObject -----------------------------
         /// <summary>
         /// Serializes an object to an XML string

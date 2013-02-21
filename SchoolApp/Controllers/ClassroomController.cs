@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using SchoolApp.DAL;
-using SchoolApp.Helpers;
+using SchoolApp.Extensions;
 using SchoolApp.Models;
 
 namespace SchoolApp.Controllers
@@ -34,7 +34,7 @@ namespace SchoolApp.Controllers
 
         //
         // GET: /Classroom/Create
-        [Authorize(Roles = CoreHelper.ADMIN_ROLE)]
+        [Authorize(Roles = Helpers.ADMIN_ROLE)]
         public ActionResult Create()
         {
             return View();

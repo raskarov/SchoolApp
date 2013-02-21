@@ -8,7 +8,7 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using SchoolApp.DAL;
 using SchoolApp.Filters;
-using SchoolApp.Helpers;
+using SchoolApp.Extensions;
 using SchoolApp.Models;
 using WebMatrix.WebData;
 
@@ -86,7 +86,7 @@ namespace SchoolApp.Controllers
                         WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email });
 
                         //And assign him to the default role
-                        Roles.AddUserToRole(model.UserName, CoreHelper.REGISTERED_USER_ROLE);
+                        Roles.AddUserToRole(model.UserName, Helpers.REGISTERED_USER_ROLE);
 
                         //Loging the new user
                         WebSecurity.Login(model.UserName, model.Password);

@@ -181,7 +181,6 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\UserGroupInstanceController.cs" />
-    <Compile Include="Helpers\CoreHelper.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
