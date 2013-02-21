@@ -68,7 +68,7 @@ namespace SchoolApp.Controllers
         //
         // GET: /UserGroupInstance/Edit/5
 
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(int id = 0) //this is a GroupInstanceId, not UserGroupInstanceId. TODO: make more obvious in routing.
         {
             GroupInstance groupInstance = db.GroupInstances.Include(x => x.Group)
                                             .Include(x => x.Group.Users)
@@ -76,7 +76,7 @@ namespace SchoolApp.Controllers
             if (groupInstance != null)
             {
                 var studentsInInstance = groupInstance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student"));
-                var UserGroupInstances = db.UserGroupInstances.Include(x => x.GroupInstance).Include(x => x.User).ToList();
+                var UserGroupInstances = db.UserGroupInstances.Include(x => x.GroupInstance).Include(x => x.User).Where(x=>x.GroupInstanceId==id).ToList();
                 foreach (var student in studentsInInstance.Except(UserGroupInstances.Select(x => x.User)))
                 {
                     var newUserGroupInstance = new UserGroupInstance();
