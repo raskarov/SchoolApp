@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Edit";
 }
+@*TODO: this page is developed using jquery post method that posts dictionary to controller and updates values. 
+This is not a standard way of doing things and it's a good idea to refactor this page using editorTemplates:
+http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edits-at-once
+*@
 
 <table id="attendanceTable" class="table table-striped datatable">
     <thead>
@@ -22,9 +26,9 @@
         </td>
         <td>
             <div class="btn-group" data-UserGroupInstance="@item.UserGroupInstanceID">
-              <button class="btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Present){<text>active btn-success</text>}" value="0">Present</button>
-              <button class="btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Absent){<text>active btn-success</text>}" value="1">Absent</button>
-              <button class="btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.AbsentWithExcuse){<text>active btn-success</text>}" value="2">Absent with excuse</button>
+              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Present){<text>active btn-success</text>}" value="0">Present</button>
+              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Absent){<text>active btn-success</text>}" value="1">Absent</button>
+              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.AbsentWithExcuse){<text>active btn-success</text>}" value="2">Absent with excuse</button>
             </div>
         </td>
         <td>
@@ -33,23 +37,44 @@
     </tr>
 }
     </table>
-<button id="btnSave" class="btn btn-primary" value="Save">Save attendance</button>
+<button id="btnSave" class="btn btn-primary disabled" disabled="disabled" value="Save">Saved</button>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script type="text/javascript">
-    $(document).on("click", ".btn", function () {
-        $(this).parent().find(".btn").removeClass("active btn-success");
+    $(document).on("click", ".attendanceBtn", function () {
+        var btnSave = $("#btnSave");
+        btnSave.removeAttr("disabled");
+        btnSave.removeClass("disabled");
+        btnSave.text("Save attendance");
+        $(this).parent().find(".attendanceBtn").removeClass("active btn-success");
         $(this).addClass("active btn-success");
     });
     $("#btnSave").click(function () {
-        var groups = $(".attendanceRow").find(".btn.active");
+        var groups = $(".attendanceRow").find(".attendanceBtn.active");
         var dict = new Object();
         groups.each(function () {
             dict[$(this).parent().data("usergroupinstance")] = $(this).val();
         })
-        $.post('@Url.Action("Save")', {
-            groups:dict
-        })
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Save")',
+            data: {
+                groups: dict
+            },
+            success: function () {
+                var btnSave = $("#btnSave");
+                btnSave.attr("disabled", "disabled");
+                btnSave.text("Saved");
+                noty({
+                    text: "Attendance updated successfully",
+                    type: "success"
+                });
+            },
+            error: function () {
+                noty({ text: "Update failed", type: "error" });
+            }
+        });
     });
 </script>

@@ -136,12 +136,16 @@ namespace SchoolApp.Controllers
         [HttpPost]
         public ActionResult Save(Dictionary<string,string> groups)
         {
-
-            var groupInstances = db.UserGroupInstances.Where(x => groups.Keys.Contains(x.UserGroupInstanceID.ToString()));
-            foreach (KeyValuePair<string,string> kvp in groups)
+            //Jquery only sends string,string. 
+            Dictionary<int, AttendanceType> groupsParsed = groups.ToDictionary(x => Convert.ToInt32(x.Key), x => (AttendanceType)Convert.ToInt32(x.Value));
+            var groupInstances = db.UserGroupInstances.Where(x => groupsParsed.Keys.Contains(x.UserGroupInstanceID));
+            foreach (KeyValuePair<int, AttendanceType> kvp in groupsParsed)
             {
-              
+                var groupInstance = groupInstances.Where(x => x.UserGroupInstanceID == kvp.Key).First();
+                groupInstance.Present = kvp.Value;
+                db.Entry(groupInstance).State = EntityState.Modified;
             }
+            db.SaveChanges();
             return Content(Boolean.TrueString);
         }
         protected override void Dispose(bool disposing)
