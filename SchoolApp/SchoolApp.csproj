@@ -185,6 +185,11 @@
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302222015119_addPaymentModel.cs" />
+    <Compile Include="Migrations\201302222015119_addPaymentModel.Designer.cs">
+      <DependentUpon>201302222015119_addPaymentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\GroupInstance.cs" />
@@ -460,6 +465,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\201302120311492_GroupIndexViewModel.resx">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302222015119_addPaymentModel.resx">
+      <DependentUpon>201302222015119_addPaymentModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

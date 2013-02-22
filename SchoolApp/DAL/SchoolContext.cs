@@ -22,6 +22,8 @@ namespace SchoolApp.DAL
 
         public DbSet<GroupInstance> GroupInstances { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
         public IQueryable<UserProfile> Students
         {
             get
