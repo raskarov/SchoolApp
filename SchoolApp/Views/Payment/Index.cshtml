@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SchoolApp.Models.UserProfile>
+
+@{
+    ViewBag.Title = "Payments";
+}
+   Select a student: @Html.DropDownList("UserId", new SelectList(Model.Select(x => new { x.FullName, x.UserId }), "UserId", "FullName"))
+    <div id="PaymentTableHolder">
+       
+    </div>
+
+<script type="text/javascript">
+    $("#UserId").change(function () {
+        var selectList = $(this);
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("PaymentList")/" + selectList.val(),
+            datatype: "html",
+            success: function (result) {
+                $("#PaymentTableHolder").html(result);
+            }
+        });
+    });
+</script>

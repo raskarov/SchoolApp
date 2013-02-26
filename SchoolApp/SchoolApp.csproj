@@ -176,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupInstanceController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PaymentProfileController.cs" />
     <Compile Include="Controllers\PaymentRuleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -452,6 +453,12 @@
     <Content Include="Views\UserGroupInstance\Create.cshtml" />
     <Content Include="Views\UserGroupInstance\Edit.cshtml" />
     <Content Include="Views\UserGroupInstance\Delete.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Payment\Details.cshtml" />
+    <Content Include="Views\Payment\Create.cshtml" />
+    <Content Include="Views\Payment\Edit.cshtml" />
+    <Content Include="Views\Payment\Delete.cshtml" />
+    <Content Include="Views\Payment\_PaymentListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

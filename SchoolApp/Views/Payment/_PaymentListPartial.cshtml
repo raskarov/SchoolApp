@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SchoolApp.Models.Payment>
+
+<span class="alert @if(@ViewBag.Balance>=0){<text>alert-success</text>}else{<text>alert-error</text>}">Current balance: <b> @ViewBag.Balance</b></span>
+<table class="table table-condensed datatable">
+    <thead>
+        <th>@Html.DisplayNameFor(model => model.TransactionDateTime)</th>
+        <th>@Html.DisplayNameFor(model => model.comments)</th>
+        <th>@Html.DisplayNameFor(model => model.Amount)</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td>@Html.TextBox("comments",null,new {id="comments"})</td>
+            <td>@Html.TextBox("Amount",null,new {id="Amount"})</td>
+            <td><a class="btn btn-small" id="addTransaction"><i class="icon-plus"></i> Add transaction</a></td>
+        </tr>
+    @foreach (var item in Model)
+    {
+        <tr class="@if (item.Amount < 0)
+                   {<text>error</text>} else{<text>success</text>}">
+            <td>@item.TransactionDateTime</td>
+            <td>@item.comments</td>
+            <td>@item.Amount</td>
+            <td></td>
+        </tr>
+    }
+        
+        </tbody>
+</table>
+<script type="text/javascript">
+    $("#addTransaction").click(function () {
+        var row = $(this).parent().parent();
+        $.ajax({
+            url: "@Url.Action("Create")",
+            dataType: 'json',
+            global:false,
+            type:"POST",
+            data: {
+                Amount: row.find("#Amount").val(),
+                comments: row.find("#comments").val(),
+                UserId: $("#UserId").val()
+            },
+            complete: function () {
+                row.closest('#PaymentTableHolder').load("@Url.Action("PaymentList")/");
+            }
+        });
+    });
+    $(document).ready(function () {
+        $(".datatable").dataTable({
+            "bSort": false,
+            "bStateSave": true,
+            "bFilter": false,
+            "sDom": '<"toolbar">frtip'
+        });
+        $("div.toolbar").html('');
+    });
+</script>

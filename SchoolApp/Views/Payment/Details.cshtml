@@ -1,0 +1,43 @@
+﻿@model SchoolApp.Models.Payment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Payment</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TransactionDateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TransactionDateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Amount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Amount)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Payee.UserName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Payee.UserName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.comments)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.comments)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.PaymentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
