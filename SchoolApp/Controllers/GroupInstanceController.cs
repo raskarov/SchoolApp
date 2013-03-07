@@ -154,11 +154,11 @@ namespace SchoolApp.Controllers
             }
             else
             {
-                groupInstances = db.GroupInstances.ToList();
+                groupInstances = db.GroupInstances.Include(e => e.Group).ToList();
             }
             var events = groupInstances.Select(x => new
             {
-                title = "Test",
+                title = x.Group.Name,
                 start = x.StartDateTime.ToString("s"),
                 end = x.EndDateTime.ToString("s"),
                 editable = false,

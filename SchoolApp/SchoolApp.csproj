@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201302222015119_addPaymentModel.Designer.cs">
       <DependentUpon>201302222015119_addPaymentModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302262345597_addPaymentProfileToGroup.cs" />
+    <Compile Include="Migrations\201302262345597_addPaymentProfileToGroup.Designer.cs">
+      <DependentUpon>201302262345597_addPaymentProfileToGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
     <Compile Include="Models\Event.cs" />
@@ -459,6 +463,7 @@
     <Content Include="Views\Payment\Edit.cshtml" />
     <Content Include="Views\Payment\Delete.cshtml" />
     <Content Include="Views\Payment\_PaymentListPartial.cshtml" />
+    <Content Include="Views\GroupInstance\_EventBodyPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -475,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302222015119_addPaymentModel.resx">
       <DependentUpon>201302222015119_addPaymentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302262345597_addPaymentProfileToGroup.resx">
+      <DependentUpon>201302262345597_addPaymentProfileToGroup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

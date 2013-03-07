@@ -15,6 +15,12 @@ namespace SchoolApp.Models
 
         public string Name { get; set; }
 
+        public int? PaymentProfileId { get; set; }
+
+        
+        [ForeignKey("PaymentProfileId")]
+        public virtual PaymentProfile PaymentProfile { get; set; }
+
         public ICollection<UserProfile> Users { get; set; }
     }
 }

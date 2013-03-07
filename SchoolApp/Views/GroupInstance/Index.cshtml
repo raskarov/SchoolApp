@@ -44,16 +44,25 @@
                     callback(result);
                 });
             },
-
+            firstDay: 1, //Start with Monday
             allDaySlot: false,
             editable: true,
             defaultView: 'agendaDay',
             droppable: true,
             selectable: true,
             selectHelper: true,
+            minTime: 8,
+            maxTime: 22,
             select: function (start, end, allDay) {
+                var now = new Date();
+                if (start < now) {
+                    alert("Appointments in the past are not allowed");
+                    $(this).fullCalendar('unselect');
+                    return;
+                }
                 formId = "createGroupInstanceForm";
                 showDialog("@Url.Action("Create")", $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"), $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT"));
+
                 //if (title) {
                 //    calendar.fullCalendar('renderEvent',
 				//		{
@@ -86,6 +95,12 @@
                 postEditCalendar(event);
             },
             eventRender: function (event, element) {
+
+                //Render html in event body O_O not supported by default: 
+                //https://code.google.com/p/fullcalendar/issues/detail?id=152
+                element.find('div.fc-event-title').html(element.find('div.fc-event-title').text());
+
+
                 var eventId = event.GroupInstanceId;
                 //Add remove & attendance icon
                 element.find(".fc-event-time")
@@ -136,6 +151,13 @@
                     }
             }
         });
+        //$(window).resize(function () {
+        //    $(".fc-event-time").each(function () {
+        //        if ($(this).width() < 100) {
+        //            $(this).find(".scheduleToolbar").hide();
+        //        }
+        //    });
+        //});
     });
     $(document).on("click", ".removeEvent", function () {
         formId = "deleteGroupInstanceForm";

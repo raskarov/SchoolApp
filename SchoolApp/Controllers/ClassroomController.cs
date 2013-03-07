@@ -34,7 +34,7 @@ namespace SchoolApp.Controllers
 
         //
         // GET: /Classroom/Create
-        [Authorize(Roles = Helpers.ADMIN_ROLE)]
+        //[Authorize(Roles = Helpers.ADMIN_ROLE)]
         public ActionResult Create()
         {
             return View();

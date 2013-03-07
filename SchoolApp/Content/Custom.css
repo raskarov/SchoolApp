@@ -42,3 +42,8 @@ font-weight: bold;
 	background-color: #1393c0 !important; 
 	color: #fff;           
 }
+.brand {
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
+    color:white !important;
+}
