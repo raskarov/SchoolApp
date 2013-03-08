@@ -82,6 +82,7 @@ namespace SchoolApp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.PaymentProfileId = new SelectList(db.PaymentProfiles, "PaymentProfileId", "Name", model.Group.PaymentProfileId);
             return View(model);
         }
 
