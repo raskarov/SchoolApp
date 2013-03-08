@@ -28,10 +28,6 @@
     var formId;
     $(document).ready(function () {
 
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -57,6 +53,7 @@
             },
             firstDay: 1, //Start with Monday
             allDaySlot: false,
+            slotMinutes: 10,
             editable: true,
             defaultView: 'agendaDay',
             droppable: true,
@@ -94,7 +91,7 @@
                     return;
                 }
                 formId = "editGroupInstanceForm";
-                showDialogEditRemove("@Url.Action("Edit", "GroupInstance")/" + calEvent.GroupInstanceId);
+                showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", calEvent.GroupInstanceId, calEvent.start, calEvent.end);
             },
             eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
                 postEditCalendar(event);
@@ -172,45 +169,56 @@
         formId = "deleteGroupInstanceForm";
         showDialogEditRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
     });
-    function showDialogEditRemove(href) {
+    function showDialogEditRemove(href, id, StartTime, EndTime) {
         var dialogDiv = $("#dialogContainer");
         var viewUrl = href;
-        $.get(viewUrl, function (data) {
-            dialogDiv.html(data);
-            //$('.datepicker').datepicker();
-            ////validation
-            //var $form = $("#updateCarForm");
-            ////Unbind existing validation
-            //$form.unbind();
-            //$form.data("validatior", null);
-            ////check document for changes
-            //$.validator.unobtrusive.parse(document);
-            ////Readd validation with changes
-            //$form.validate();
-            dialogDiv.dialog('open');
+        $.ajax({
+            url: viewUrl,
+            type: 'GET',
+            data: {
+                id: id,
+                start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
+                end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+            },
+            success: function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            },
+            error: function () {
+                alert("error");
+            }
         });
-        return false;
     }
     function showDialog(href, start, end) {
         var dialogDiv = $("#dialogContainer");
         var viewUrl = href;
-        $.get(viewUrl, function (data) {
-            dialogDiv.html(data);
-            dialogDiv.find("#StartDateTime").val(start);
-            dialogDiv.find("#EndDateTime").val(end);
-            //$('.datepicker').datepicker();
-            ////validation
-            //var $form = $("#updateCarForm");
-            ////Unbind existing validation
-            //$form.unbind();
-            //$form.data("validatior", null);
-            ////check document for changes
-            //$.validator.unobtrusive.parse(document);
-            ////Readd validation with changes
-            //$form.validate();
-            dialogDiv.dialog('open');
+        $.ajax({
+            url: viewUrl,
+            type: 'GET',
+            data: {
+                start: start,
+                end: end
+            },
+            success: function (data) {
+                dialogDiv.html(data);
+                dialogDiv.find("#StartDateTime").val(start);
+                dialogDiv.find("#EndDateTime").val(end);
+                //$('.datepicker').datepicker();
+                ////validation
+                //var $form = $("#updateCarForm");
+                ////Unbind existing validation
+                //$form.unbind();
+                //$form.data("validatior", null);
+                ////check document for changes
+                //$.validator.unobtrusive.parse(document);
+                ////Readd validation with changes
+                //$form.validate();
+                dialogDiv.dialog('open');
+            },
+            error: function () {
+                alert("error");
+            }
         });
-        return false;
     }
     function updateSuccess() {
         if ($("#update-message").html() == "True") {

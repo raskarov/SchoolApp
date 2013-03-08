@@ -50,10 +50,9 @@ namespace SchoolApp.Controllers
         //
         // GET: /GroupInstance/Create
 
-        public ActionResult Create()
+        public ActionResult Create(DateTime start, DateTime end)
         {
-            ViewBag.GroupId = new SelectList(db.Groups, "GroupId", "Name");
-            ViewBag.ClassroomId = new SelectList(db.Classrooms, "ClassroomID", "Name");
+            MakeFilteredDropdowns(start.ToString(), end.ToString());
             return PartialView();
         }
 
@@ -69,7 +68,7 @@ namespace SchoolApp.Controllers
                 db.SaveChanges();
                 return Content(Boolean.TrueString);
             }
-
+            //TODO: review error handling. This will fail since it is not filtering dropdowns for overlapping events!!!
             ViewBag.GroupId = new SelectList(db.Groups, "GroupId", "Name", groupinstance.GroupId);
             ViewBag.ClassroomId = new SelectList(db.Classrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
             return Content("Please review your form");
@@ -78,18 +77,75 @@ namespace SchoolApp.Controllers
         //
         // GET: /GroupInstance/Edit/5
 
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(int id = 0, string start =null, string end = null)
         {
             GroupInstance groupinstance = db.GroupInstances.Find(id);
             if (groupinstance == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GroupId = new SelectList(db.Groups, "GroupId", "Name", groupinstance.GroupId);
-            ViewBag.ClassroomId = new SelectList(db.Classrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
+            MakeFilteredDropdowns(start, end, groupinstance, id);
             return PartialView(groupinstance);
         }
 
+        private void MakeFilteredDropdowns(string start, string end, int id=0)
+        {
+            var groups = db.Groups;
+            var classrooms = db.Classrooms;
+
+            if (start != null && end != null)
+            {
+                IQueryable<Group> filteredGroups;
+                IQueryable<Classroom> filteredClassrooms;
+                GetFilteredInfo(start, end, id, groups, classrooms, out filteredGroups, out filteredClassrooms);
+                ViewBag.GroupId = new SelectList(filteredGroups, "GroupId", "Name");
+                ViewBag.ClassroomId = new SelectList(filteredClassrooms, "ClassroomID", "Name");
+            }
+            else
+            {
+                    ViewBag.GroupId = new SelectList(groups, "GroupId", "Name");
+                    ViewBag.ClassroomId = new SelectList(classrooms, "ClassroomID", "Name");
+            }
+        }
+        private void MakeFilteredDropdowns(string start, string end, GroupInstance groupinstance, int id=0)
+        {
+            var groups = db.Groups;
+            var classrooms = db.Classrooms;
+
+            if (start != null && end != null)
+            {
+                IQueryable<Group> filteredGroups;
+                IQueryable<Classroom> filteredClassrooms;
+                GetFilteredInfo(start, end, id, groups, classrooms, out filteredGroups, out filteredClassrooms);
+                ViewBag.GroupId = new SelectList(filteredGroups, "GroupId", "Name", groupinstance.GroupId);
+                ViewBag.ClassroomId = new SelectList(filteredClassrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
+            }
+            else
+            {
+                    ViewBag.GroupId = new SelectList(groups, "GroupId", "Name", groupinstance.GroupId);
+                    ViewBag.ClassroomId = new SelectList(classrooms, "ClassroomID", "Name", groupinstance.ClassroomId);
+            }
+        }
+
+        private void GetFilteredInfo(string start, string end, int id, DbSet<Group> groups, DbSet<Classroom> classrooms, out IQueryable<Group> filteredGroups, out IQueryable<Classroom> filteredClassrooms)
+        {
+            DateTime startDt = Convert.ToDateTime(start);
+            DateTime endDt = Convert.ToDateTime(end);
+            //Find any overlapping events
+            var overlapping = db.GroupInstances.
+                                Where(period =>
+                                    ((period.StartDateTime >= startDt && period.EndDateTime <= endDt)
+                                    || (period.EndDateTime >= startDt && period.EndDateTime <= endDt)
+                                    || (period.StartDateTime <= startDt && period.EndDateTime >= endDt)
+                                    || (period.StartDateTime <= startDt && period.EndDateTime >= endDt))
+                                    && period.GroupInstanceId != id).ToList();
+            var overlappingGroups = overlapping.Select(x => x.GroupId).ToList();
+            filteredGroups = groups.Where(x => !overlappingGroups.Contains(x.GroupId));
+
+
+            var overlappingClassrooms = overlapping.Select(x => x.ClassroomId).ToList();
+            filteredClassrooms = classrooms.Where(x => !overlappingClassrooms.Contains(x.ClassroomID));
+        }
         //
         // POST: /GroupInstance/Edit/5
 
