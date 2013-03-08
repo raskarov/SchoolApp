@@ -4,7 +4,17 @@
     ViewBag.Title = "Schedule";
 }
 <div class="well">
-    filter by teacher: @Html.DropDownList("UserId", Model.TeachersList)
+    <div class="calendarTop">
+        <div class="filter" style="float:left">
+            filter by teacher: @Html.DropDownList("UserId", Model.TeachersList)
+        </div>
+        <div class="legend" style="float:right">
+            @foreach (var item in Model.ColorLegend)
+            {
+                <span class="label" style="background-color: @item.Value">@item.Key</span>
+            }
+        </div>
+    </div>
     <div id="calendar"></div>
     <div id="dialogContainer"></div>
 </div>
@@ -66,14 +76,14 @@
 
                 //if (title) {
                 //    calendar.fullCalendar('renderEvent',
-				//		{
-				//		    title: title,
-				//		    start: start,
-				//		    end: end,
-				//		    allDay: allDay
-				//		},
-				//		true // make the event "stick"
-				//	);
+                //		{
+                //		    title: title,
+                //		    start: start,
+                //		    end: end,
+                //		    allDay: allDay
+                //		},
+                //		true // make the event "stick"
+                //	);
                 //}
                 //calendar.fullCalendar('unselect');
             },
@@ -84,15 +94,13 @@
                     return;
                 }
                 formId = "editGroupInstanceForm";
-                showDialogEditRemove("@Url.Action("Edit","GroupInstance")/" + calEvent.GroupInstanceId);
+                showDialogEditRemove("@Url.Action("Edit", "GroupInstance")/" + calEvent.GroupInstanceId);
             },
-            eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view)
-            {
+            eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
                 postEditCalendar(event);
-               
+
             },
-            eventResize: function (event, dayDelta, minuteDelta, revertFunc)
-            {
+            eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
                 postEditCalendar(event);
             },
             eventRender: function (event, element) {
@@ -124,7 +132,7 @@
                         trigger: 'hover',
                     });
                 });*@
-               
+
             }
         });
         $("#dialogContainer").dialog({
@@ -138,7 +146,7 @@
                         class: 'btn btn-primary',
                         click: function () {
                             $("#update-message").html('');
-                            $("#"+formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                            $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                         },
                         html: 'Update'
                     },
@@ -183,7 +191,7 @@
         });
         return false;
     }
-    function showDialog(href,start,end) {
+    function showDialog(href, start, end) {
         var dialogDiv = $("#dialogContainer");
         var viewUrl = href;
         $.get(viewUrl, function (data) {
@@ -202,7 +210,7 @@
             //$form.validate();
             dialogDiv.dialog('open');
         });
-            return false;
+        return false;
     }
     function updateSuccess() {
         if ($("#update-message").html() == "True") {
@@ -227,7 +235,7 @@
                 EndDateTime: $.fullCalendar.formatDate(event.end, "yyyy/MM/dd hh:mm:ss TT"),
                 GroupId: event.GroupId,
                 ClassroomId: event.ClassroomId
-                },
+            },
             success: function () {
                 noty({
                     text: "Saved successfully",

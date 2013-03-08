@@ -24,11 +24,13 @@ namespace SchoolApp.Controllers
             model.GroupInstances = db.GroupInstances.Include(g => g.Group).Include(g => g.Classroom).ToList();
             List<SelectListItem> sli = new List<SelectListItem>();
             sli.Add(new SelectListItem { Text = "All", Value = "0", Selected = true });
-            foreach (var teacher in db.Teachers.ToList())
+            var teachers = db.Teachers.ToList();
+            foreach (var teacher in teachers)
             {
                 sli.Add(new SelectListItem { Text = teacher.FullName, Value = teacher.UserId.ToString() });
             }
             model.TeachersList = sli;
+            model.ColorLegend = teachers.ToDictionary(x => x.FullName, x => x.HexColor);
             return View(model);
         }
 
