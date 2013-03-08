@@ -134,10 +134,10 @@ namespace SchoolApp.Controllers
             //Find any overlapping events
             var overlapping = db.GroupInstances.
                                 Where(period =>
-                                    ((period.StartDateTime >= startDt && period.EndDateTime <= endDt)
-                                    || (period.EndDateTime >= startDt && period.EndDateTime <= endDt)
-                                    || (period.StartDateTime <= startDt && period.EndDateTime >= endDt)
-                                    || (period.StartDateTime <= startDt && period.EndDateTime >= endDt))
+                                    ((period.StartDateTime > startDt && period.EndDateTime < endDt)
+                                    || (period.EndDateTime > startDt && period.EndDateTime < endDt)
+                                    || (period.StartDateTime < startDt && period.EndDateTime > endDt)
+                                    || (period.StartDateTime < startDt && period.EndDateTime > endDt))
                                     && period.GroupInstanceId != id).ToList();
             var overlappingGroups = overlapping.Select(x => x.GroupId).ToList();
             filteredGroups = groups.Where(x => !overlappingGroups.Contains(x.GroupId));
