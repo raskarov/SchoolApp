@@ -278,11 +278,7 @@ function Calendar(element, options, eventSources) {
 	
 	
 	// called when we know the calendar couldn't be rendered when it was initialized,
-	// but we think it'
-
-
-
-ready now
+    // but we think it's ready now
 	function lateRender() {
 		setTimeout(function() { // IE7 needs this so dimensions are calculated correctly
 			if (!currentView.start && bodyVisible()) { // !currentView.start makes sure this never happens more than once

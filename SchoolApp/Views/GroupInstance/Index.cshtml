@@ -38,7 +38,8 @@
                             allDay: this.editable,
                             GroupInstanceId: this.GroupInstanceId,
                             ClassroomId: this.ClassroomId,
-                            GroupId: this.GroupId
+                            GroupId: this.GroupId,
+                            color: this.Color
                         };
                     }).toArray();
                     callback(result);
@@ -114,7 +115,7 @@
                     </a>\
                     </div>\
                     "));
-               
+                //Add color based on the field in table teacher
                 @*$.get("@Url.Action("GroupInfo","showDialogEditRemove")", function (viewContent) {
                     element.popover({
                         title: 'Event details',

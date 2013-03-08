@@ -61,8 +61,8 @@
     </div>
     <div class="editor-field" style="padding-bottom: 10px">
         <span style="vertical-align: middle">Select a color: </span>
-        <div class="input-append color" style="display: inline !important" data-color="#ff96b7" data-color-format="hex" id="cp3">
-            <span class="add-on add-on-rounded"><i style="background-color: #ff96b7"></i></span>
+        <div class="input-append color" style="display: inline !important" data-color="#1393c0" data-color-format="hex" id="cp3">
+            <span class="add-on add-on-rounded"><i style="background-color: #1393c0"></i></span>
         </div>
         @Html.ValidationMessageFor(model => model.HexColor)
     </div>
@@ -82,7 +82,7 @@
         var ColorControl = $("#HexColor");
         var currentColor = ColorControl.val();
         if (currentColor == '') {
-            ColorControl.val('#ff96b7');
+            ColorControl.val('#1393c0');
         }
         else {
             $(".color").data("color", currentColor);

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using SchoolApp.DAL;
 using SchoolApp.Models;
 using SchoolApp.ViewModels;
+using System.Web.Security;
 
 namespace SchoolApp.Controllers
 {
@@ -154,7 +155,8 @@ namespace SchoolApp.Controllers
             }
             else
             {
-                groupInstances = db.GroupInstances.Include(e => e.Group).ToList();
+                groupInstances = db.GroupInstances.Include(e => e.Group)
+                    .Include(e=>e.Group.Users).ToList();
             }
             var events = groupInstances.Select(x => new
             {
@@ -164,7 +166,8 @@ namespace SchoolApp.Controllers
                 editable = false,
                 GroupInstanceId = x.GroupInstanceId,
                 ClassroomId = x.ClassroomId,
-                GroupId = x.GroupId
+                GroupId = x.GroupId,
+                Color = x.Group.Users.First(y=>Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
             });
 
             return Json(events, JsonRequestBehavior.AllowGet);
