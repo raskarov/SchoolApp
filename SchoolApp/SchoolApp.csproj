@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201302262345597_addPaymentProfileToGroup.Designer.cs">
       <DependentUpon>201302262345597_addPaymentProfileToGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303072313401_addUserColor.cs" />
+    <Compile Include="Migrations\201303072313401_addUserColor.Designer.cs">
+      <DependentUpon>201303072313401_addUserColor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
     <Compile Include="Models\Event.cs" />
@@ -204,6 +208,7 @@
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
     <Compile Include="ViewModels\GroupInstanceViewModel.cs" />
     <Compile Include="ViewModels\PaymentProfileEditViewModel.cs" />
+    <Content Include="Content\bootstrap-colorpicker.css" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\datatables.bootstrap.css" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -231,6 +236,10 @@
     <Content Include="Content\fullcalendar.print.css" />
     <Content Include="Content\images\140x140.gif" />
     <Content Include="Content\images\170x170.gif" />
+    <Content Include="Content\images\alpha.png" />
+    <Content Include="Content\images\hue.png" />
+    <Content Include="Content\images\saturation.png" />
+    <Content Include="Scripts\bootstrap-colorpicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\datatables.bootstrap.js" />
   </ItemGroup>
@@ -483,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302262345597_addPaymentProfileToGroup.resx">
       <DependentUpon>201302262345597_addPaymentProfileToGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303072313401_addUserColor.resx">
+      <DependentUpon>201303072313401_addUserColor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

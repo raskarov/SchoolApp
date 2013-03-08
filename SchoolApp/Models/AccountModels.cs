@@ -34,6 +34,8 @@ namespace SchoolApp.Models
 
         public ICollection<Group> Groups { get; set; }
 
+        public string HexColor { get; set; }
+
         public string FullName
         {
             get

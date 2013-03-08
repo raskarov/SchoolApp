@@ -53,6 +53,9 @@ namespace SchoolApp
             bundles.Add(new StyleBundle("~/Content/multi-select").Include("~/Content/multi-select*"));
             bundles.Add(new StyleBundle("~/Content/fullcalendar").Include("~/Content/fullcalendar.css"));
             bundles.Add(new StyleBundle("~/Content/datatables").Include("~/content/datatables.bootstrap.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/colorpicker").Include("~/Scripts/bootstrap-colorpicker.js"));
+            bundles.Add(new StyleBundle("~/content/colorpicker").Include("~/Content/bootstrap-colorpicker.css"));
         }
     }
 }

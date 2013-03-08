@@ -47,3 +47,10 @@ font-weight: bold;
     font-size: 22px;
     color:white !important;
 }
+
+.add-on-rounded {
+-webkit-border-radius: 4px 4px 4px 4px !important;
+-moz-border-radius: 4px 4px 4px 4px !important;
+border-radius: 4px 4px 4px 4px !important;
+padding-bottom: 0 !important;
+}
