@@ -2,18 +2,56 @@
 
 @{
     ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
+<html>
+<body>
+    <h2>Login to your account</h2>
+    <fieldset>
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="input-prepend" title="Username">
+                <span class="add-on"><i class="icon-user"></i></span>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "input-large span10", @placeholder = "type username" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+            <div class="clearfix"></div>
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+            <div class="input-prepend" title="Password">
+                <span class="add-on"><i class="icon-lock"></i></span>
+                @Html.PasswordFor(m => m.Password, new { @class = "input-large span10", @placeholder = "type password" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+            <div class="clearfix"></div>
+							
+           <span class="remember"> @Html.CheckBoxFor(m => m.RememberMe, new {@class="rememberCheckbox"}) Remember me?</span>
+@*<label class="remember" for="remember"><div class="checker" id="uniform-remember"><span><input type="checkbox" id="remember"></span></div>Remember me</label>*@
 
-<section id="loginForm">
+            <div class="button-login">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        }
+        <div class="clearfix"></div>
+
+        <hr>
+        @*<h3>Forgot Password?</h3>
+        <p>
+            No problem, @Html.ActionLink("click here","Manage") to get a new password.
+        </p>*@
+        <h3>Don't have an account?</h3>
+        <p> No problem, you can always register @Html.ActionLink("here","Register").</p>
+    </fieldset>
+    @*<section id="loginForm">
 <h2>Use a local account to log in.</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
+ 
+    
+    
+    
     <fieldset>
         <legend>Log in Form</legend>
         <ol>
@@ -43,8 +81,9 @@
 <section class="social" id="socialLoginForm">
     <h2>Use another service to log in.</h2>
     @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
-
+</section>*@
+</body>
+</html>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
