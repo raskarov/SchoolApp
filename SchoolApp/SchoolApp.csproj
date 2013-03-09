@@ -181,6 +181,7 @@
     <Compile Include="Controllers\PaymentRuleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserGroupInstanceController.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.cs" />
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
@@ -204,11 +205,13 @@
     <Compile Include="Models\GroupInstance.cs" />
     <Compile Include="Models\PaymentProfile.cs" />
     <Compile Include="Models\PaymentRule.cs" />
+    <Compile Include="ViewModels\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
     <Compile Include="ViewModels\GroupInstanceViewModel.cs" />
     <Compile Include="ViewModels\PaymentProfileEditViewModel.cs" />
     <Content Include="Content\bootstrap-colorpicker.css" />
+    <Content Include="Content\bootstrapSwitch.css" />
     <Content Include="Content\Custom.css" />
     <Content Include="Content\datatables.bootstrap.css" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -241,6 +244,7 @@
     <Content Include="Content\images\saturation.png" />
     <Content Include="Scripts\bootstrap-colorpicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrapSwitch.js" />
     <Content Include="Scripts\datatables.bootstrap.js" />
   </ItemGroup>
   <ItemGroup>
@@ -473,6 +477,11 @@
     <Content Include="Views\Payment\Delete.cshtml" />
     <Content Include="Views\Payment\_PaymentListPartial.cshtml" />
     <Content Include="Views\GroupInstance\_EventBodyPartial.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

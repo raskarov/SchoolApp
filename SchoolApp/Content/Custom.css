@@ -44,8 +44,8 @@ font-weight: bold;
 }
 
 .add-on-rounded {
--webkit-border-radius: 4px 4px 4px 4px !important;
--moz-border-radius: 4px 4px 4px 4px !important;
-border-radius: 4px 4px 4px 4px !important;
-padding-bottom: 0 !important;
+    -webkit-border-radius: 4px 4px 4px 4px !important;
+    -moz-border-radius: 4px 4px 4px 4px !important;
+    border-radius: 4px 4px 4px 4px !important;
+    padding-bottom: 0 !important;
 }

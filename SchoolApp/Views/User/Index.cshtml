@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SchoolApp.ViewModels.UserIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
+</p>
+<div class="well">
+    <table class="table table-striped datatable">
+        <thead>
+            <tr role="row">
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th rowspan="1" colspan="2" style="text-align:center"> Roles</th>
+           
+                </tr>
+            <tr role="row">
+                <th>
+                @Html.DisplayNameFor(model => model.IsTeacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAdmin)
+            </th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @Html.HiddenFor(modelItem => item.UserName, new { @class = "UserName"})
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    <div data-role="teacher" class="switch">
+                        <input  type="checkbox"@if(item.IsTeacher){<text>checked</text>}>
+                    </div>
+                </td>
+                <td>
+                    <div data-role="administrator" class="switch">
+                        <input  type="checkbox" @if(item.IsAdmin){<text>checked</text>}>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<script>
+    $('.switch').on('switch-change', function (e, data) {
+        var username = $(this).closest('tr').find(".UserName").val();
+        var role = $(this).data('role');
+        var value = data.value;
+        $.ajax({
+            url: "@Url.Action("UpdateRole")",
+            type: 'POST',
+            data: {
+                username: username,
+                role: role,
+                value: value
+            },
+            success: function () {
+                noty({
+                    text: "Saved successfully",
+                    type: "success"
+                });
+            },
+            error: function () {
+                noty({ text: "Update failed", type: "error" });
+            }
+        });
+    });
+</script>
