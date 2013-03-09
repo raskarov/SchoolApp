@@ -35,18 +35,17 @@
                     @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
-                    <div data-role="teacher" class="switch">
+                    <div data-role="teacher" data-on="success" class="switch switch-small">
                         <input  type="checkbox"@if(item.IsTeacher){<text>checked</text>}>
                     </div>
                 </td>
                 <td>
-                    <div data-role="administrator" class="switch">
+                    <div data-role="administrator" data-on="success" class="switch switch-small">
                         <input  type="checkbox" @if(item.IsAdmin){<text>checked</text>}>
                     </div>
                 </td>
             </tr>
         }
-
     </table>
 </div>
 <script>
@@ -65,11 +64,16 @@
             success: function () {
                 noty({
                     text: "Saved successfully",
-                    type: "success"
+                    type: "success",
+                    timeout: 1000
                 });
             },
             error: function () {
-                noty({ text: "Update failed", type: "error" });
+                noty({
+                    text: "Update failed",
+                    type: "error",
+                    timeout: 1000
+                });
             }
         });
     });

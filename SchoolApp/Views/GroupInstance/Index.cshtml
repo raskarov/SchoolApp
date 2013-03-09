@@ -248,11 +248,16 @@
             success: function () {
                 noty({
                     text: "Saved successfully",
-                    type: "success"
+                    type: "success",
+                    timeout: 1000
                 });
             },
             error: function () {
-                noty({ text: "Update failed", type: "error" });
+                noty({
+                    text: "Update failed",
+                    type: "error",
+                    timeout: 1000
+                });
             }
         });
     }
