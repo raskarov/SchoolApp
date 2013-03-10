@@ -1,0 +1,29 @@
+﻿@{
+    var defaultRoles = new[] { SchoolApp.Extensions.Helpers.TEACHER_ROLE, SchoolApp.Extensions.Helpers.ADMIN_ROLE };
+    var adminsOnly = new[] { SchoolApp.Extensions.Helpers.ADMIN_ROLE };
+    var menus = new[]
+                {
+                   new { LinkText="Schedule", ActionName="Index",ControllerName="GroupInstance",Roles=defaultRoles  },
+                   new { LinkText="Classrooms", ActionName="Index",ControllerName="Classroom",Roles=adminsOnly},
+                   new { LinkText="Students", ActionName="Index",ControllerName="Student",Roles=defaultRoles },
+                   new { LinkText="Teachers", ActionName="Index",ControllerName="Teacher",Roles=adminsOnly },
+                   new { LinkText="Groups", ActionName="Index",ControllerName="Group",Roles=defaultRoles },
+                   new { LinkText="Payment Profiles", ActionName="Index",ControllerName="PaymentProfile",Roles=adminsOnly  },
+                   new { LinkText="Payments", ActionName="Index",ControllerName="Payment",Roles=defaultRoles  },
+                   new { LinkText="User Management", ActionName="Index",ControllerName="User",Roles=adminsOnly  },
+                };
+}
+<ul id="dashboard-menu" class="nav nav-list collapse in">
+    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        String[] roles = Roles.GetRolesForUser();
+        var links = menus.Where(x => x.Roles.Any(y => roles.Contains(y)));
+
+        foreach (var link in links)
+        {
+        @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+    }
+
+    }
+</ul>
+

@@ -60,31 +60,11 @@
         </form>
 
         <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Dashboard</a>
-        <ul id="dashboard-menu" class="nav nav-list collapse in">
-            <li>@Html.ActionLink("Home","Index","Home") </li>
-            <li>@Html.ActionLink("Classrooms","Index","Classroom") </li>
-            <li>@Html.ActionLink("Students","Index", "Student") </li>
-            <li>@Html.ActionLink("Teachers","Index", "Teacher") </li>
-            <li>@Html.ActionLink("Groups","Index", "Group") </li>
-            <li>@Html.ActionLink("Payment Profiles","Index", "PaymentProfile") </li>
-            <li>@Html.ActionLink("Schedule","Index", "GroupInstance") </li>
-            <li>@Html.ActionLink("Payments", "Index", "Payment")</li>
-        </ul>
-
-        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>
-        <ul id="accounts-menu" class="nav nav-list collapse">
-           <li>@Html.ActionLink("Login","Login","Account")</li>
-           <li>@Html.ActionLink("Register","Register", "Account" )</li>
-        </ul>
-
-        <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Error Pages <i class="icon-chevron-up"></i></a>
-        <ul id="error-menu" class="nav nav-list collapse">
-            <li><a href="403.html">403 page</a></li>
-            <li><a href="404.html">404 page</a></li>
-            <li><a href="500.html">500 page</a></li>
-            <li><a href="503.html">503 page</a></li>
-        </ul>
-
+        @if (Session["MyMenu"] == null)
+        {
+            Session["MyMenu"] = Html.Partial("~/Views/Shared/_Menu.cshtml");
+        }
+        @Session["MyMenu"]
         <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>Legal</a>
         <ul id="legal-menu" class="nav nav-list collapse">
             <li><a href="privacy-policy.html">Privacy Policy</a></li>
