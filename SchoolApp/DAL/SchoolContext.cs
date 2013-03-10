@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Security;
 using SchoolApp.Extensions;
 using SchoolApp.Models;
+using WebMatrix.WebData;
+using SchoolApp.Filters;
 
 namespace SchoolApp.DAL
 {
@@ -23,7 +25,7 @@ namespace SchoolApp.DAL
         public DbSet<GroupInstance> GroupInstances { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
-
+      
         public IQueryable<UserProfile> Students
         {
             get

@@ -11,6 +11,7 @@ namespace SchoolApp.Migrations
     {
         public Configuration()
         {
+           
             AutomaticMigrationsEnabled = false;
         }
 
