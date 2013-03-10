@@ -175,6 +175,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\login.css" />
     <Compile Include="Controllers\GroupInstanceController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PaymentProfileController.cs" />
@@ -240,6 +241,7 @@
     <Content Include="Content\images\140x140.gif" />
     <Content Include="Content\images\170x170.gif" />
     <Content Include="Content\images\alpha.png" />
+    <Content Include="Content\images\bg-login.jpg" />
     <Content Include="Content\images\hue.png" />
     <Content Include="Content\images\saturation.png" />
     <Content Include="Scripts\bootstrap-colorpicker.js" />
@@ -482,6 +484,8 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Account\View1.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

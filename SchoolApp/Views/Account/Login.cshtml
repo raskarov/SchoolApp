@@ -4,10 +4,8 @@
     ViewBag.Title = "Log in";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-<html>
-<body>
     <h2>Login to your account</h2>
-    <fieldset>
+
         @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
         {
             @Html.AntiForgeryToken()
@@ -27,7 +25,6 @@
             <div class="clearfix"></div>
 							
            <span class="remember"> @Html.CheckBoxFor(m => m.RememberMe, new {@class="rememberCheckbox"}) Remember me?</span>
-@*<label class="remember" for="remember"><div class="checker" id="uniform-remember"><span><input type="checkbox" id="remember"></span></div>Remember me</label>*@
 
             <div class="button-login">
                 <button type="submit" class="btn btn-primary">Login</button>
@@ -42,48 +39,6 @@
         </p>*@
         <h3>Don't have an account?</h3>
         <p> No problem, you can always register @Html.ActionLink("here","Register").</p>
-    </fieldset>
-    @*<section id="loginForm">
-<h2>Use a local account to log in.</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
- 
-    
-    
-    
-    <fieldset>
-        <legend>Log in Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-        </ol>
-        <input type="submit" value="Log in" />
-    </fieldset>
-    <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
-}
-</section>
-
-<section class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>*@
-</body>
-</html>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

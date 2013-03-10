@@ -1,9 +1,64 @@
 ﻿@model SchoolApp.Models.RegisterModel
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
+ <h2>Register</h2>
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="input-prepend" title="FirstName">
+                <span class="add-on"><i class="icon-info-sign"></i></span>
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "input-large span10", @placeholder = "First name" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            <div class="clearfix"></div>
 
-<hgroup class="title">
+            <div class="input-prepend" title="LastName">
+                <span class="add-on"><i class="icon-info-sign"></i></span>
+                 @Html.TextBoxFor(m => m.LastName, new { @class = "input-large span10", @placeholder = "Last name" })
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+                        <div class="input-prepend" title="Email">
+                <span class="add-on"><i class="icon-envelope"></i></span>
+                 @Html.TextBoxFor(m => m.Email, new { @class = "input-large span10", @placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class="clearfix"></div>
+            <div class="input-prepend" title="Password">
+                <span class="add-on"><i class="icon-user"></i></span>
+                 @Html.TextBoxFor(m => m.UserName, new { @class = "input-large span10", @placeholder = "Username" })
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+              <div class="clearfix"></div>
+            <div class="input-prepend" title="Password">
+                <span class="add-on"><i class="icon-lock"></i></span>
+                 @Html.PasswordFor(m => m.Password, new { @class = "input-large span10", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+                <div class="clearfix"></div>
+            <div class="input-prepend" title="ConfirmPassword">
+                <span class="add-on"><i class="icon-lock"></i></span>
+                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input-large span10", @placeholder = "Confirm password" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </div>
+            <div class="clearfix"></div>
+            <div class="button-login">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        }
+        <div class="clearfix"></div>
+
+        <hr>
+        @*<h3>Forgot Password?</h3>
+        <p>
+            No problem, @Html.ActionLink("click here","Manage") to get a new password.
+        </p>*@
+        <h3>Don't have an account?</h3>
+        <p> No problem, you can always register @Html.ActionLink("here","Register").</p>
+    </fieldset>
+@*<hgroup class="title">
     <h1>@ViewBag.Title.</h1>
     <h2>Create a new account.</h2>
 </hgroup>
@@ -42,7 +97,7 @@
         </ol>
         <input type="submit" value="Register" />
     </fieldset>
-}
+}*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
