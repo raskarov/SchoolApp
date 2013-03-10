@@ -11,6 +11,11 @@ namespace SchoolApp.ViewModels
     {
         public List<GroupInstance> GroupInstances { get; set; }
         public List<SelectListItem> TeachersList { get; set; }
-        public Dictionary<string, string> ColorLegend { get; set; } //Will fail if two teachers have the same name :)
+        public List<ColorLegend> ColorLegend { get; set; }
+    }
+    public class ColorLegend
+    {
+        public string FullName { get; set; }
+        public string Color { get; set; }
     }
 }

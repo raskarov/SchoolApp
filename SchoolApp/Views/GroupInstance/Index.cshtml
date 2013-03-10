@@ -11,7 +11,7 @@
         <div class="legend" style="float:right">
             @foreach (var item in Model.ColorLegend)
             {
-                <span class="label" style="background-color: @item.Value">@item.Key</span>
+                <span class="label" style="background-color: @item.Color">@item.FullName</span>
             }
         </div>
     </div>

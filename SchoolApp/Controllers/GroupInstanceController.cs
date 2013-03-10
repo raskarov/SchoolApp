@@ -30,7 +30,7 @@ namespace SchoolApp.Controllers
                 sli.Add(new SelectListItem { Text = teacher.FullName, Value = teacher.UserId.ToString() });
             }
             model.TeachersList = sli;
-            model.ColorLegend = teachers.ToDictionary(x => x.FullName, x => x.HexColor);
+            model.ColorLegend = teachers.Select(x => new ColorLegend { FullName = x.FullName, Color = x.HexColor }).ToList();
             return View(model);
         }
 
