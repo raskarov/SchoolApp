@@ -105,7 +105,8 @@
 
                 //Render html in event body O_O not supported by default: 
                 //https://code.google.com/p/fullcalendar/issues/detail?id=152
-                element.find('div.fc-event-title').html(element.find('div.fc-event-title').text());
+                var titleElement = element.find('div.fc-event-title');
+                titleElement.html(titleElement.text());
 
 
                 var eventId = event.GroupInstanceId;
@@ -121,6 +122,7 @@
                     </a>\
                     </div>\
                     "));
+
                 //Add color based on the field in table teacher
                 @*$.get("@Url.Action("GroupInfo","showDialogEditRemove")", function (viewContent) {
                     element.popover({
@@ -131,6 +133,13 @@
                     });
                 });*@
 
+            },
+            eventAfterRender: function (event, element, view) {
+                if (element.width() < 120) {
+                    var titleElement = element.find('div.fc-event-title');
+                    titleElement.html('<i class="icon-hand-up"></i>');
+                    element.find('div.fc-event-head').hide();
+                }
             }
         });
         $("#dialogContainer").dialog({
