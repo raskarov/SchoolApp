@@ -107,6 +107,10 @@ namespace SchoolApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             UserProfile userprofile = db.UserProfiles.Find(id);
+            
+            //Remove user from all roles
+            Roles.RemoveUserFromRoles(userprofile.UserName, Roles.GetRolesForUser(userprofile.UserName));
+            
             db.UserProfiles.Remove(userprofile);
             db.SaveChanges();
             return RedirectToAction("Index");

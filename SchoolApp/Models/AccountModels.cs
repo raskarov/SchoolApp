@@ -13,12 +13,12 @@ namespace SchoolApp.Models
 
         public string UserName { get; set; }
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "Имя")]
         [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Фамилия")]
         [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string LastName { get; set; }
 
@@ -26,16 +26,20 @@ namespace SchoolApp.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Display(Name = "Адрес")]
         public string Address { get; set; }
 
         [DataType(DataType.PhoneNumber)]
+        [Display(Name="Телефон")]
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Invalid phone format")]
         public string Phone { get; set; }
 
         public ICollection<Group> Groups { get; set; }
 
+        [Display(Name = "Цвет")]
         public string HexColor { get; set; }
 
+        [Display(Name = "Полное Имя")]
         public string FullName
         {
             get

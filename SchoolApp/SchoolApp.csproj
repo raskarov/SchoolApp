@@ -188,24 +188,17 @@
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201302222015119_addPaymentModel.cs" />
-    <Compile Include="Migrations\201302222015119_addPaymentModel.Designer.cs">
-      <DependentUpon>201302222015119_addPaymentModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201302262345597_addPaymentProfileToGroup.cs" />
-    <Compile Include="Migrations\201302262345597_addPaymentProfileToGroup.Designer.cs">
-      <DependentUpon>201302262345597_addPaymentProfileToGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201303072313401_addUserColor.cs" />
-    <Compile Include="Migrations\201303072313401_addUserColor.Designer.cs">
-      <DependentUpon>201303072313401_addUserColor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\GroupInstance.cs" />
     <Compile Include="Models\PaymentProfile.cs" />
     <Compile Include="Models\PaymentRule.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
@@ -363,6 +356,10 @@
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\gcal.js" />
+    <Content Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -500,15 +497,6 @@
     <EmbeddedResource Include="Images\201302120311492_GroupIndexViewModel.resx">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302222015119_addPaymentModel.resx">
-      <DependentUpon>201302222015119_addPaymentModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201302262345597_addPaymentProfileToGroup.resx">
-      <DependentUpon>201302262345597_addPaymentProfileToGroup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201303072313401_addUserColor.resx">
-      <DependentUpon>201303072313401_addUserColor.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -526,7 +514,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>49548</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:50509/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

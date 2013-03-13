@@ -3,10 +3,6 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<p>
-    <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i>New Item</a>
-</p>
 <div class="well">
     <table class="table table-striped datatable">
         <thead>
@@ -53,9 +49,8 @@
                     <span class="label" style="background-color: @item.HexColor; width: 50%; height: 15px;">&nbsp</span>
                 </td>
                 <td>
-                    <a href="@Url.Action("Edit", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
-                    <a href="@Url.Action("Details", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
-                    <a href="@Url.Action("Delete", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+                    <a href="@Url.Action("Edit", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="Редактировать учителя"><i class="icon-pencil"></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="Удалить учителя"><i class="icon-remove"></i></a>
                 </td>
             </tr>
         }
