@@ -8,6 +8,7 @@ using SchoolApp.DAL;
 using SchoolApp.Models;
 using SchoolApp.ViewModels;
 using System.Web.Security;
+using System.Dynamic;
 
 namespace SchoolApp.Controllers
 {
@@ -216,19 +217,27 @@ namespace SchoolApp.Controllers
                 groupInstances = db.GroupInstances.Include(e => e.Group)
                     .Include(e=>e.Group.Users).ToList();
             }
-            var events = groupInstances.Select(x => new
+            if (groupInstances.Any())
             {
-                title = x.Group.Name,
-                start = x.StartDateTime.ToString("s"),
-                end = x.EndDateTime.ToString("s"),
-                editable = false,
-                GroupInstanceId = x.GroupInstanceId,
-                ClassroomId = x.ClassroomId,
-                GroupId = x.GroupId,
-                Color = x.Group.Users.First(y=>Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
-            });
-
-            return Json(events, JsonRequestBehavior.AllowGet);
+                var events = groupInstances.Select(x => new
+                {
+                    title = x.Group.Name,
+                    start = x.StartDateTime.ToString("s"),
+                    end = x.EndDateTime.ToString("s"),
+                    editable = false,
+                    GroupInstanceId = x.GroupInstanceId,
+                    ClassroomId = x.ClassroomId,
+                    GroupId = x.GroupId,
+                    Color = "#ff00ff"//x.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
+                });
+                return Json(events, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+           
+            
         }
         protected override void Dispose(bool disposing)
         {
