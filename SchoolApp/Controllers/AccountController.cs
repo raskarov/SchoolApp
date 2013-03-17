@@ -39,7 +39,15 @@ namespace SchoolApp.Controllers
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 Session["MyMenu"] = null;
-                return RedirectToLocal(returnUrl);
+                if (Roles.IsUserInRole(model.UserName, "RegisteredUser"))
+                {
+                    FormsAuthentication.SignOut();
+                    return RedirectToAction("ApprovalRequired");
+                }
+                else
+                {
+                    return RedirectToLocal(returnUrl);
+                }
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");

@@ -10850,7 +10850,8 @@
 		 *  @namespace
 		 *  @extends DataTable.models.oSearch
 		 */
-		"oPreviousSearch": {},
+		"o
+            Search": {},
 		
 		/**
 		 * Store the applied search for each column - see 

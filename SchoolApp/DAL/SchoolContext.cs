@@ -25,7 +25,7 @@ namespace SchoolApp.DAL
         public DbSet<GroupInstance> GroupInstances { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
-      
+
         public IQueryable<UserProfile> Students
         {
             get
@@ -42,6 +42,8 @@ namespace SchoolApp.DAL
                 return UserProfiles.Where(x => AllTeachers.Contains(x.UserName));
             }
         }
+
+        public DbSet<Guardian> Guardians { get; set; }
       
     }
 }

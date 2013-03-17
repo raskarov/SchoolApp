@@ -177,6 +177,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\login.css" />
     <Compile Include="Controllers\GroupInstanceController.cs" />
+    <Compile Include="Controllers\GuardianController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PaymentProfileController.cs" />
     <Compile Include="Controllers\PaymentRuleController.cs" />
@@ -209,6 +210,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\EventDetails.cs" />
+    <Compile Include="ViewModels\StudentEditViewModel.cs" />
     <Compile Include="ViewModels\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
@@ -493,6 +495,12 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Guardian\Index.cshtml" />
+    <Content Include="Views\Guardian\Details.cshtml" />
+    <Content Include="Views\Guardian\Create.cshtml" />
+    <Content Include="Views\Guardian\Edit.cshtml" />
+    <Content Include="Views\Guardian\Delete.cshtml" />
+    <Content Include="Views\Account\ApprovalRequired.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

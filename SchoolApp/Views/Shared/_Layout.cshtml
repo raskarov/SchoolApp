@@ -56,10 +56,10 @@
     </header>
     <div class="sidebar-nav">
         <form class="search form-inline">
-            <input type="text" placeholder="Search...">
+            <input type="text" placeholder="Поиск...">
         </form>
 
-        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Dashboard</a>
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Основное Меню</a>
         @if (Session["MyMenu"] == null)
         {
             Session["MyMenu"] = Html.Partial("~/Views/Shared/_Menu.cshtml");

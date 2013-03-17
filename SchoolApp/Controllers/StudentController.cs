@@ -6,6 +6,7 @@ using SchoolApp.Models;
 using SchoolApp.Extensions;
 using System;
 using System.Linq;
+using SchoolApp.ViewModels;
 namespace SchoolApp.Controllers
 {
     public class StudentController : Controller
@@ -67,28 +68,31 @@ namespace SchoolApp.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            UserProfile userprofile = db.UserProfiles.Find(id);
-            if (userprofile == null)
+            StudentEditViewModel vm = new StudentEditViewModel();
+
+            vm.Student = db.UserProfiles.Find(id);
+            if (vm.Student == null)
             {
                 return HttpNotFound();
             }
             var levels = from Level d in Enum.GetValues(typeof(Level))
-                             select new { ID = (int)d, Name = d.ToString() };
+                             select new { Name = Enum.GetName(typeof(Level), d), Value = Enum.GetName(typeof(Level),d) };
 
-            Level currentLevel = userprofile.StudentLevel;
-            ViewBag.SelectLevel = new SelectList(levels, "ID", "Name", currentLevel);
-            return View(userprofile);
+            Level currentLevel = vm.Student.StudentLevel;
+            vm.LevelsList = new SelectList(levels, "Name", "Value", currentLevel);
+            vm.StudentLevel = currentLevel;
+            return View(vm);
         }
 
         //
         // POST: /Student/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(UserProfile userprofile)
+        public ActionResult Edit(StudentEditViewModel userprofile)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userprofile).State = EntityState.Modified;
+                db.Entry(userprofile.Student).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

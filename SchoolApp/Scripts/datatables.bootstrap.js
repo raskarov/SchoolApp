@@ -3,10 +3,12 @@ $.extend(true, $.fn.dataTable.defaults, {
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "oLanguage": {
-        "sLengthMenu": "_MENU_ records per page"
+        "sLengthMenu": "_MENU_ записей на странице",
+        "sEmptyTable": "В этой таблице пока нет записей",
+        "sInfo": "Показаны записи от _START_ до _END_ из _TOTAL_",
+        "sSearch": "Поиск:"
     }
 });
-
 
 /* Default class modification */
 $.extend($.fn.dataTableExt.oStdClasses, {

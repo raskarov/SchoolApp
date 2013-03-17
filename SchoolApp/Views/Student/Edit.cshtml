@@ -1,73 +1,74 @@
-﻿@model SchoolApp.Models.UserProfile
+﻿@model SchoolApp.ViewModels.StudentEditViewModel
 
 @{
     ViewBag.Title = "Edit";
-    SelectList  levelList= ViewBag.SelectLevel;
 }
 
-<h2>Edit</h2>
-
+<h2>Студент</h2>
+<div class="row-fluid">
+<div class="span2">
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.UserId)
-
+        @Html.HiddenFor(model => model.Student.UserId)
+    @Html.HiddenFor(model => model.Student.UserName)
+        
         <div class="editor-label">
-            @Html.LabelFor(model => model.UserName)
+            @Html.LabelFor(model => model.Student.FirstName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.UserName)
-            @Html.ValidationMessageFor(model => model.UserName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FirstName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.FirstName)
-            @Html.ValidationMessageFor(model => model.FirstName)
+            @Html.EditorFor(model => model.Student.FirstName)
+            @Html.ValidationMessageFor(model => model.Student.FirstName)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.LastName)
+            @Html.LabelFor(model => model.Student.LastName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LastName)
-            @Html.ValidationMessageFor(model => model.LastName)
+            @Html.EditorFor(model => model.Student.LastName)
+            @Html.ValidationMessageFor(model => model.Student.LastName)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
+            @Html.LabelFor(model => model.Student.Email)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
+            @Html.EditorFor(model => model.Student.Email)
+            @Html.ValidationMessageFor(model => model.Student.Email)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Address)
+            @Html.LabelFor(model => model.Student.Address)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Address)
-            @Html.ValidationMessageFor(model => model.Address)
+            @Html.EditorFor(model => model.Student.Address)
+            @Html.ValidationMessageFor(model => model.Student.Address)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Phone)
+            @Html.LabelFor(model => model.Student.Phone)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Phone)
-            @Html.ValidationMessageFor(model => model.Phone)
+            @Html.EditorFor(model => model.Student.Phone)
+            @Html.ValidationMessageFor(model => model.Student.Phone)
+        </div>
+     <div class="editor-label">
+            @Html.LabelFor(model => model.Student.StudentLevel)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("StudentLevel", levelList)
-            @Html.ValidationMessageFor(model=>model.StudentLevel)
+            @Html.DropDownListFor(x=>x.Student.StudentLevel, Model.LevelsList)
+            @Html.ValidationMessageFor(model=>model.Student.StudentLevel)
         </div>
         <p>
             <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
             <a href="@Url.Action("Index")" class="btn">Back to list</a>
         </p>
 }
+            </div>
+    <div class="span8">
+        @Html.Action("Index","Guardian", new {id = Model.Student.UserId })
+    </div>
+    </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

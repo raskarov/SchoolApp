@@ -52,7 +52,7 @@ namespace SchoolApp.Models
         public Level StudentLevel { get; set; }
 
         [Display(Name="Попечитель")]
-        public List<Guardian> Guardians { get; set; }
+        public ICollection<Guardian> Guardians { get; set; }
     }
 
     public class RegisterExternalLoginModel
