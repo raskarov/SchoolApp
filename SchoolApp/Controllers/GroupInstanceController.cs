@@ -9,6 +9,7 @@ using SchoolApp.Models;
 using SchoolApp.ViewModels;
 using System.Web.Security;
 using System.Dynamic;
+using SchoolApp.Extensions;
 
 namespace SchoolApp.Controllers
 {
@@ -228,7 +229,7 @@ namespace SchoolApp.Controllers
                     GroupInstanceId = x.GroupInstanceId,
                     ClassroomId = x.ClassroomId,
                     GroupId = x.GroupId,
-                    Color = "#ff00ff"//x.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
+                    Color = x.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
                 });
                 return Json(events, JsonRequestBehavior.AllowGet);
             }
@@ -236,8 +237,30 @@ namespace SchoolApp.Controllers
             {
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        //GET: /GroupInstance/GetEventDetails/1
+        public ActionResult GetEventDetails(int id = 0)
+        {
+            if (id>0)
+            {
+                var instance = db.GroupInstances
+                            .Include(e => e.Group)
+                            .Include(e => e.Group.Users)
+                            .Include(e => e.Classroom)
+                            .Where(x => x.GroupInstanceId == id).FirstOrDefault();
+                if (instance != null)
+                {
+                    var details = new EventDetails();
+                    details.Students = instance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, Helpers.STUDENT_ROLE)).Select(x => x.FullName).ToList();
+                    details.Teachers = instance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, Helpers.TEACHER_ROLE)).Select(x => x.FullName).ToList();
+                    details.GroupInstanceId = instance.GroupInstanceId;
+                    return PartialView("_EventBodyPartial", details);
+                }
            
-            
+            }
+            return Content(Boolean.FalseString);
+
         }
         protected override void Dispose(bool disposing)
         {

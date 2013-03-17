@@ -4,7 +4,8 @@ using System.Web.Security;
 using SchoolApp.DAL;
 using SchoolApp.Models;
 using SchoolApp.Extensions;
-
+using System;
+using System.Linq;
 namespace SchoolApp.Controllers
 {
     public class StudentController : Controller
@@ -71,6 +72,11 @@ namespace SchoolApp.Controllers
             {
                 return HttpNotFound();
             }
+            var levels = from Level d in Enum.GetValues(typeof(Level))
+                             select new { ID = (int)d, Name = d.ToString() };
+
+            Level currentLevel = userprofile.StudentLevel;
+            ViewBag.SelectLevel = new SelectList(levels, "ID", "Name", currentLevel);
             return View(userprofile);
         }
 

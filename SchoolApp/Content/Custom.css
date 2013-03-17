@@ -49,3 +49,10 @@ font-weight: bold;
     border-radius: 4px 4px 4px 4px !important;
     padding-bottom: 0 !important;
 }
+
+.detailsButtons {
+padding-top:20px;
+padding-bottom:20px;
+display: inline;
+float:right;
+}

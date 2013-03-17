@@ -47,6 +47,12 @@ namespace SchoolApp.Models
                 return FirstName + " " + LastName;
             }
         }
+
+        [Display(Name="Уровень")]
+        public Level StudentLevel { get; set; }
+
+        [Display(Name="Попечитель")]
+        public List<Guardian> Guardians { get; set; }
     }
 
     public class RegisterExternalLoginModel
@@ -124,11 +130,21 @@ namespace SchoolApp.Models
         [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string Email { get; set; }
     }
-
+    
     public class ExternalLogin
     {
         public string Provider { get; set; }
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
+    }
+
+    public enum Level
+    {
+        Starter,
+        Beginner, 
+        preIntermediate, 
+        Intermediate, 
+        upperIntermediate,
+        Advanced
     }
 }

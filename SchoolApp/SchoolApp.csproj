@@ -188,6 +188,15 @@
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303162043519_addStudentLevel.cs" />
+    <Compile Include="Migrations\201303162043519_addStudentLevel.Designer.cs">
+      <DependentUpon>201303162043519_addStudentLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303170249448_addParents.cs" />
+    <Compile Include="Migrations\201303170249448_addParents.Designer.cs">
+      <DependentUpon>201303170249448_addParents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
     <Compile Include="Models\Event.cs" />
@@ -199,6 +208,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\EventDetails.cs" />
     <Compile Include="ViewModels\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />
@@ -496,6 +506,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\201302120311492_GroupIndexViewModel.resx">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303162043519_addStudentLevel.resx">
+      <DependentUpon>201303162043519_addStudentLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303170249448_addParents.resx">
+      <DependentUpon>201303170249448_addParents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,1 +1,18 @@
-﻿HI! HI! HI!
+﻿@model SchoolApp.ViewModels.EventDetails
+<div>
+    <h5>Teachers:</h5>
+    @foreach (var teacher in Model.Teachers)
+    {
+        <span class="label">@teacher</span>
+    }
+    <h5>Students:</h5>
+    @foreach (var student in Model.Students)
+    {
+        <span class="label">@student</span>
+    }
+</div>
+<div class="detailsButtons">
+<a href="#" class="btn editEvent" data-event-id="@Model.GroupInstanceId"><i class="icon-pencil"></i></a>
+<a href="@Url.Action("Edit", "UserGroupInstance", new { id = @Model.GroupInstanceId })" class="btn"><i class="icon-list-alt"></i></a>
+<a href="#" class="btn removeEvent" data-event-id="@Model.GroupInstanceId"><i class="icon-remove"></i></a>
+</div>

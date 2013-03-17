@@ -5,16 +5,17 @@
 }
 <div class="well">
     <div class="calendarTop">
-        <div class="filter" style="float:left">
+        <div class="filter" style="float: left">
             filter by teacher: @Html.DropDownList("UserId", Model.TeachersList)
         </div>
-        <div class="legend" style="float:right">
+        <div class="legend" style="float: right">
             @foreach (var item in Model.ColorLegend)
             {
                 <span class="label" style="background-color: @item.Color">@item.FullName</span>
             }
         </div>
     </div>
+    <div id="popverContainer"></div>
     <div id="calendar"></div>
     <div id="dialogContainer"></div>
 </div>
@@ -53,10 +54,10 @@
             },
             firstDay: 1, //Start with Monday
             allDaySlot: false,
-            slotMinutes: 20,
-            height:500,
+            slotMinutes: 10,
+            height: 500,
             editable: true,
-            defaultView: 'agendaDay',
+            defaultView: 'agendaWeek',
             droppable: true,
             selectable: true,
             selectHelper: true,
@@ -86,13 +87,13 @@
                 //calendar.fullCalendar('unselect');
             },
             eventClick: function (calEvent, jsEvent, view) {
-                if (jsEvent.target.className === "icon-remove" || jsEvent.target.className === "removeEvent") //We handle remove button ourselves
+                @*if (jsEvent.target.className === "icon-remove" || jsEvent.target.className === "removeEvent") //We handle remove button ourselves
                 {
                     jsEvent.preventDefault();
                     return;
                 }
                 formId = "editGroupInstanceForm";
-                showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", calEvent.GroupInstanceId, calEvent.start, calEvent.end);
+                showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", calEvent.GroupInstanceId, calEvent.start, calEvent.end);*@
             },
             eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
                 postEditCalendar(event);
@@ -107,8 +108,26 @@
                 //https://code.google.com/p/fullcalendar/issues/detail?id=152
                 var titleElement = element.find('div.fc-event-title');
                 titleElement.html(titleElement.text());
-
-
+                $.get('@Url.Action("GetEventDetails")/' + event.GroupInstanceId, function (d) {
+                    element.popover({
+                        title: event.title,
+                        html: true,
+                        placement: 'right',
+                        content: d,
+                        trigger: 'manual',
+                        container: 'body',
+                        template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+                    }).mouseenter(function (e) {
+                        $(this).popover('show');
+                    })
+                   .mouseleave(function (e) {
+                       var ref = $(this);
+                       timeoutObj = setTimeout(function () {
+                           ref.popover('hide');
+                       }, 50);
+                   });
+                });
+               
                 var eventId = event.GroupInstanceId;
                 //Add remove & attendance icon
                 element.find(".fc-event-time")
@@ -179,6 +198,10 @@
         formId = "deleteGroupInstanceForm";
         showDialogEditRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
     });
+    $(document).on("click", ".editEvent", function () {
+        formId = "editGroupInstanceForm";
+        showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", $(this).data('event-id'));
+    });
     function showDialogEditRemove(href, id, StartTime, EndTime) {
         var dialogDiv = $("#dialogContainer");
         var viewUrl = href;
@@ -187,8 +210,8 @@
             type: 'GET',
             data: {
                 id: id,
-                start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
-                end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
+                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
             },
             success: function (data) {
                 dialogDiv.html(data);
