@@ -39,7 +39,9 @@ namespace SchoolApp.Controllers
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 Session["MyMenu"] = null;
-                if (Roles.IsUserInRole(model.UserName, "RegisteredUser"))
+                if (Roles.IsUserInRole(model.UserName, Helpers.REGISTERED_USER_ROLE) 
+                    && !Roles.IsUserInRole(model.UserName, Helpers.TEACHER_ROLE) 
+                    && !Roles.IsUserInRole(model.UserName, Helpers.ADMIN_ROLE))
                 {
                     FormsAuthentication.SignOut();
                     return RedirectToAction("ApprovalRequired");
@@ -74,7 +76,11 @@ namespace SchoolApp.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
+        public ActionResult ApprovalRequired()
+        {
+            return View();
+        }
         //
         // POST: /Account/Register
 
@@ -95,11 +101,8 @@ namespace SchoolApp.Controllers
 
                         //And assign him to the default role
                         Roles.AddUserToRole(model.UserName, Helpers.REGISTERED_USER_ROLE);
-
-                        //Loging the new user
-                        WebSecurity.Login(model.UserName, model.Password);
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ApprovalRequired");
                 }
                 catch (MembershipCreateUserException e)
                 {
