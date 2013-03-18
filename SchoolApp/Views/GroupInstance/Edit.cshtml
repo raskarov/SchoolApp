@@ -16,7 +16,6 @@
     <div id="update-message"></div>
 
         @Html.HiddenFor(model => model.GroupInstanceId)
-
         <div class="editor-label">
             @Html.LabelFor(model => model.StartDateTime)
         </div>
@@ -48,6 +47,12 @@
             @Html.DropDownList("ClassroomId", String.Empty)
             @Html.ValidationMessageFor(model => model.ClassroomId)
         </div>
+        <!-- Make a text area for the RRULE, which also works as a non-javascript fallback -->
+        <textarea id="RecurrenceRule" name="RecurrenceRule"></textarea>
+        <!-- Make the text area a recurrenceinput -->
+        <script type="text/javascript">
+            $("textarea[name=RecurrenceRule]").recurrenceinput();
+        </script>
 }
 
 

@@ -176,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\jquery.recurrenceinput.css" />
     <Compile Include="Controllers\GroupInstanceController.cs" />
     <Compile Include="Controllers\GuardianController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -196,6 +197,10 @@
     <Compile Include="Migrations\201303170249448_addParents.cs" />
     <Compile Include="Migrations\201303170249448_addParents.Designer.cs">
       <DependentUpon>201303170249448_addParents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303180210546_addREcurrenceRule.cs" />
+    <Compile Include="Migrations\201303180210546_addREcurrenceRule.Designer.cs">
+      <DependentUpon>201303180210546_addREcurrenceRule.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -249,6 +254,7 @@
     <Content Include="Content\images\bg-login.jpg" />
     <Content Include="Content\images\hue.png" />
     <Content Include="Content\images\saturation.png" />
+    <Content Include="Content\overlay.css" />
     <Content Include="Scripts\bootstrap-colorpicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrapSwitch.js" />
@@ -365,6 +371,7 @@
     <Content Include="Images\switch.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\dateinput.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\gcal.js" />
@@ -388,8 +395,11 @@
     <Content Include="Scripts\jquery.quicksearch.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.recurrenceinput.js" />
+    <Content Include="Scripts\jquery.tmpl-beta1.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.utils.i18n-0.8.5.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -397,6 +407,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\overlay.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -520,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303170249448_addParents.resx">
       <DependentUpon>201303170249448_addParents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303180210546_addREcurrenceRule.resx">
+      <DependentUpon>201303180210546_addREcurrenceRule.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

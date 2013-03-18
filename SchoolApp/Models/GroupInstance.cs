@@ -21,5 +21,7 @@ namespace SchoolApp.Models
 
         [ForeignKey("ClassroomId")]
         public Classroom Classroom { get; set; }
+
+        public string RecurrenceRule { get; set; }
     }
 }

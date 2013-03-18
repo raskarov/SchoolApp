@@ -15,14 +15,21 @@
             }
         </div>
     </div>
+
     <div id="popverContainer"></div>
     <div id="calendar"></div>
     <div id="dialogContainer"></div>
 </div>
 @section Scripts{
+    <script type="text/javascript" src="~/Scripts/dateinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/overlay.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.tmpl-beta1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.recurrenceinput.js"></script>
     @Scripts.Render("~/bundles/fullcalendar")
 }
 @section Styles{
+    <link href="~/Content/overlay.css" rel="stylesheet">
+    <link href="~/Content/jquery.recurrenceinput.css" rel="stylesheet" />
     @Styles.Render("~/content/fullcalendar")
 }
 <script type="text/javascript">
@@ -114,18 +121,9 @@
                         html: true,
                         placement: 'right',
                         content: d,
-                        trigger: 'manual',
-                        container: 'body',
-                        template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
-                    }).mouseenter(function (e) {
-                        $(this).popover('show');
+                        trigger: 'click',
+                        container: 'body'
                     })
-                   .mouseleave(function (e) {
-                       var ref = $(this);
-                       timeoutObj = setTimeout(function () {
-                           ref.popover('hide');
-                       }, 50);
-                   });
                 });
                
                 var eventId = event.GroupInstanceId;

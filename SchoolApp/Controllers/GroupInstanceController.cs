@@ -10,6 +10,7 @@ using SchoolApp.ViewModels;
 using System.Web.Security;
 using System.Dynamic;
 using SchoolApp.Extensions;
+using DDay.iCal;
 
 namespace SchoolApp.Controllers
 {
@@ -220,18 +221,49 @@ namespace SchoolApp.Controllers
             }
             if (groupInstances.Any())
             {
-                var events = groupInstances.Select(x => new
+                var recurrence = groupInstances.Where(x => !String.IsNullOrWhiteSpace(x.RecurrenceRule)).FirstOrDefault();
+                var list = new List<dynamic>();
+                foreach (var instance in groupInstances)
                 {
-                    title = x.Group.Name,
-                    start = x.StartDateTime.ToString("s"),
-                    end = x.EndDateTime.ToString("s"),
-                    editable = false,
-                    GroupInstanceId = x.GroupInstanceId,
-                    ClassroomId = x.ClassroomId,
-                    GroupId = x.GroupId,
-                    Color = x.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
-                });
-                return Json(events, JsonRequestBehavior.AllowGet);
+                    if (!String.IsNullOrWhiteSpace(instance.RecurrenceRule))
+                    {
+                        RecurrencePattern rp = new RecurrencePattern(recurrence.RecurrenceRule);
+                        Event ev = new Event();
+                        ev.RecurrenceRules.Add(rp);
+                        ev.Start = new iCalDateTime(recurrence.StartDateTime);
+                        var occ = ev.GetOccurrences(recurrence.StartDateTime, DateTime.MaxValue);
+                        foreach (var occurence in occ)
+                        {
+                            list.Add(new
+                            {
+                                title = instance.Group.Name,
+                                start = occurence.Period.StartTime.ToString("s"),
+                                end = occurence.Period.EndTime.ToString("s"),
+                                editable = false,
+                                GroupInstanceId = instance.GroupInstanceId,
+                                ClassroomId = instance.ClassroomId,
+                                GroupId = instance.GroupId,
+                                Color = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
+                            });
+                        }
+                    }
+                    else
+                    {
+                        list.Add(new
+                         {
+                             title = instance.Group.Name,
+                             start = instance.StartDateTime.ToString("s"),
+                             end = instance.EndDateTime.ToString("s"),
+                             editable = false,
+                             GroupInstanceId = instance.GroupInstanceId,
+                             ClassroomId = instance.ClassroomId,
+                             GroupId = instance.GroupId,
+                             Color = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
+                         });
+                       
+                    }
+                }
+                return Json(list, JsonRequestBehavior.AllowGet);
             }
             else
             {
