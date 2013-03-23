@@ -43,7 +43,13 @@
                 right: 'agendaWeek,agendaDay'
             },
             events: function (start, end, callback) {
-                $.getJSON("@Url.Action("GetEvents")/" + $("#UserId").val(), function (locationsArray) {
+                $.getJSON("@Url.Action("GetEvents")",
+                     {
+                        id: $("#UserId").val(),
+                        start: $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"),
+                        end: $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT")
+                    },
+            function (locationsArray) {
                     var result = $(locationsArray).map(function () {
                         return {
                             title: this.title,
@@ -53,7 +59,8 @@
                             GroupInstanceId: this.GroupInstanceId,
                             ClassroomId: this.ClassroomId,
                             GroupId: this.GroupId,
-                            color: this.Color
+                            color: this.Color,
+                            RecurrenceRule: this.RecurrenceRule
                         };
                     }).toArray();
                     callback(result);
@@ -197,6 +204,7 @@
         showDialogEditRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
     });
     $(document).on("click", ".editEvent", function () {
+        $(this).closest(".popover").hide();
         formId = "editGroupInstanceForm";
         showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", $(this).data('event-id'));
     });
@@ -273,7 +281,8 @@
                 StartDateTime: $.fullCalendar.formatDate(event.start, "yyyy/MM/dd hh:mm:ss TT"),
                 EndDateTime: $.fullCalendar.formatDate(event.end, "yyyy/MM/dd hh:mm:ss TT"),
                 GroupId: event.GroupId,
-                ClassroomId: event.ClassroomId
+                ClassroomId: event.ClassroomId,
+                RecurrenceRule: event.RecurrenceRule
             },
             success: function () {
                 noty({

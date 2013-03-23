@@ -204,7 +204,7 @@ namespace SchoolApp.Controllers
         /// Get scheduled events into calendar
         /// </summary>
         /// <returns>Formatted Json events</returns>
-        public JsonResult GetEvents(int id = 0)
+        public JsonResult GetEvents( DateTime start, DateTime end,int id = 0)
         {
             IEnumerable<GroupInstance> groupInstances;
             if (id > 0)
@@ -212,12 +212,16 @@ namespace SchoolApp.Controllers
                 groupInstances = db.GroupInstances.Include(e => e.Group)
                                                   .Include(e => e.Group.Users)
                                                   .ToList()
-                                                  .Where(x => x.Group.Users.Where(y => y.UserId == id).Any());
+                                                  .Where(x => x.Group.Users.Where(y => y.UserId == id
+                                                       &&((x.StartDateTime>=start 
+                                                           ||x.EndDateTime<=end)
+                                                       &&x.RecurrenceRule==null)
+                                                      ||x.RecurrenceRule!=null).Any());
             }
             else
             {
                 groupInstances = db.GroupInstances.Include(e => e.Group)
-                    .Include(e=>e.Group.Users).ToList();
+                    .Include(e=>e.Group.Users).Where(x=>((x.StartDateTime>=start ||x.EndDateTime<=end)&&x.RecurrenceRule==null)||x.RecurrenceRule!=null).ToList();
             }
             if (groupInstances.Any())
             {
@@ -231,7 +235,7 @@ namespace SchoolApp.Controllers
                         Event ev = new Event();
                         ev.RecurrenceRules.Add(rp);
                         ev.Start = new iCalDateTime(recurrence.StartDateTime);
-                        var occ = ev.GetOccurrences(recurrence.StartDateTime, DateTime.MaxValue);
+                        var occ = ev.GetOccurrences(start.AddDays(-1), end);
                         foreach (var occurence in occ)
                         {
                             list.Add(new
@@ -243,7 +247,8 @@ namespace SchoolApp.Controllers
                                 GroupInstanceId = instance.GroupInstanceId,
                                 ClassroomId = instance.ClassroomId,
                                 GroupId = instance.GroupId,
-                                Color = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor
+                                Color = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor,
+                                RecurrenceRule = recurrence.RecurrenceRule
                             });
                         }
                     }

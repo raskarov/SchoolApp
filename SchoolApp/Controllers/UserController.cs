@@ -25,7 +25,7 @@ namespace SchoolApp.Controllers
             var RegisteredUsers = Roles.GetUsersInRole(Helpers.REGISTERED_USER_ROLE);
             var Teachers = Roles.GetUsersInRole(Helpers.TEACHER_ROLE);
             var Admins = Roles.GetUsersInRole(Helpers.ADMIN_ROLE);
-            var users = db.UserProfiles.Select(x => new UserIndexViewModel
+            var users = db.UserProfiles.Where(x=>!Roles.IsUserInRole(x.UserName,Helpers.STUDENT_ROLE)).Select(x => new UserIndexViewModel
                                                 {
                                                     UserId = x.UserId,
                                                     UserName = x.UserName,

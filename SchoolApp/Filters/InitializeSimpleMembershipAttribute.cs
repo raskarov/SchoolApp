@@ -27,7 +27,6 @@ namespace SchoolApp.Filters
             public SimpleMembershipInitializer()
             {
                 Database.SetInitializer<SchoolContext>(new DropCreateDatabaseIfModelChanges<SchoolContext>());
-
                 try
                 {
                     using (var context = new SchoolContext())

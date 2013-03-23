@@ -7,6 +7,11 @@ namespace SchoolApp.Models
     [Table("UserProfile")]
     public class UserProfile
     {
+
+        public UserProfile()
+        {
+            HexColor = "#1393c0";
+        }
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
