@@ -111,10 +111,11 @@
             },
             eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
                 postEditCalendar(event);
-
+                $('#calendar').fullCalendar('refetchEvents');
             },
             eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
                 postEditCalendar(event);
+                $('#calendar').fullCalendar('refetchEvents');
             },
             eventRender: function (event, element) {
 

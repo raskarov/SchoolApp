@@ -199,7 +199,10 @@ namespace SchoolApp.Controllers
             db.SaveChanges();
             return Content(Boolean.TrueString);
         }
-
+        DateTime CreateNewDateTime(IDateTime date, DateTime time)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second);
+        }
         /// <summary>
         /// Get scheduled events into calendar
         /// </summary>
@@ -236,13 +239,14 @@ namespace SchoolApp.Controllers
                         ev.RecurrenceRules.Add(rp);
                         ev.Start = new iCalDateTime(recurrence.StartDateTime);
                         var occ = ev.GetOccurrences(start.AddDays(-1), end);
+
                         foreach (var occurence in occ)
                         {
                             list.Add(new
                             {
                                 title = instance.Group.Name,
-                                start = occurence.Period.StartTime.ToString("s"),
-                                end = occurence.Period.EndTime.ToString("s"),
+                                start = CreateNewDateTime(occurence.Period.StartTime, instance.StartDateTime).ToString("s"),
+                                end = CreateNewDateTime(occurence.Period.EndTime, instance.EndDateTime).ToString("s"),
                                 editable = false,
                                 GroupInstanceId = instance.GroupInstanceId,
                                 ClassroomId = instance.ClassroomId,
