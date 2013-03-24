@@ -1,12 +1,12 @@
 ﻿@model SchoolApp.ViewModels.GroupInstanceViewModel
 
 @{
-    ViewBag.Title = "Schedule";
+    ViewBag.Title = "Расписание";
 }
 <div class="well">
     <div class="calendarTop">
         <div class="filter" style="float: left">
-            filter by teacher: @Html.DropDownList("UserId", Model.TeachersList)
+            Фильтровать по учителю: @Html.DropDownList("UserId", Model.TeachersList)
         </div>
         <div class="legend" style="float: right">
             @foreach (var item in Model.ColorLegend)
@@ -35,7 +35,6 @@
 <script type="text/javascript">
     var formId;
     $(document).ready(function () {
-
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -77,6 +76,16 @@
             selectHelper: true,
             minTime: 8,
             maxTime: 22,
+            buttonText: {
+                today: 'Сегодня',
+                month: 'Месяц',
+                day: 'День',
+                week: 'Неделя'
+            },
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthNamesShort: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Нов', 'Дек'],
+            dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+            dayNamesShort: ['Вс', 'Пон', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
             select: function (start, end, allDay) {
                 var now = new Date();
                 if (start < now) {

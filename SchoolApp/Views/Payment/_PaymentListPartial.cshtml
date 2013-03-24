@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<SchoolApp.Models.Payment>
 
-<span class="alert @if(@ViewBag.Balance>=0){<text>alert-success</text>}else{<text>alert-error</text>}">Current balance: <b> @ViewBag.Balance</b></span>
+<span class="alert @if(@ViewBag.Balance>=0){<text>alert-success</text>}else{<text>alert-error</text>}">Текущий баланс: <b> @ViewBag.Balance</b></span>
 <table class="table table-condensed datatable">
     <thead>
         <th>@Html.DisplayNameFor(model => model.TransactionDateTime)</th>
@@ -13,7 +13,7 @@
             <td></td>
             <td>@Html.TextBox("comments",null,new {id="comments"})</td>
             <td>@Html.TextBox("Amount",null,new {id="Amount"})</td>
-            <td><a class="btn btn-small" id="addTransaction"><i class="icon-plus"></i> Add transaction</a></td>
+            <td><a class="btn btn-small" id="addTransaction"><i class="icon-plus"></i> Добавить транзакцию</a></td>
         </tr>
     @foreach (var item in Model)
     {

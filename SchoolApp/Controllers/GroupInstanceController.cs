@@ -30,7 +30,7 @@ namespace SchoolApp.Controllers
             GroupInstanceViewModel model = new GroupInstanceViewModel();
             model.GroupInstances = db.GroupInstances.Include(g => g.Group).Include(g => g.Classroom).ToList();
             List<SelectListItem> sli = new List<SelectListItem>();
-            sli.Add(new SelectListItem { Text = "All", Value = "0", Selected = true });
+            sli.Add(new SelectListItem { Text = "Все", Value = "0", Selected = true });
             var teachers = db.Teachers.ToList();
             foreach (var teacher in teachers)
             {

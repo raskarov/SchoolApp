@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<SchoolApp.Models.UserProfile>
 
 @{
-    ViewBag.Title = "Payments";
+    ViewBag.Title = "Оплата";
 }
-   Select a student: @Html.DropDownList("UserId", new SelectList(Model.Select(x => new { x.FullName, x.UserId }), "UserId", "FullName"))
+   Выберите студента: @Html.DropDownList("UserId", new SelectList(Model.Select(x => new { x.FullName, x.UserId }), "UserId", "FullName"),"Выбрать")
     <div id="PaymentTableHolder">
        
     </div>
