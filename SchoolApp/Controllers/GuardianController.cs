@@ -19,7 +19,7 @@ namespace SchoolApp.Controllers
 
         public ActionResult Index(int id=0)
         {
-            var guardians = db.UserProfiles.Find(id).Guardians??new List<Guardian>();
+            var guardians = db.UserProfiles.Include(x=>x.Guardians).Where(x=>x.UserId==id).First().Guardians??new List<Guardian>();
             return View(guardians);
         }
 
@@ -39,22 +39,38 @@ namespace SchoolApp.Controllers
         //
         // GET: /Guardian/Create
 
-        public ActionResult Create(int id=0)
+        public ActionResult Create(int UserId)
         {
-            return View();
+            ViewBag.UserId = UserId;
+            if (UserId > 0)
+            {
+                return View();
+            }
+            return HttpNotFound();
         }
 
         //
         // POST: /Guardian/Create
 
         [HttpPost]
-        public ActionResult Create(Guardian guardian)
+        public ActionResult Create(Guardian guardian, int UserId)
         {
             if (ModelState.IsValid)
             {
-                db.Guardians.Add(guardian);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (UserId > 0)
+                {
+                    db.Guardians.Add(guardian);
+                    db.SaveChanges();
+                    var student = db.UserProfiles.Include(x=>x.Guardians).Where(x => x.UserId == UserId).FirstOrDefault();
+                    if (student != null)
+                    {
+                        student.Guardians.Add(guardian);
+                        db.SaveChanges();
+                    }
+                    
+                }
+
+                return RedirectToAction("Edit", "Student", new { id = UserId });
             }
 
             return View(guardian);
@@ -77,13 +93,13 @@ namespace SchoolApp.Controllers
         // POST: /Guardian/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Guardian guardian)
+        public ActionResult Edit(Guardian guardian, int UserId = 0)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(guardian).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Student", new { id = UserId });
             }
             return View(guardian);
         }
@@ -105,12 +121,12 @@ namespace SchoolApp.Controllers
         // POST: /Guardian/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int UserId)
         {
             Guardian guardian = db.Guardians.Find(id);
             db.Guardians.Remove(guardian);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "Student", new { id = UserId });
         }
 
         protected override void Dispose(bool disposing)

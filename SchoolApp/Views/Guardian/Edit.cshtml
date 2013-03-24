@@ -9,7 +9,7 @@
     @Html.ValidationSummary(true)
 
         @Html.HiddenFor(model => model.GuardianId)
-
+        
         <div class="editor-label">
             @Html.LabelFor(model => model.FirstName)
         </div>
@@ -52,7 +52,6 @@
 
         <p>
             <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
-            <a href="@Url.Action("Index")" class="btn">Back to list</a>
         </p>
 }
 

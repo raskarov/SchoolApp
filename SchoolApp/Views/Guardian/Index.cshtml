@@ -4,8 +4,9 @@
     Layout = null;
 }
 <h4>Попечители</h4>
+<h5></h5>
 <p>
-    <a href="@Url.Action("Create")" class="btn btn-small"><i class="icon-plus"></i> Добавить</a>
+    <a href="@Url.Action("Create", new { UserId = ViewContext.RouteData.Values["id"] })" class="btn btn-small"><i class="icon-plus"></i> Добавить</a>
 </p>
 <table class="table table-striped datatable">
     <thead>
@@ -45,9 +46,8 @@
             @Html.DisplayFor(modelItem => item.Relationship)
         </td>
         <td>
-			<a href="@Url.Action("Edit", new { id=item.GuardianId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
-            <a href="@Url.Action("Details", new { id=item.GuardianId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
-            <a href="@Url.Action("Delete", new { id=item.GuardianId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+			<a href="@Url.Action("Edit", new { id=item.GuardianId, UserId = ViewContext.RouteData.Values["id"]})" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
+            <a href="@Url.Action("Delete", new { id=item.GuardianId, UserId = ViewContext.RouteData.Values["id"] })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
         </td>
     </tr>
 }

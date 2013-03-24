@@ -115,7 +115,12 @@
             },
             eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
                 postEditCalendar(event);
-                $('#calendar').fullCalendar('refetchEvents');
+                var events = $('#calendar').fullCalendar('clientEvents', event.id);
+                $.each(events, function () {
+                    $(this).
+                    $("#calendar").fullCalendar('updateEvent', $(this));
+                });
+                $('#calendar').fullCalendar('rerenderEvents');
             },
             eventRender: function (event, element) {
 
