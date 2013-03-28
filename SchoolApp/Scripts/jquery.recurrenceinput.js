@@ -1614,7 +1614,8 @@
                     autoOpen: true,
                     resizable: false,
                     height: 'auto',
-                    modal: true
+                    modal: true,
+                    width: 450
                 });
             }
         );

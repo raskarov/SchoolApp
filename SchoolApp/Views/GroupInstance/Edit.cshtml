@@ -47,6 +47,9 @@
             @Html.DropDownList("ClassroomId", String.Empty)
             @Html.ValidationMessageFor(model => model.ClassroomId)
         </div>
+    <div class="editor-label">
+            Повторение
+        </div>
         <!-- Make a text area for the RRULE, which also works as a non-javascript fallback -->
         <textarea id="RecurrenceRule" name="RecurrenceRule"></textarea>
         <!-- Make the text area a recurrenceinput -->

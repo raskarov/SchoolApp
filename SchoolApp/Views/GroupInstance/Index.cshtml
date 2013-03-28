@@ -215,6 +215,7 @@
         //});
     });
     $(document).on("click", ".removeEvent", function () {
+        $(this).closest(".popover").hide();
         formId = "deleteGroupInstanceForm";
         showDialogEditRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
     });

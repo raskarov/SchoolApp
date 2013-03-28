@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using SchoolApp.DAL;
 using SchoolApp.Extensions;
 using SchoolApp.Models;
+using System.Collections.Generic;
 
 namespace SchoolApp.Controllers
 {
@@ -16,6 +17,9 @@ namespace SchoolApp.Controllers
 
         public ActionResult Index()
         {
+
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            string list = dic.OrderByDescending(x => x.Key.Count(y => y == '/'));
             return View(db.Classrooms.ToList());
         }
 
