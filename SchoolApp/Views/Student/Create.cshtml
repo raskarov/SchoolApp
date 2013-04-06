@@ -1,7 +1,8 @@
 ﻿@model SchoolApp.Models.UserProfile
 
 @{
-    ViewBag.Title = "Добавление студента";
+    ViewBag.Title = "Добавление студента";   
+    var items = new SelectList(ViewBag.Level, "Name", "Value");
 }
 
 @using (Html.BeginForm()) {
@@ -44,6 +45,13 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Phone)
             @Html.ValidationMessageFor(model => model.Phone)
+        </div>
+     <div class="editor-label">
+            @Html.LabelFor(model => model.StudentLevel)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StudentLevel, items)
+            @Html.ValidationMessageFor(model=>model.StudentLevel)
         </div>
 
         <p>

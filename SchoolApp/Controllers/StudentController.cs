@@ -39,6 +39,10 @@ namespace SchoolApp.Controllers
 
         public ActionResult Create()
         {
+              var levels = from Level d in Enum.GetValues(typeof(Level))
+                             select new { Name = Enum.GetName(typeof(Level), d), Value = Enum.GetName(typeof(Level),d) };
+
+              ViewBag.Level = levels;
             return View();
         }
 
@@ -81,7 +85,7 @@ namespace SchoolApp.Controllers
             Level currentLevel = vm.Student.StudentLevel;
             vm.LevelsList = new SelectList(levels, "Name", "Value", currentLevel);
             vm.StudentLevel = currentLevel;
-            return View(vm);
+            return View(vm); 
         }
 
         //
