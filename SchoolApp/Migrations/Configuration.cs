@@ -25,7 +25,7 @@ namespace SchoolApp.Migrations
         /// </summary>
         private void SeedRolesAndUsers()
         {
-            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
+            //WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
 
             if (!Roles.RoleExists(Helpers.ADMIN_ROLE))
             {
