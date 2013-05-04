@@ -150,5 +150,10 @@ if ($.fn.DataTable.TableTools) {
 
 //Apply datatable to all tables with class datatable
 $(document).ready(function () {
-    $(".datatable").dataTable();
+    $(".datatable").dataTable(
+        {
+            "aLengthMenu": [[5, 10, 15, 25, 50, 100, -1], [5, 10, 15, 25, 50, 100, "Все"]],
+            "iDisplayLength": -1
+        }
+        );
 });
