@@ -51,10 +51,15 @@
             Повторение
         </div>
         <!-- Make a text area for the RRULE, which also works as a non-javascript fallback -->
-        <textarea id="RecurrenceRule" name="RecurrenceRule"></textarea>
+    @Html.TextAreaFor(model=>model.RecurrenceRule)
         <!-- Make the text area a recurrenceinput -->
         <script type="text/javascript">
-            $("textarea[name=RecurrenceRule]").recurrenceinput();
+            $(document).ready(function () {
+                $("#RecurrenceRule").recurrenceinput({
+                    firstDay: 1
+                });
+            });
+           
         </script>
 }
 
