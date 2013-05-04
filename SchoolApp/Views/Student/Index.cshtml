@@ -43,6 +43,9 @@
         <th>
             @Html.DisplayNameFor(model=> model.CreationDate)
         </th>
+        <th>
+            Телефон Попечителя
+        </th>
         <th></th>
     </thead>
 
@@ -68,6 +71,14 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem=> item.CreationDate)
+        </td>
+        <td>
+           <!--TODO: Replace with ViewModel -->
+            @Html.DisplayFor(modelItem => item.Guardians.FirstOrDefault().Phone) 
+            (
+           @Html.DisplayFor(modelItem => item.Guardians.FirstOrDefault().FirstName)
+            @Html.DisplayFor(modelItem => item.Guardians.FirstOrDefault().LastName)
+            )
         </td>
         <td>
 			<a href="@Url.Action("Edit", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>

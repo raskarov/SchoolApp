@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Security;
 using SchoolApp.DAL;
@@ -7,6 +8,7 @@ using SchoolApp.Extensions;
 using System;
 using System.Linq;
 using SchoolApp.ViewModels;
+using System.Collections.Generic;
 namespace SchoolApp.Controllers
 {
     public class StudentController : Controller
@@ -18,7 +20,7 @@ namespace SchoolApp.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Students);
+            return View(db.Students.Include(x=>x.Guardians));
         }
 
         //

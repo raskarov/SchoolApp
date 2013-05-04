@@ -218,6 +218,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\StudentIndexViewModel.cs" />
     <Compile Include="ViewModels\EventDetails.cs" />
     <Compile Include="ViewModels\StudentEditViewModel.cs" />
     <Compile Include="ViewModels\UserIndexViewModel.cs" />
