@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -55,6 +56,9 @@ namespace SchoolApp.Models
 
         [Display(Name="Уровень")]
         public Level StudentLevel { get; set; }
+
+        [Display(Name = "Дата создания")]
+        public DateTime CreationDate { get; set; }
 
         [Display(Name="Попечитель")]
         public ICollection<Guardian> Guardians { get; set; }

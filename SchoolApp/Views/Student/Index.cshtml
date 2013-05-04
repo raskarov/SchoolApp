@@ -3,13 +3,24 @@
 @{
     ViewBag.Title = "Студенты";
 }
+
 <script type="text/javascript">
+    $(document).ready(function () {
+        $(".datatable-custom").dataTable(
+            {
+                "aLengthMenu": [[5, 10, 15, 25, 50, 100, -1], [5, 10, 15, 25, 50, 100, "Все"]],
+                "iDisplayLength": -1,
+                "aaSorting": [[6, "desc"]]
+            }
+            );
+    });
+    
 </script>
 <p>
     <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i> Добавить студента</a>
 </p>
 <div class="well">
-<table class="table table-striped datatable">
+<table class="table table-striped datatable-custom">
     <thead>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
@@ -28,6 +39,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StudentLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=> model.CreationDate)
         </th>
         <th></th>
     </thead>
@@ -51,6 +65,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StudentLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem=> item.CreationDate)
         </td>
         <td>
 			<a href="@Url.Action("Edit", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>

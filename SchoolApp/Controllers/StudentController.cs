@@ -54,6 +54,7 @@ namespace SchoolApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                userprofile.CreationDate = DateTime.Now;
                 //Todo: currently requires two trips to db to autogenerate username.
                 db.UserProfiles.Add(userprofile);
                 db.SaveChanges();
