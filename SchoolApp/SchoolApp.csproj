@@ -206,6 +206,10 @@
     <Compile Include="Migrations\201305042041340_AddStudentCreationDate.Designer.cs">
       <DependentUpon>201305042041340_AddStudentCreationDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305050307223_addInstanceDateTime.cs" />
+    <Compile Include="Migrations\201305050307223_addInstanceDateTime.Designer.cs">
+      <DependentUpon>201305050307223_addInstanceDateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
@@ -544,6 +548,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305042041340_AddStudentCreationDate.resx">
       <DependentUpon>201305042041340_AddStudentCreationDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305050307223_addInstanceDateTime.resx">
+      <DependentUpon>201305050307223_addInstanceDateTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

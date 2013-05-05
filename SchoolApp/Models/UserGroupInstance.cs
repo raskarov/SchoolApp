@@ -9,6 +9,7 @@ namespace SchoolApp.Models
 {
     public enum AttendanceType
     {
+        NA,
         Present,
         Absent,
         AbsentWithExcuse
@@ -29,5 +30,10 @@ namespace SchoolApp.Models
 
         [ForeignKey("GroupInstanceId")]
         public GroupInstance GroupInstance { get; set; }
+
+        /// <summary>
+        /// The actual date for the attendace if recurrence is not null
+        /// </summary>
+        public DateTime InstanceDateTime { get; set; }
     }
 }

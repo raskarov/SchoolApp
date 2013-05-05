@@ -26,9 +26,9 @@ http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edi
         </td>
         <td>
             <div class="btn-group" data-UserGroupInstance="@item.UserGroupInstanceID">
-              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Present){<text>active btn-success</text>}" value="0">Присутствовал</button>
-              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Absent){<text>active btn-success</text>}" value="1">Отсутствовал</button>
-              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.AbsentWithExcuse){<text>active btn-success</text>}" value="2">Отсутствовал и предупредил</button>
+              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Present){<text>active btn-success</text>}" value="1">Присутствовал</button>
+              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Absent){<text>active btn-success</text>}" value="2">Отсутствовал</button>
+              <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.AbsentWithExcuse){<text>active btn-success</text>}" value="3">Отсутствовал и предупредил</button>
             </div>
         </td>
         <td>

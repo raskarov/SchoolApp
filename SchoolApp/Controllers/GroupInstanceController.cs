@@ -238,7 +238,7 @@ namespace SchoolApp.Controllers
                 {
                     if (!String.IsNullOrWhiteSpace(instance.RecurrenceRule))
                     {
-                        RecurrencePattern rp = new RecurrencePattern(recurrence.RecurrenceRule);
+                        RecurrencePattern rp = new RecurrencePattern(instance.RecurrenceRule);
                         Event ev = new Event();
                         ev.RecurrenceRules.Add(rp);
                         ev.Start = new iCalDateTime(recurrence.StartDateTime);

@@ -82,7 +82,8 @@ namespace SchoolApp.Controllers
                     var newUserGroupInstance = new UserGroupInstance();
                     newUserGroupInstance.User = student;
                     newUserGroupInstance.AttendanceTaken = DateTime.Now;
-                    newUserGroupInstance.Present = AttendanceType.Present;
+                    newUserGroupInstance.InstanceDateTime = DateTime.Now;
+                    newUserGroupInstance.Present = AttendanceType.NA;
                     newUserGroupInstance.GroupInstance = groupInstance;
                     db.UserGroupInstances.Add(newUserGroupInstance);
                 }
@@ -138,11 +139,22 @@ namespace SchoolApp.Controllers
         {
             //Jquery only sends string,string. 
             Dictionary<int, AttendanceType> groupsParsed = groups.ToDictionary(x => Convert.ToInt32(x.Key), x => (AttendanceType)Convert.ToInt32(x.Value));
-            var groupInstances = db.UserGroupInstances.Where(x => groupsParsed.Keys.Contains(x.UserGroupInstanceID));
+            var groupInstances = db.UserGroupInstances.Include(x=>x.User).Where(x => groupsParsed.Keys.Contains(x.UserGroupInstanceID));
             foreach (KeyValuePair<int, AttendanceType> kvp in groupsParsed)
             {
                 var groupInstance = groupInstances.Where(x => x.UserGroupInstanceID == kvp.Key).First();
+                var PaymentProfileId = db.GroupInstances.Include(x=>x.Group).Where(x => x.GroupInstanceId == groupInstance.GroupInstanceId).First().Group.PaymentProfileId;
+                var amount = db.PaymentRules.Where(x => x.PaymentProfileId == PaymentProfileId && x.EffectiveDate <= DateTime.Today).First().Amount;
                 groupInstance.Present = kvp.Value;
+                if (kvp.Value == AttendanceType.Absent || kvp.Value == AttendanceType.Present)
+                {
+                    Payment payment = new Payment();
+                    payment.Amount = amount*-1;
+                    payment.comments = "Списано через страницу посещений (" + Membership.GetUser().UserName + ")";
+                    payment.UserId = groupInstance.UserId;
+                    payment.TransactionDateTime = DateTime.Now;
+                    db.Payments.Add(payment);
+                }
                 db.Entry(groupInstance).State = EntityState.Modified;
             }
             db.SaveChanges();
