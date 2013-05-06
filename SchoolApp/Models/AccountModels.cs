@@ -62,6 +62,8 @@ namespace SchoolApp.Models
 
         [Display(Name="Попечитель")]
         public ICollection<Guardian> Guardians { get; set; }
+
+        public bool FutureStudent { get; set; }
     }
 
     public class RegisterExternalLoginModel

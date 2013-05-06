@@ -31,7 +31,15 @@ namespace SchoolApp.DAL
             get
             {
                 var AllStudents = Roles.GetUsersInRole(Helpers.STUDENT_ROLE);
-                return UserProfiles.Where(x => AllStudents.Contains(x.UserName));
+                return UserProfiles.Where(x => AllStudents.Contains(x.UserName) && x.FutureStudent == false);
+            }
+        }
+        public IQueryable<UserProfile> FutureStudents
+        {
+            get
+            {
+                var AllStudents = Roles.GetUsersInRole(Helpers.STUDENT_ROLE);
+                return UserProfiles.Where(x => AllStudents.Contains(x.UserName) && x.FutureStudent == true);
             }
         }
         public IQueryable<UserProfile> Teachers

@@ -1,29 +1,32 @@
-﻿using System.Data;
-using System.Data.Entity;
-using System.Web.Mvc;
-using System.Web.Security;
-using SchoolApp.DAL;
-using SchoolApp.Models;
-using SchoolApp.Extensions;
-using System;
-using System.Linq;
-using SchoolApp.ViewModels;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using SchoolApp.Models;
+using SchoolApp.DAL;
+using System.Web.Security;
+using SchoolApp.Extensions;
+using SchoolApp.ViewModels;
+
 namespace SchoolApp.Controllers
 {
-    public class StudentController : Controller
+    public class FutureStudentController : Controller
     {
         private SchoolContext db = new SchoolContext();
 
         //
-        // GET: /Student/
+        // GET: /FutureStudent/
 
         public ActionResult Index()
         {
-            return View(db.Students.Include(x=>x.Guardians));
+            return View(db.FutureStudents.Include(x=>x.Guardians).ToList());
         }
+
         //
-        // GET: /Student/Details/5
+        // GET: /FutureStudent/Details/5
 
         public ActionResult Details(int id = 0)
         {
@@ -36,19 +39,19 @@ namespace SchoolApp.Controllers
         }
 
         //
-        // GET: /Student/Create
+        // GET: /FutureStudent/Create
 
         public ActionResult Create()
         {
-              var levels = from Level d in Enum.GetValues(typeof(Level))
-                             select new { Name = Enum.GetName(typeof(Level), d), Value = Enum.GetName(typeof(Level),d) };
+            var levels = from Level d in Enum.GetValues(typeof(Level))
+                         select new { Name = Enum.GetName(typeof(Level), d), Value = Enum.GetName(typeof(Level), d) };
 
-              ViewBag.Level = levels;
+            ViewBag.Level = levels;
             return View();
         }
 
         //
-        // POST: /Student/Create
+        // POST: /FutureStudent/Create
 
         [HttpPost]
         public ActionResult Create(UserProfile userprofile)
@@ -56,6 +59,7 @@ namespace SchoolApp.Controllers
             if (ModelState.IsValid)
             {
                 userprofile.CreationDate = DateTime.Now;
+                userprofile.FutureStudent = true;
                 //Todo: currently requires two trips to db to autogenerate username.
                 db.UserProfiles.Add(userprofile);
                 db.SaveChanges();
@@ -68,9 +72,8 @@ namespace SchoolApp.Controllers
 
             return View(userprofile);
         }
-
         //
-        // GET: /Student/Edit/5
+        // GET: /FutureStudent/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
@@ -82,7 +85,7 @@ namespace SchoolApp.Controllers
                 return HttpNotFound();
             }
             var levels = from Level d in Enum.GetValues(typeof(Level))
-                             select new { Name = Enum.GetName(typeof(Level), d), Value = Enum.GetName(typeof(Level),d) };
+                         select new { Name = Enum.GetName(typeof(Level), d), Value = Enum.GetName(typeof(Level), d) };
 
             Level currentLevel = vm.Student.StudentLevel;
             vm.LevelsList = new SelectList(levels, "Name", "Value", currentLevel);
@@ -91,14 +94,14 @@ namespace SchoolApp.Controllers
         }
 
         //
-        // POST: /Student/Edit/5
+        // POST: /FutureStudent/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(StudentEditViewModel userprofile)
+        public ActionResult Edit(UserProfile userprofile)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userprofile.Student).State = EntityState.Modified;
+                db.Entry(userprofile).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -106,7 +109,7 @@ namespace SchoolApp.Controllers
         }
 
         //
-        // GET: /Student/Delete/5
+        // GET: /FutureStudent/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
@@ -119,9 +122,10 @@ namespace SchoolApp.Controllers
         }
 
         //
-        // POST: /Student/Delete/5
+        // POST: /FutureStudent/Delete/5
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             UserProfile userprofile = db.UserProfiles.Find(id);
@@ -129,7 +133,15 @@ namespace SchoolApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [HttpPost]
+        public ActionResult MakeStudent(int UserId)
+        {
+            var user = db.UserProfiles.Find(UserId);
+            user.FutureStudent = false;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            return Content(Boolean.TrueString);
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

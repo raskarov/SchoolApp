@@ -20,7 +20,7 @@ namespace SchoolApp.ViewModels
             this.GroupId = group.GroupId;
             this.Name = group.Name;
             this.Teachers = group.Users.Where(x=>Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.FullName).ToList();
-            this.Students = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Student")).Select(x => x.FullName).ToList(); 
+            this.Students = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Student") && x.FutureStudent==false).Select(x => x.FullName).ToList(); 
         }
     }
 }

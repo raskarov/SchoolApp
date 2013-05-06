@@ -6,11 +6,13 @@
                    new { LinkText="Расписание", ActionName="Index",ControllerName="GroupInstance",Roles=defaultRoles  },
                    new { LinkText="Комнаты", ActionName="Index",ControllerName="Classroom",Roles=adminsOnly},
                    new { LinkText="Студенты", ActionName="Index",ControllerName="Student",Roles=defaultRoles },
+                   new { LinkText ="Будущие Студенты", ActionName="Index", ControllerName="FutureStudent", Roles=defaultRoles},
                    new { LinkText="Учителя", ActionName="Index",ControllerName="Teacher",Roles=adminsOnly },
                    new { LinkText="Группы", ActionName="Index",ControllerName="Group",Roles=defaultRoles },
                    new { LinkText="Профили Оплаты", ActionName="Index",ControllerName="PaymentProfile",Roles=adminsOnly  },
                    new { LinkText="Оплата", ActionName="Index",ControllerName="Payment",Roles=defaultRoles  },
                    new { LinkText="Управление Пользователями", ActionName="Index",ControllerName="User",Roles=adminsOnly  },
+                  
                 };
 }
 <ul id="dashboard-menu" class="nav nav-list collapse in">

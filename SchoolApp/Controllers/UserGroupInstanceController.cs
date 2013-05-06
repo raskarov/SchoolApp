@@ -75,7 +75,7 @@ namespace SchoolApp.Controllers
                                             .Where(x => x.GroupInstanceId == id).FirstOrDefault();
             if (groupInstance != null)
             {
-                var studentsInInstance = groupInstance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student"));
+                var studentsInInstance = groupInstance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student") && x.FutureStudent==false);
                 var UserGroupInstances = db.UserGroupInstances.Include(x => x.GroupInstance).Include(x => x.User).Where(x=>x.GroupInstanceId==id).ToList();
                 foreach (var student in studentsInInstance.Except(UserGroupInstances.Select(x => x.User)))
                 {

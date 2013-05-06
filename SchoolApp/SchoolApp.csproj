@@ -177,6 +177,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\login.css" />
     <Content Include="Content\jquery.recurrenceinput.css" />
+    <Compile Include="Controllers\FutureStudentController.cs" />
     <Compile Include="Controllers\GroupInstanceController.cs" />
     <Compile Include="Controllers\GuardianController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -209,6 +210,10 @@
     <Compile Include="Migrations\201305050307223_addInstanceDateTime.cs" />
     <Compile Include="Migrations\201305050307223_addInstanceDateTime.Designer.cs">
       <DependentUpon>201305050307223_addInstanceDateTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201305060047272_futureStudentBOok.cs" />
+    <Compile Include="Migrations\201305060047272_futureStudentBOok.Designer.cs">
+      <DependentUpon>201305060047272_futureStudentBOok.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -523,6 +528,11 @@
     <Content Include="Views\Guardian\Edit.cshtml" />
     <Content Include="Views\Guardian\Delete.cshtml" />
     <Content Include="Views\Account\ApprovalRequired.cshtml" />
+    <Content Include="Views\FutureStudent\Index.cshtml" />
+    <Content Include="Views\FutureStudent\Details.cshtml" />
+    <Content Include="Views\FutureStudent\Create.cshtml" />
+    <Content Include="Views\FutureStudent\Edit.cshtml" />
+    <Content Include="Views\FutureStudent\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -551,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305050307223_addInstanceDateTime.resx">
       <DependentUpon>201305050307223_addInstanceDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305060047272_futureStudentBOok.resx">
+      <DependentUpon>201305060047272_futureStudentBOok.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
