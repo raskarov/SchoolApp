@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-
+using Isg.Domain;
 namespace SchoolApp.Models
 {
-    public class Payment
+    public class Payment : ISoftDelete//, IAuditable
     {
         public int PaymentId { get; set; }
 
@@ -23,5 +23,13 @@ namespace SchoolApp.Models
         public UserProfile Payee { get; set; }
         [Display(Name="Комментарии")]
         public string comments { get; set; }
+
+        #region Interceptors
+        public bool IsDeleted { get; set; }
+        //public DateTime CreateDate { get; set; }
+        //public string CreateUser { get; set; }
+        //public DateTime UpdateDate { get; set; }
+        //public string UpdateUser { get; set; }
+        #endregion
     }
 }

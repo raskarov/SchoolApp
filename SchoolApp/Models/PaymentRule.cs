@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
+using Isg.Domain;
 namespace SchoolApp.Models
 {
-    public class PaymentRule
+    public class PaymentRule : ISoftDelete//, IAuditable
     {
         public int PaymentRuleId { get; set; }
 
@@ -60,5 +61,13 @@ namespace SchoolApp.Models
         {
             Variable = false;
         }
+
+        #region Interceptors
+        public bool IsDeleted { get; set; }
+        //public DateTime CreateDate { get; set; }
+        //public string CreateUser { get; set; }
+        //public DateTime UpdateDate { get; set; }
+        //public string UpdateUser { get; set; }
+        #endregion
     }
 }

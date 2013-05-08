@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Isg.EntityFramework</id>
+    <version>0.7.0</version>
+    <authors>Chris McKenzie</authors>
+    <owners>Chris McKenzie</owners>
+    <licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://bitbucket.org/crmckenzie/isg.entityframework/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package provides a means of intercepting entities before they are saved and taking custom actions, and distributing the configuration of the entity-relational model.</description>
+    <tags>EntityFramework</tags>
+    <dependencies>
+      <dependency id="EntityFramework" version="5.0.0" />
+    </dependencies>
+    <references>
+      <reference file="Isg.EntityFramework.dll" />
+    </references>
+  </metadata>
+</package>

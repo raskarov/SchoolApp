@@ -5,10 +5,14 @@ using SchoolApp.Extensions;
 using SchoolApp.Models;
 using WebMatrix.WebData;
 using SchoolApp.Filters;
+using System.Data.Objects;
+using System.Collections.Generic;
+using System.Data;
+using Isg.EntityFramework;
 
 namespace SchoolApp.DAL
 {
-    public class SchoolContext : DbContext
+    public class SchoolContext : DbContextBase
     {
         public DbSet<Classroom> Classrooms { get; set; }
 
@@ -52,6 +56,5 @@ namespace SchoolApp.DAL
         }
 
         public DbSet<Guardian> Guardians { get; set; }
-      
     }
 }

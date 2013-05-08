@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Isg.EntityFramework.Interceptors.Auditable</id>
+    <version>0.7.0</version>
+    <authors>Chris McKenzie</authors>
+    <owners>Chris McKenzie</owners>
+    <licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://bitbucket.org/crmckenzie/isg.entityframework/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package provides an interceptorfor EntityFramework Code First which will plug in auditing fields on data models.</description>
+    <tags>EntityFramework</tags>
+    <dependencies>
+      <dependency id="Isg.EntityFramework" version="0.7.0" />
+      <dependency id="Isg.Domain" version="0.6.1" />
+    </dependencies>
+    <references>
+      <reference file="Isg.EntityFramework.Interceptors.Auditable.dll" />
+    </references>
+  </metadata>
+</package>

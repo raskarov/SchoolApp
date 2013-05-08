@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Isg.Domain;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SchoolApp.Models
 {
     [Table("UserProfile")]
-    public class UserProfile
+    public class UserProfile : ISoftDelete//, IAuditable
     {
 
         public UserProfile()
@@ -64,6 +65,14 @@ namespace SchoolApp.Models
         public ICollection<Guardian> Guardians { get; set; }
 
         public bool FutureStudent { get; set; }
+
+        #region Interceptors
+        public bool IsDeleted { get; set; }
+        //public DateTime CreateDate { get; set; }
+        //public string CreateUser { get; set; }
+        //public DateTime UpdateDate { get; set; }
+        //public string UpdateUser { get; set; }
+        #endregion
     }
 
     public class RegisterExternalLoginModel

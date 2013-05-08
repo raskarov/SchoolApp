@@ -48,6 +48,18 @@
     <Reference Include="DDay.iCal">
       <HintPath>..\..\..\..\..\Desktop\DDay.iCal.dll</HintPath>
     </Reference>
+    <Reference Include="Isg.Domain">
+      <HintPath>..\packages\Isg.Domain.0.6.1\lib\net40\Isg.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="Isg.EntityFramework">
+      <HintPath>..\packages\Isg.EntityFramework.0.7.0\lib\net40\Isg.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Isg.EntityFramework.Interceptors.Auditable">
+      <HintPath>..\packages\Isg.EntityFramework.Interceptors.Auditable.0.7.0\lib\net40\Isg.EntityFramework.Interceptors.Auditable.dll</HintPath>
+    </Reference>
+    <Reference Include="Isg.EntityFramework.Interceptors.SoftDelete">
+      <HintPath>..\packages\Isg.EntityFramework.Interceptors.SoftDelete.0.7.0\lib\net40\Isg.EntityFramework.Interceptors.SoftDelete.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -214,6 +226,10 @@
     <Compile Include="Migrations\201305060047272_futureStudentBOok.cs" />
     <Compile Include="Migrations\201305060047272_futureStudentBOok.Designer.cs">
       <DependentUpon>201305060047272_futureStudentBOok.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201305081914587_AddIsDeletedToModels.cs" />
+    <Compile Include="Migrations\201305081914587_AddIsDeletedToModels.Designer.cs">
+      <DependentUpon>201305081914587_AddIsDeletedToModels.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -564,6 +580,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305060047272_futureStudentBOok.resx">
       <DependentUpon>201305060047272_futureStudentBOok.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305081914587_AddIsDeletedToModels.resx">
+      <DependentUpon>201305081914587_AddIsDeletedToModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

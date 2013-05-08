@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-
+using Isg.Domain;
 namespace SchoolApp.Models
 {
     public enum AttendanceType
@@ -14,7 +14,7 @@ namespace SchoolApp.Models
         Absent,
         AbsentWithExcuse
     }
-    public class UserGroupInstance
+    public class UserGroupInstance : ISoftDelete//, IAuditable
     {
         public int UserGroupInstanceID { get; set; }
 
@@ -35,5 +35,13 @@ namespace SchoolApp.Models
         /// The actual date for the attendace if recurrence is not null
         /// </summary>
         public DateTime InstanceDateTime { get; set; }
+
+        #region Interceptors
+        public bool IsDeleted { get; set; }
+        //public DateTime CreateDate { get; set; }
+        //public string CreateUser { get; set; }
+        //public DateTime UpdateDate { get; set; }
+        //public string UpdateUser { get; set; }
+        #endregion
     }
 }

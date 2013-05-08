@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Isg.Domain</id>
+    <version>0.6.1</version>
+    <authors>Chris McKenzie</authors>
+    <owners>Chris McKenzie</owners>
+    <licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://bitbucket.org/crmckenzie/isg.entityframework.interceptors/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package provides a interfaces used by other members of the Isg.EntityFramework family of packages.</description>
+    <references>
+      <reference file="Isg.Domain.dll" />
+    </references>
+  </metadata>
+</package>
