@@ -71,6 +71,10 @@ namespace SchoolApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //default recurrence once a week forever
+                RecurrencePattern rp = new RecurrencePattern(FrequencyType.Weekly);
+                groupinstance.RecurrenceRule = rp.ToString();
+
                 db.GroupInstances.Add(groupinstance);
                 db.SaveChanges();
                 return Content(Boolean.TrueString);
