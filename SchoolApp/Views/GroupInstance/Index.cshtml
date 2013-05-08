@@ -126,7 +126,6 @@
                 postEditCalendar(event);
                 var events = $('#calendar').fullCalendar('clientEvents', event.id);
                 $.each(events, function () {
-                    $(this).
                     $("#calendar").fullCalendar('updateEvent', $(this));
                 });
                 $('#calendar').fullCalendar('rerenderEvents');
