@@ -5,12 +5,17 @@ using System.Linq;
 using System.Web;
 using SchoolApp.Models;
 using Isg.Domain;
+using System.ComponentModel.DataAnnotations;
 namespace SchoolApp.Models
 {
     public class GroupInstance : ISoftDelete//, IAuditable
     {
         public int GroupInstanceId { get; set; }
+
+        [Display(Name="Начало")]
         public DateTime StartDateTime { get; set; }
+
+        [Display(Name = "Конец")]
         public DateTime EndDateTime { get; set; }
 
         public int GroupId { get; set; }
