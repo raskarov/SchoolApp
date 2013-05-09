@@ -165,6 +165,14 @@ namespace SchoolApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var inst = db.GroupInstances.Where(x => x.GroupInstanceId == groupinstance.GroupInstanceId).First();
+                if (groupinstance.RecurrenceRule != null)
+                {
+                   
+                    groupinstance.StartDateTime = inst.StartDateTime.Date + new TimeSpan(groupinstance.StartDateTime.Hour, groupinstance.StartDateTime.Minute, 0);
+                    groupinstance.EndDateTime = inst.EndDateTime.Date + new TimeSpan(groupinstance.EndDateTime.Hour, groupinstance.EndDateTime.Minute, 0);
+                    db.Entry(inst).State = EntityState.Detached;
+                }
                 db.Entry(groupinstance).State = EntityState.Modified;
                 db.SaveChanges();
                 return Content(Boolean.TrueString);

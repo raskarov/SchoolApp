@@ -29,7 +29,7 @@ namespace SchoolApp
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
-            InterceptorProvider.SetInterceptorProvider(new DefaultInterceptorProvider(new SoftDeleteChangeInterceptor()));
+            //InterceptorProvider.SetInterceptorProvider(new DefaultInterceptorProvider(new SoftDeleteChangeInterceptor()));
             //InterceptorProvider.SetInterceptorProvider(new DefaultInterceptorProvider(new AuditableChangeInterceptor(HttpContext.Current.User, new MyClock())));
         }
         //public class MyClock : IClock

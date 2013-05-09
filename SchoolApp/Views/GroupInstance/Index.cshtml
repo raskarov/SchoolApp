@@ -19,6 +19,7 @@
     <div id="popverContainer"></div>
     <div id="calendar"></div>
     <div id="dialogContainer"></div>
+    <div id="dialogContainerRemove"></div>
 </div>
 @section Scripts{
     <script type="text/javascript" src="~/Scripts/dateinput.js"></script>
@@ -89,7 +90,7 @@
             select: function (start, end, allDay) {
                 var now = new Date();
                 if (start < now) {
-                    alert("Appointments in the past are not allowed");
+                    alert("Ай-яй-яй. Нельзя создавать уроки в прошлом!");
                     $(this).fullCalendar('unselect');
                     return;
                 }
@@ -126,7 +127,6 @@
                 postEditCalendar(event);
                 var events = $('#calendar').fullCalendar('clientEvents', event.id);
                 $.each(events, function () {
-                    $(this).
                     $("#calendar").fullCalendar('updateEvent', $(this));
                 });
                 $('#calendar').fullCalendar('rerenderEvents');
@@ -187,22 +187,56 @@
             height: 'auto',
             modal: true,
             buttons: {
-                "Update":
+                "Сохранить":
                     {
                         class: 'btn btn-primary',
                         click: function () {
                             $("#update-message").html('');
                             $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                         },
-                        html: 'Update'
+                        html: 'Сохранить'
                     },
-                Cancel:
+                "Отменить":
                     {
                         class: 'btn btn-primary',
                         click: function () {
                             $(this).dialog("close");
                         },
-                        html: 'Cancel'
+                        html: 'Отменить'
+                    }
+            }
+        });
+        $("#dialogContainerRemove").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 'auto',
+            modal: true,
+            buttons: {
+                "Удалить":
+                     {
+                         class: 'btn btn-primary',
+                         click: function () {
+                             $("#update-message").html('');
+                             $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                         },
+                         html: 'Удалить'
+                     },
+                "УдалитьПовторение":
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $("#update-message").html('');
+                            $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                        },
+                        html: 'Удалить выбранное'
+                    },
+                "Отменить":
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        html: 'Отменить'
                     }
             }
         });
@@ -217,15 +251,35 @@
     $(document).on("click", ".removeEvent", function () {
         $(this).closest(".popover").hide();
         formId = "deleteGroupInstanceForm";
-        showDialogEditRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
+        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
     });
     $(document).on("click", ".editEvent", function () {
         $(this).closest(".popover").hide();
         formId = "editGroupInstanceForm";
-        showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", $(this).data('event-id'));
+        showDialogEdit("@Url.Action("Edit", "GroupInstance")", $(this).data('event-id'));
     });
-    function showDialogEditRemove(href, id, StartTime, EndTime) {
+    function showDialogEdit(href, id, StartTime, EndTime) {
         var dialogDiv = $("#dialogContainer");
+        var viewUrl = href;
+        $.ajax({
+            url: viewUrl,
+            type: 'GET',
+            data: {
+                id: id,
+                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
+                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+            },
+            success: function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    function showDialogRemove(href, id, StartTime, EndTime) {
+        var dialogDiv = $("#dialogContainerRemove");
         var viewUrl = href;
         $.ajax({
             url: viewUrl,
@@ -276,13 +330,15 @@
         });
     }
     function updateSuccess() {
+        alert("TTT");
         if ($("#update-message").html() == "True") {
 
             //var parent = linkObj.closest("tr");
             //parent.find(".Amount").html($("#Amount").val());
             //parent.find(".EffectiveDate").html($("#EffectiveDate").val());
-            $('#calendar').fullCalendar('refetchEvents');
+            setTimeout(function () { $('#calendar').fullCalendar('refetchEvents'); }, 0);
             $('#dialogContainer').dialog("close");
+            $('#dialogContainerRemove').dialog("close");
         }
         else {
         }
