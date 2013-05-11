@@ -68,30 +68,50 @@ namespace SchoolApp.Controllers
         //
         // GET: /UserGroupInstance/Edit/5
 
-        public ActionResult Edit(int id = 0) //this is a GroupInstanceId, not UserGroupInstanceId. TODO: make more obvious in routing.
+        public ActionResult Edit(string Date, int id = 0) //this is a GroupInstanceId, not UserGroupInstanceId. TODO: make more obvious in routing.
         {
+            DateTime InstanceDate = Convert.ToDateTime(Date);
             GroupInstance groupInstance = db.GroupInstances.Include(x => x.Group)
                                             .Include(x => x.Group.Users)
                                             .Where(x => x.GroupInstanceId == id).FirstOrDefault();
+            var ugi = new List<UserGroupInstance>();
             if (groupInstance != null)
             {
-                var studentsInInstance = groupInstance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student") && x.FutureStudent==false);
-                var UserGroupInstances = db.UserGroupInstances.Include(x => x.GroupInstance).Include(x => x.User).Where(x=>x.GroupInstanceId==id).ToList();
+                var group = GetGroupByDate(db.Groups.Include(x => x.Users), groupInstance.GroupId, InstanceDate);
+                var studentsInInstance = group.Users.Where(x => Roles.IsUserInRole(x.UserName, "Student") && x.FutureStudent == false);
+                var UserGroupInstances = db.UserGroupInstances.Include(x => x.GroupInstance).Include(x => x.User).Where(x => x.GroupInstanceId == id).ToList().Where(x=>x.InstanceDateTime.Date == InstanceDate.Date);
+                
                 foreach (var student in studentsInInstance.Except(UserGroupInstances.Select(x => x.User)))
                 {
                     var newUserGroupInstance = new UserGroupInstance();
                     newUserGroupInstance.User = student;
+                    newUserGroupInstance.UserId = student.UserId;
                     newUserGroupInstance.AttendanceTaken = DateTime.Now;
-                    newUserGroupInstance.InstanceDateTime = DateTime.Now;
+                    newUserGroupInstance.InstanceDateTime = InstanceDate;
                     newUserGroupInstance.Present = AttendanceType.NA;
                     newUserGroupInstance.GroupInstance = groupInstance;
-                    db.UserGroupInstances.Add(newUserGroupInstance);
+                    ugi.Add(newUserGroupInstance);
                 }
-                db.SaveChanges();
             }
-            return View(db.UserGroupInstances.Where(x=>x.GroupInstanceId==id).ToList());
+            return View(ugi);
         }
-
+        public Group GetGroupByDate(IQueryable<Group> Groups, int GroupId, DateTime Date)
+        {
+            var r = Groups.FirstOrDefault(g => g.GroupId == GroupId);
+            if (r != null && r.ParentGroup != null)
+            {
+                if (r.CreatedDate < Date)
+                {
+                    return r;
+                }
+                else
+                {
+                    return GetGroupByDate(Groups, r.ParentGroup.GroupId, Date);  // Get the parent, if existing..
+                }
+            }
+            else
+                return r;   // Return the matching record
+        }
         //
         // POST: /UserGroupInstance/Edit/5
 

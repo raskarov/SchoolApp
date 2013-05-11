@@ -18,14 +18,15 @@ http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edi
         </th>
         <th></th>
     </thead>
-
 @foreach (var item in Model) {
     <tr class="attendanceRow">
         <td>
             @Html.DisplayFor(modelItem => item.User.FullName)
         </td>
         <td>
-            <div class="btn-group" data-UserGroupInstance="@item.UserGroupInstanceID">
+
+            <div class="btn-group" data-UserGroupInstance="@item.UserId">
+                 <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.NA){<text>active btn-success</text>}" value="0">N/A</button>
               <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Present){<text>active btn-success</text>}" value="1">Присутствовал</button>
               <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.Absent){<text>active btn-success</text>}" value="2">Отсутствовал</button>
               <button class="attendanceBtn btn btn-small @if (item.Present==SchoolApp.Models.AttendanceType.AbsentWithExcuse){<text>active btn-success</text>}" value="3">Отсутствовал и предупредил</button>
