@@ -1,37 +1,4 @@
-﻿@model SchoolApp.Models.GroupInstance
-
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>GroupInstance</legend>
-    <div id="update-message"></div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.StartDateTime)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartDateTime)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EndDateTime)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndDateTime)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Group.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Group.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Classroom.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Classroom.Name)
-    </div>
-</fieldset>
+﻿@model SchoolApp.ViewModels.GroupInstanceDeleteViewModel
 @using (Ajax.BeginForm(
     "Delete",
     "GroupInstance",
@@ -44,4 +11,40 @@
     },
     new { @id = "deleteGroupInstanceForm" }))
 {
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>GroupInstance</legend>
+    @Html.Hidden("RemoveInstance")
+    @Html.HiddenFor(x=>x.StartDate)
+    @Html.HiddenFor(x=>x.EndDate)
+    <div id="update-message"></div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GroupInstance.StartDateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GroupInstance.StartDateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GroupInstance.EndDateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GroupInstance.EndDateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GroupInstance.Group.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GroupInstance.Group.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GroupInstance.Classroom.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GroupInstance.Classroom.Name)
+    </div>
+</fieldset>
+
 }

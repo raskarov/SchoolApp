@@ -8,6 +8,7 @@ using SchoolApp.Models;
 using SchoolApp.ViewModels;
 using SchoolApp.Extensions;
 using System.Data.Entity;
+using System;
 namespace SchoolApp.Controllers
 {
     public class GroupController : Controller
@@ -20,7 +21,8 @@ namespace SchoolApp.Controllers
         public ActionResult Index()
         {
             var gvm = new List<GroupIndexViewModel>();
-            foreach (var group in db.Groups.Include(e=>e.Users))
+            
+            foreach (var group in db.LatestGroups.Include(e => e.Users))
             {
                 gvm.Add(new GroupIndexViewModel(group));
             }
@@ -61,6 +63,7 @@ namespace SchoolApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                groupView.Group.CreatedDate = DateTime.Now;
                 db.Groups.Add(groupView.Group);
                 db.SaveChanges();
                 UpdateUsers(groupView);
@@ -88,7 +91,7 @@ namespace SchoolApp.Controllers
 
         private GroupCreateEditViewModel GetGroupEditRecords(int id)
         {
-            Group group = db.Groups.Include(e=>e.Users).Where(x => x.GroupId == id).FirstOrDefault();
+            Group group = db.Groups.Include(e=>e.Users).Include(e=>e.ParentGroup).Where(x => x.GroupId == id).FirstOrDefault();
             var GroupStudents = group.Users.Where(x => Roles.IsUserInRole(x.UserName, Helpers.STUDENT_ROLE)).Select(x => x.UserId);
             var GroupTeachers = group.Users.Where(x => Roles.IsUserInRole(x.UserName, Helpers.TEACHER_ROLE)).Select(x => x.UserId);
             var model = new GroupCreateEditViewModel
@@ -116,7 +119,13 @@ namespace SchoolApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(groupView.Group).State = EntityState.Modified;
+
+                groupView.Group.CreatedDate = DateTime.Now;
+                int GroupId = groupView.Group.GroupId;
+                db.Entry(groupView.Group).State = EntityState.Added;
+                db.SaveChanges();
+                groupView.Group.ParentGroup =  db.Groups.Find(GroupId);
+                db.SaveChanges();
                 UpdateUsers(groupView);
                 db.SaveChanges();
                 return RedirectToAction("Index");

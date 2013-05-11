@@ -54,7 +54,19 @@ namespace SchoolApp.DAL
                 return UserProfiles.Where(x => AllTeachers.Contains(x.UserName));
             }
         }
-
+        public IQueryable<Group> LatestGroups
+        {
+            get
+            {
+                var query = from r1 in Groups.Include(x => x.ParentGroup)
+                            join r2 in Groups.Include(x => x.ParentGroup)
+                                on r1 equals r2.ParentGroup into rec
+                            from r in rec.DefaultIfEmpty()
+                            where r == null
+                            select r1;
+                return query;
+            }
+        }
         public DbSet<Guardian> Guardians { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Web.UI.HtmlControls;
+using DDay.iCal.Serialization.iCalendar;
 
 namespace SchoolApp.Controllers
 {
@@ -101,7 +102,7 @@ namespace SchoolApp.Controllers
 
         private void MakeFilteredDropdowns(string start, string end, int id=0)
         {
-            var groups = db.Groups;
+            var groups = db.LatestGroups;
             var classrooms = db.Classrooms;
 
             if (start != null && end != null)
@@ -138,7 +139,7 @@ namespace SchoolApp.Controllers
             }
         }
 
-        private void GetFilteredInfo(string start, string end, int id, DbSet<Group> groups, DbSet<Classroom> classrooms, out IQueryable<Group> filteredGroups, out IQueryable<Classroom> filteredClassrooms)
+        private void GetFilteredInfo(string start, string end, int id, IQueryable<Group> groups, DbSet<Classroom> classrooms, out IQueryable<Group> filteredGroups, out IQueryable<Classroom> filteredClassrooms)
         {
             DateTime startDt = Convert.ToDateTime(start);
             DateTime endDt = Convert.ToDateTime(end);
@@ -194,25 +195,55 @@ namespace SchoolApp.Controllers
         //
         // GET: /GroupInstance/Delete/5
 
-        public ActionResult Delete(int id = 0)
+        public ActionResult Delete(string start, string end, int id = 0)
         {
+
+            GroupInstanceDeleteViewModel givw = new GroupInstanceDeleteViewModel();
             GroupInstance groupinstance = db.GroupInstances.Find(id);
             if (groupinstance == null)
             {
                 return HttpNotFound();
             }
-            return PartialView(groupinstance);
+            givw.GroupInstance = groupinstance;
+            givw.StartDate = start;
+            givw.EndDate = end;
+            return PartialView(givw);
         }
 
         //
         // POST: /GroupInstance/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string RemoveInstance, string StartDate, string EndDate)
         {
-            GroupInstance groupinstance = db.GroupInstances.Find(id);
-            db.GroupInstances.Remove(groupinstance);
-            db.SaveChanges();
+            if (!String.IsNullOrEmpty(RemoveInstance))
+            {
+                GroupInstance groupinstance = db.GroupInstances.Find(id);
+                if (Convert.ToBoolean(RemoveInstance) == false)
+                {
+                    db.GroupInstances.Remove(groupinstance);
+                }
+                else
+                {
+                    RecurrencePattern rp = new RecurrencePattern(groupinstance.RecurrenceRule);
+                    RecurringComponent rc = new RecurringComponent();
+                    
+                    Event ev = new Event();
+                    ev.RecurrenceRules.Add(rp);
+                    PeriodList pl = new PeriodList();
+                    Convert.ToDateTime(StartDate);
+                    pl.Add(new iCalDateTime(StartDate));
+                    pl.Add(new iCalDateTime(EndDate));
+                    rc.ExceptionDates.Add(pl);
+                    ev.ExceptionDates.Add(pl);
+                    iCalendar ical = new iCalendar();
+                    ical.Events.Add(ev);
+                    iCalendarSerializer serializer = new iCalendarSerializer(ical);
+                    groupinstance.RecurrenceRule = serializer.SerializeToString(ical);
+                    db.Entry(groupinstance).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+            }
             return Content(Boolean.TrueString);
         }
         DateTime CreateNewDateTime(IDateTime date, DateTime time)
@@ -250,11 +281,14 @@ namespace SchoolApp.Controllers
                 {
                     if (!String.IsNullOrWhiteSpace(instance.RecurrenceRule))
                     {
+                        iCalendar ical = new iCalendar();
+                        
                         RecurrencePattern rp = new RecurrencePattern(instance.RecurrenceRule);
                         Event ev = new Event();
                         ev.RecurrenceRules.Add(rp);
                         ev.Start = new iCalDateTime(recurrence.StartDateTime);
                         var occ = ev.GetOccurrences(start.AddDays(-1), end);
+
 
                         foreach (var occurence in occ)
                         {
@@ -297,7 +331,7 @@ namespace SchoolApp.Controllers
         }
 
         //GET: /GroupInstance/GetEventDetails/1
-        public ActionResult GetEventDetails(int id = 0)
+        public ActionResult GetEventDetails(string StartDateTime, string EndDateTime,int id = 0)
         {
             if (id>0)
             {
@@ -309,6 +343,8 @@ namespace SchoolApp.Controllers
                 if (instance != null)
                 {
                     var details = new EventDetails();
+                    details.StartDateTime = StartDateTime;
+                    details.EndDateTime = EndDateTime;
                     details.Students = instance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, Helpers.STUDENT_ROLE)).Select(x => x.FullName).ToList();
                     details.Teachers = instance.Group.Users.Where(x => Roles.IsUserInRole(x.UserName, Helpers.TEACHER_ROLE)).Select(x => x.FullName).ToList();
                     details.GroupInstanceId = instance.GroupInstanceId;

@@ -96,28 +96,8 @@
                 }
                 formId = "createGroupInstanceForm";
                 showDialog("@Url.Action("Create")", $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"), $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT"));
-
-                //if (title) {
-                //    calendar.fullCalendar('renderEvent',
-                //		{
-                //		    title: title,
-                //		    start: start,
-                //		    end: end,
-                //		    allDay: allDay
-                //		},
-                //		true // make the event "stick"
-                //	);
-                //}
-                //calendar.fullCalendar('unselect');
             },
             eventClick: function (calEvent, jsEvent, view) {
-                @*if (jsEvent.target.className === "icon-remove" || jsEvent.target.className === "removeEvent") //We handle remove button ourselves
-                {
-                    jsEvent.preventDefault();
-                    return;
-                }
-                formId = "editGroupInstanceForm";
-                showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", calEvent.GroupInstanceId, calEvent.start, calEvent.end);*@
             },
             eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
                 postEditCalendar(event);
@@ -137,7 +117,26 @@
                 //https://code.google.com/p/fullcalendar/issues/detail?id=152
                 var titleElement = element.find('div.fc-event-title');
                 titleElement.html(titleElement.text());
-                $.get('@Url.Action("GetEventDetails")/' + event.GroupInstanceId, function (d) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetEventDetails")',
+                    data: {
+                        id: event.GroupInstanceId,
+                        StartDateTime: $.fullCalendar.formatDate(event.start, "yyyy/MM/dd hh:mm:ss TT"),
+                        EndDateTime: $.fullCalendar.formatDate(event.end, "yyyy/MM/dd hh:mm:ss TT"),
+                    },
+                    success: function (d) {
+                        element.popover({
+                            title: event.title,
+                            html: true,
+                            placement: 'right',
+                            content: d,
+                            trigger: 'click',
+                            container: 'body'
+                        })
+                    }
+                });
+              @*  $.get('@Url.Action("GetEventDetails")/' + event.GroupInstanceId, function (d) {
                     element.popover({
                         title: event.title,
                         html: true,
@@ -146,7 +145,7 @@
                         trigger: 'click',
                         container: 'body'
                     })
-                });
+                });*@
                
                 var eventId = event.GroupInstanceId;
                 //Add remove & attendance icon
@@ -156,22 +155,11 @@
                     <a href='/UserGroupInstance/Edit/"+ eventId + "' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon takeAttendance' data-toggle='tooltip' title='take attendance'>\
                     <i class='icon-list-alt'></i> \
                     </a> \
-                    <a href='#' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon removeEvent' data-toggle='tooltip' title='Remove event'>\
+                    <a href='#' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon removeEvent' data-toggle='tooltip' data-startdate='" + event.start + "' data-enddate='" + event.end + "' title='Remove event'>\
                     <i class='icon-remove'></i>\
                     </a>\
                     </div>\
                     "));
-
-                //Add color based on the field in table teacher
-                @*$.get("@Url.Action("GroupInfo","showDialogEditRemove")", function (viewContent) {
-                    element.popover({
-                        title: 'Event details',
-                        placement: 'bottom',
-                        content: viewContent,
-                        trigger: 'hover',
-                    });
-                });*@
-
             },
             eventAfterRender: function (event, element, view) {
                 if (element.width() < 120) {
@@ -216,6 +204,7 @@
                      {
                          class: 'btn btn-primary',
                          click: function () {
+                             $("#RemoveInstance").val(true);
                              $("#update-message").html('');
                              $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                          },
@@ -225,6 +214,7 @@
                     {
                         class: 'btn btn-primary',
                         click: function () {
+                            $("#RemoveInstance").val(true);
                             $("#update-message").html('');
                             $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                         },
@@ -250,8 +240,10 @@
     });
     $(document).on("click", ".removeEvent", function () {
         $(this).closest(".popover").hide();
+        var start = $(this).data("startdate");
+        var end = $(this).data("enddate");
         formId = "deleteGroupInstanceForm";
-        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
+        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'),start, end);
     });
     $(document).on("click", ".editEvent", function () {
         $(this).closest(".popover").hide();
@@ -278,7 +270,7 @@
             }
         });
     }
-    function showDialogRemove(href, id, StartTime, EndTime) {
+    function showDialogRemove(href, StartTime, EndTime, id) {
         var dialogDiv = $("#dialogContainerRemove");
         var viewUrl = href;
         $.ajax({
@@ -286,8 +278,8 @@
             type: 'GET',
             data: {
                 id: id,
-                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
-                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+                start: StartTime,
+                end: EndTime
             },
             success: function (data) {
                 dialogDiv.html(data);
@@ -330,7 +322,6 @@
         });
     }
     function updateSuccess() {
-        alert("TTT");
         if ($("#update-message").html() == "True") {
 
             //var parent = linkObj.closest("tr");

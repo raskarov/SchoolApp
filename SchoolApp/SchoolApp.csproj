@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201305081914587_AddIsDeletedToModels.Designer.cs">
       <DependentUpon>201305081914587_AddIsDeletedToModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305101720126_addGroupIntersectionAndDate.cs" />
+    <Compile Include="Migrations\201305101720126_addGroupIntersectionAndDate.Designer.cs">
+      <DependentUpon>201305101720126_addGroupIntersectionAndDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
@@ -243,6 +247,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\GroupInstanceDeleteViewModel.cs" />
     <Compile Include="ViewModels\StudentIndexViewModel.cs" />
     <Compile Include="ViewModels\EventDetails.cs" />
     <Compile Include="ViewModels\StudentEditViewModel.cs" />
@@ -583,6 +588,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305081914587_AddIsDeletedToModels.resx">
       <DependentUpon>201305081914587_AddIsDeletedToModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305101720126_addGroupIntersectionAndDate.resx">
+      <DependentUpon>201305101720126_addGroupIntersectionAndDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
