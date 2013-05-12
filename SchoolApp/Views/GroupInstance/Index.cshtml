@@ -221,7 +221,10 @@
                          class: 'btn btn-primary',
                          click: function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
                              $("#RemoveInstance").val(true);
+=======
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
 =======
 >>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
                              $("#update-message").html('');
@@ -234,7 +237,10 @@
                         class: 'btn btn-primary',
                         click: function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
                             $("#RemoveInstance").val(true);
+=======
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
 =======
 >>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
                             $("#update-message").html('');
@@ -266,7 +272,11 @@
         var end = $(this).data("enddate");
         formId = "deleteGroupInstanceForm";
 <<<<<<< HEAD
+<<<<<<< HEAD
         showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'),start, end);
+=======
+        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
 =======
         showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
 >>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
@@ -297,7 +307,11 @@
         });
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     function showDialogRemove(href, StartTime, EndTime, id) {
+=======
+    function showDialogRemove(href, id, StartTime, EndTime) {
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
 =======
     function showDialogRemove(href, id, StartTime, EndTime) {
 >>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
@@ -309,8 +323,13 @@
             data: {
                 id: id,
 <<<<<<< HEAD
+<<<<<<< HEAD
                 start: StartTime,
                 end: EndTime
+=======
+                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
+                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
 =======
                 //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
                 //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")

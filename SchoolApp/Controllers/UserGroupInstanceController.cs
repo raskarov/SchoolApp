@@ -182,6 +182,7 @@ namespace SchoolApp.Controllers
                 }
                 else
                 {
+                    //new code
                     var newInstance = new UserGroupInstance() { UserId = kvp.Key, 
                                                                 InstanceDateTime = InstanceDate, 
                                                                 Present = kvp.Value, 
