@@ -39,14 +39,28 @@ namespace SchoolApp.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Group group = db.Groups.Find(id);
-            if (group == null)
+            var gvm = new List<GroupDetailsViewModel>();
+            var groups = new List<Group>();
+            AllGroupVersions(id, ref groups);
+            foreach (var group in groups)
             {
-                return HttpNotFound();
+                gvm.Add(new GroupDetailsViewModel(group));
             }
-            return View(group);
+            return View(gvm.OrderByDescending(x=>x.CreatedDate));
         }
-
+        public void AllGroupVersions(int LatestId, ref List<Group> groups)
+        {
+            var r = db.Groups.Include(x=>x.ParentGroup).Include(x=>x.Users).Where(x=>x.GroupId==LatestId).FirstOrDefault();
+            if (r != null && r.ParentGroup != null)
+            {
+                groups.Add(r);
+                AllGroupVersions(r.ParentGroup.GroupId, ref groups);
+            }
+            else
+            {
+                groups.Add(r);
+            }
+        }
         //
         // GET: /Group/Create
 

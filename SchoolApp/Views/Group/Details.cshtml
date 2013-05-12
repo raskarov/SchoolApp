@@ -1,22 +1,50 @@
-﻿@model IEnumerable<SchoolApp.ViewModels.GroupIndexViewModel>
+﻿@model IEnumerable<SchoolApp.ViewModels.GroupDetailsViewModel>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Все версии группы";
 }
 
-<h2>Details</h2>
+<div class="well">
+<table class="table datatable">
+    <thead>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=>model.Students)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=>model.Teachers)
+        </th>
+        <th></th>
+    </thead>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @foreach (var student in item.Students)
+            {
+                <span class="label label-info">@student</span>
+            }
+        </td>
+        <td>
+            @foreach (var teacher in item.Teachers)
+            {
+                <span class="label label-success">@teacher</span>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem=>item.CreatedDate)
+        </td>
+    </tr>
+}
 
-<fieldset>
-    <legend>Group</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.GroupId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".datatable tbody tr:first").addClass("success");
+    });
+</script>

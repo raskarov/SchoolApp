@@ -247,6 +247,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\GroupInstanceDeleteViewModel.cs" />
     <Compile Include="ViewModels\StudentIndexViewModel.cs" />
     <Compile Include="ViewModels\EventDetails.cs" />
