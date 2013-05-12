@@ -1,0 +1,429 @@
+﻿@model SchoolApp.ViewModels.GroupInstanceViewModel
+
+@{
+    ViewBag.Title = "Расписание";
+}
+<div class="well">
+    <div class="calendarTop">
+        <div class="filter" style="float: left">
+            Фильтровать по учителю: @Html.DropDownList("UserId", Model.TeachersList)
+        </div>
+        <div class="legend" style="float: right">
+            @foreach (var item in Model.ColorLegend)
+            {
+                <span class="label" style="background-color: @item.Color">@item.FullName</span>
+            }
+        </div>
+    </div>
+
+    <div id="popverContainer"></div>
+    <div id="calendar"></div>
+    <div id="dialogContainer"></div>
+    <div id="dialogContainerRemove"></div>
+</div>
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/dateinput.js"></script>
+    <script type="text/javascript" src="~/Scripts/overlay.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.tmpl-beta1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.recurrenceinput.js"></script>
+    @Scripts.Render("~/bundles/fullcalendar")
+}
+@section Styles{
+    <link href="~/Content/overlay.css" rel="stylesheet">
+    <link href="~/Content/jquery.recurrenceinput.css" rel="stylesheet" />
+    @Styles.Render("~/content/fullcalendar")
+}
+<script type="text/javascript">
+    var formId;
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'agendaWeek,agendaDay'
+            },
+            events: function (start, end, callback) {
+                $.getJSON("@Url.Action("GetEvents")",
+                     {
+                         id: $("#UserId").val(),
+                         start: $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"),
+                         end: $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT")
+                     },
+            function (locationsArray) {
+                var result = $(locationsArray).map(function () {
+                    return {
+                        title: this.title,
+                        start: this.start,
+                        end: this.end,
+                        allDay: this.editable,
+                        GroupInstanceId: this.GroupInstanceId,
+                        ClassroomId: this.ClassroomId,
+                        GroupId: this.GroupId,
+                        color: this.Color,
+                        RecurrenceRule: this.RecurrenceRule
+                    };
+                }).toArray();
+                callback(result);
+            });
+            },
+            firstDay: 1, //Start with Monday
+            allDaySlot: false,
+            slotMinutes: 10,
+            height: 500,
+            editable: true,
+            defaultView: 'agendaWeek',
+            droppable: true,
+            selectable: true,
+            selectHelper: true,
+            minTime: 8,
+            maxTime: 22,
+            buttonText: {
+                today: 'Сегодня',
+                month: 'Месяц',
+                day: 'День',
+                week: 'Неделя'
+            },
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthNamesShort: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Нов', 'Дек'],
+            dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+            dayNamesShort: ['Вс', 'Пон', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+            select: function (start, end, allDay) {
+                var now = new Date();
+                if (start < now) {
+                    alert("Ай-яй-яй. Нельзя создавать уроки в прошлом!");
+                    $(this).fullCalendar('unselect');
+                    return;
+                }
+                formId = "createGroupInstanceForm";
+                showDialog("@Url.Action("Create")", $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"), $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT"));
+
+                //if (title) {
+                //    calendar.fullCalendar('renderEvent',
+                //		{
+                //		    title: title,
+                //		    start: start,
+                //		    end: end,
+                //		    allDay: allDay
+                //		},
+                //		true // make the event "stick"
+                //	);
+                //}
+                //calendar.fullCalendar('unselect');
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                @*if (jsEvent.target.className === "icon-remove" || jsEvent.target.className === "removeEvent") //We handle remove button ourselves
+                {
+                    jsEvent.preventDefault();
+                    return;
+                }
+                formId = "editGroupInstanceForm";
+                showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", calEvent.GroupInstanceId, calEvent.start, calEvent.end);*@
+            },
+            eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+                postEditCalendar(event);
+                $('#calendar').fullCalendar('refetchEvents');
+            },
+            eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
+                postEditCalendar(event);
+                var events = $('#calendar').fullCalendar('clientEvents', event.id);
+                $.each(events, function () {
+                    $("#calendar").fullCalendar('updateEvent', $(this));
+                });
+                $('#calendar').fullCalendar('rerenderEvents');
+            },
+            eventRender: function (event, element) {
+
+                //Render html in event body O_O not supported by default: 
+                //https://code.google.com/p/fullcalendar/issues/detail?id=152
+                var titleElement = element.find('div.fc-event-title');
+                titleElement.html(titleElement.text());
+                $.get('@Url.Action("GetEventDetails")/' + event.GroupInstanceId, function (d) {
+                    element.popover({
+                        title: event.title,
+                        html: true,
+                        placement: 'right',
+                        content: d,
+                        trigger: 'click',
+                        container: 'body'
+                    })
+                });
+
+                var eventId = event.GroupInstanceId;
+                //Add remove & attendance icon
+                element.find(".fc-event-time")
+
+                .append($("<div class='scheduleToolbar'>\
+                    <a href='/UserGroupInstance/Edit/"+ eventId + "' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon takeAttendance' data-toggle='tooltip' title='take attendance'>\
+                    <i class='icon-list-alt'></i> \
+                    </a> \
+                    <a href='#' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon removeEvent' data-toggle='tooltip' title='Remove event'>\
+                    <i class='icon-remove'></i>\
+                    </a>\
+                    </div>\
+                    "));
+
+                //Add color based on the field in table teacher
+                @*$.get("@Url.Action("GroupInfo","showDialogEditRemove")", function (viewContent) {
+                    element.popover({
+                        title: 'Event details',
+                        placement: 'bottom',
+                        content: viewContent,
+                        trigger: 'hover',
+                    });
+                });*@
+
+            },
+            eventAfterRender: function (event, element, view) {
+                if (element.width() < 120) {
+                    var titleElement = element.find('div.fc-event-title');
+                    titleElement.html('<i class="icon-hand-up"></i>');
+                    element.find('div.fc-event-head').hide();
+                }
+            }
+        });
+        $("#dialogContainer").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 'auto',
+            modal: true,
+            buttons: {
+                "Сохранить":
+<<<<<<< HEAD
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $("#update-message").html('');
+                            $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                        },
+                        html: 'Сохранить'
+                    },
+                "Отменить":
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        html: 'Отменить'
+                    }
+            }
+        });
+        $("#dialogContainerRemove").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 'auto',
+            modal: true,
+            buttons: {
+                "Удалить":
+                     {
+                         class: 'btn btn-primary',
+                         click: function () {
+                             $("#update-message").html('');
+                             $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                         },
+                         html: 'Удалить'
+                     },
+                "УдалитьПовторение":
+=======
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $("#update-message").html('');
+                            $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                        },
+<<<<<<< HEAD
+                        html: 'Удалить выбранное'
+=======
+                        html: 'Сохранить'
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
+                    },
+                "Отменить":
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        html: 'Отменить'
+<<<<<<< HEAD
+=======
+                    }
+            }
+        });
+        $("#dialogContainerRemove").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 'auto',
+            modal: true,
+            buttons: {
+                "Удалить":
+                     {
+                         class: 'btn btn-primary',
+                         click: function () {
+                             $("#update-message").html('');
+                             $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                         },
+                         html: 'Удалить'
+                     },
+                "УдалитьПовторение":
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $("#update-message").html('');
+                            $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
+                        },
+                        html: 'Удалить выбранное'
+                    },
+                "Отменить":
+                    {
+                        class: 'btn btn-primary',
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        html: 'Отменить'
+>>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
+                    }
+            }
+        });
+        //$(window).resize(function () {
+        //    $(".fc-event-time").each(function () {
+        //        if ($(this).width() < 100) {
+        //            $(this).find(".scheduleToolbar").hide();
+        //        }
+        //    });
+        //});
+    });
+    $(document).on("click", ".removeEvent", function () {
+        $(this).closest(".popover").hide();
+        formId = "deleteGroupInstanceForm";
+        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
+    });
+    $(document).on("click", ".editEvent", function () {
+        $(this).closest(".popover").hide();
+        formId = "editGroupInstanceForm";
+        showDialogEdit("@Url.Action("Edit", "GroupInstance")", $(this).data('event-id'));
+    });
+    function showDialogEdit(href, id, StartTime, EndTime) {
+        var dialogDiv = $("#dialogContainer");
+        var viewUrl = href;
+        $.ajax({
+            url: viewUrl,
+            type: 'GET',
+            data: {
+                id: id,
+                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
+                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+            },
+            success: function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    function showDialogRemove(href, id, StartTime, EndTime) {
+        var dialogDiv = $("#dialogContainerRemove");
+        var viewUrl = href;
+        $.ajax({
+            url: viewUrl,
+            type: 'GET',
+            data: {
+                id: id,
+                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
+                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+            },
+            success: function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    function showDialog(href, start, end) {
+        var dialogDiv = $("#dialogContainer");
+        var viewUrl = href;
+        $.ajax({
+            url: viewUrl,
+            type: 'GET',
+            data: {
+                start: start,
+                end: end
+            },
+            success: function (data) {
+                dialogDiv.html(data);
+                dialogDiv.find("#StartDateTime").val(start);
+                dialogDiv.find("#EndDateTime").val(end);
+                //$('.datepicker').datepicker();
+                ////validation
+                //var $form = $("#updateCarForm");
+                ////Unbind existing validation
+                //$form.unbind();
+                //$form.data("validatior", null);
+                ////check document for changes
+                //$.validator.unobtrusive.parse(document);
+                ////Readd validation with changes
+                //$form.validate();
+                dialogDiv.dialog('open');
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    function updateSuccess() {
+        alert("TTT");
+        if ($("#update-message").html() == "True") {
+
+            //var parent = linkObj.closest("tr");
+            //parent.find(".Amount").html($("#Amount").val());
+            //parent.find(".EffectiveDate").html($("#EffectiveDate").val());
+            setTimeout(function () { $('#calendar').fullCalendar('refetchEvents'); }, 0);
+            $('#dialogContainer').dialog("close");
+            $('#dialogContainerRemove').dialog("close");
+        }
+        else {
+        }
+    }
+
+    function postEditCalendar(event) {
+        $.ajax({
+            url: '@Url.Action("Edit")',
+            type: "POST",
+            data: {
+                GroupInstanceId: event.GroupInstanceId,
+                StartDateTime: $.fullCalendar.formatDate(event.start, "yyyy/MM/dd hh:mm:ss TT"),
+                EndDateTime: $.fullCalendar.formatDate(event.end, "yyyy/MM/dd hh:mm:ss TT"),
+                GroupId: event.GroupId,
+                ClassroomId: event.ClassroomId,
+                RecurrenceRule: event.RecurrenceRule
+            },
+            success: function () {
+                noty({
+                    text: "Saved successfully",
+                    type: "success",
+                    timeout: 1000
+                });
+            },
+            error: function () {
+                noty({
+                    text: "Update failed",
+                    type: "error",
+                    timeout: 1000
+                });
+            }
+        });
+    }
+    $("#UserId").change(function () {
+        $("#calendar").fullCalendar('refetchEvents');
+    });
+    $('*[data-ajaxload]').bind('hover', function () {
+        var e = $(this);
+        e.unbind('hover');
+        $.get(e.data('poload'), function (d) {
+            e.popover({ content: d }).popover('show');
+        });
+    });
+</script>
