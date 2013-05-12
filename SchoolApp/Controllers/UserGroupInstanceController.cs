@@ -89,9 +89,10 @@ namespace SchoolApp.Controllers
                     newUserGroupInstance.AttendanceTaken = DateTime.Now;
                     newUserGroupInstance.InstanceDateTime = InstanceDate;
                     newUserGroupInstance.Present = AttendanceType.NA;
-                    newUserGroupInstance.GroupInstance = groupInstance;
+                    newUserGroupInstance.GroupInstanceId = groupInstance.GroupInstanceId;
                     ugi.Add(newUserGroupInstance);
                 }
+                ugi.AddRange(UserGroupInstances);
             }
             return View(ugi);
         }
@@ -178,26 +179,30 @@ namespace SchoolApp.Controllers
                     {
                         currentAttendance.Present = kvp.Value;
                         db.Entry(currentAttendance).State = EntityState.Modified;
+                        db.SaveChanges();
                     }
                 }
                 else
                 {
-                    //new code
                     var newInstance = new UserGroupInstance() { UserId = kvp.Key, 
                                                                 InstanceDateTime = InstanceDate, 
                                                                 Present = kvp.Value, 
-                                                                GroupInstanceId = GroupInstanceId };
+                                                                GroupInstanceId = GroupInstanceId,
+                                                                AttendanceTaken= DateTime.Now};
                     db.UserGroupInstances.Add(newInstance);
                     db.SaveChanges();
-                    var Payment = new Payment()
+                    if (kvp.Value == AttendanceType.Absent || kvp.Value == AttendanceType.Present)
                     {
-                        comments = "Списано через страницу посещений (" + Membership.GetUser().UserName + ")",
-                        TransactionDateTime = DateTime.Now,
-                        UserId = newInstance.UserId,
-                        Amount = amount
-                    };
-                    db.Payments.Add(Payment);
-                    db.SaveChanges();
+                        var Payment = new Payment()
+                        {
+                            comments = "Списано через страницу посещений (" + Membership.GetUser().UserName + ")",
+                            TransactionDateTime = DateTime.Now,
+                            UserId = newInstance.UserId,
+                            Amount = amount * -1
+                        };
+                        db.Payments.Add(Payment);
+                        db.SaveChanges();
+                    }
                 }
                 //var groupInstance = groupInstances.Where(x => x.UserGroupInstanceID == kvp.Key).First();
                 //var PaymentProfileId = db.GroupInstances.Include(x=>x.Group).Where(x => x.GroupInstanceId == groupInstance.GroupInstanceId).First().Group.PaymentProfileId;

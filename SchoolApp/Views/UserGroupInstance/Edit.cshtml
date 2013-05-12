@@ -18,6 +18,8 @@ http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edi
         </th>
         <th></th>
     </thead>
+    @Html.HiddenFor(x=>Model.FirstOrDefault().InstanceDateTime)
+    @Html.HiddenFor(modelItem=>Model.FirstOrDefault().GroupInstanceId)
 @foreach (var item in Model) {
     <tr class="attendanceRow">
         <td>
@@ -62,7 +64,9 @@ http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edi
             type: "POST",
             url: '@Url.Action("Save")',
             data: {
-                groups: dict
+                groups: dict,
+                date: $("#InstanceDateTime").val(),
+                GroupInstanceId: $("#GroupInstanceId").val()
             },
             success: function () {
                 var btnSave = $("#btnSave");

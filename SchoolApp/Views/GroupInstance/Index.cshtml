@@ -18,7 +18,6 @@
 
     <div id="popverContainer"></div>
     <div id="calendar">
-        <a href="#" id="fullscreen">Fullscreen</a>
     </div>
     <div id="dialogContainer"></div>
     <div id="dialogContainerRemove"></div>
@@ -47,9 +46,6 @@
 }
 <script type="text/javascript">
     var formId;
-    $("#fullscreen").click(function () {
-        $(".well").addClass("overlay");
-    });
     $(document).ready(function () {
         $('#calendar').fullCalendar({
             header: {
@@ -220,13 +216,7 @@
                      {
                          class: 'btn btn-primary',
                          click: function () {
-<<<<<<< HEAD
-<<<<<<< HEAD
                              $("#RemoveInstance").val(true);
-=======
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
-=======
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
                              $("#update-message").html('');
                              $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                          },
@@ -236,13 +226,7 @@
                     {
                         class: 'btn btn-primary',
                         click: function () {
-<<<<<<< HEAD
-<<<<<<< HEAD
                             $("#RemoveInstance").val(true);
-=======
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
-=======
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
                             $("#update-message").html('');
                             $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                         },
@@ -271,15 +255,9 @@
         var start = $(this).data("startdate");
         var end = $(this).data("enddate");
         formId = "deleteGroupInstanceForm";
-<<<<<<< HEAD
-<<<<<<< HEAD
         showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'),start, end);
-=======
         showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
-=======
         showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
     });
     $(document).on("click", ".editEvent", function () {
         $(this).closest(".popover").hide();
@@ -306,15 +284,7 @@
             }
         });
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-    function showDialogRemove(href, StartTime, EndTime, id) {
-=======
     function showDialogRemove(href, id, StartTime, EndTime) {
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
-=======
-    function showDialogRemove(href, id, StartTime, EndTime) {
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
         var dialogDiv = $("#dialogContainerRemove");
         var viewUrl = href;
         $.ajax({
@@ -322,18 +292,8 @@
             type: 'GET',
             data: {
                 id: id,
-<<<<<<< HEAD
-<<<<<<< HEAD
                 start: StartTime,
                 end: EndTime
-=======
-                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
-                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
-=======
-                //start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
-                //end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
->>>>>>> 415351f684379eb14333831f8f580916f1b1e72e
             },
             success: function (data) {
                 dialogDiv.html(data);
