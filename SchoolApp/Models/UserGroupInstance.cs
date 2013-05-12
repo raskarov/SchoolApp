@@ -5,13 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Isg.Domain;
+using System.ComponentModel;
 namespace SchoolApp.Models
 {
     public enum AttendanceType
     {
+        [Description("NA")]
         NA,
+        [Description("Присутствовал")]
         Present,
+        [Description("Отсутствовал")]
         Absent,
+        [Description("Отсутствовал и предупредил")]
         AbsentWithExcuse
     }
     public class UserGroupInstance : ISoftDelete//, IAuditable

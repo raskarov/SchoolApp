@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
-
+using System.ComponentModel;
 namespace SchoolApp.Extensions
 {
     public static class Helpers
@@ -52,6 +53,21 @@ namespace SchoolApp.Extensions
                 XmlReader.Close();
                 StrReader.Close();
             }
+        }
+        /// <summary>
+        /// Get enum description
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string GetDescription(this Enum value)
+        {
+            FieldInfo field = value.GetType().GetField(value.ToString());
+
+            DescriptionAttribute attribute
+                    = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute))
+                        as DescriptionAttribute;
+
+            return attribute == null ? value.ToString() : attribute.Description;
         }
     }
 }

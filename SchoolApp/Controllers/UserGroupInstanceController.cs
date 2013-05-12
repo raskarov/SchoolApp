@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using SchoolApp.Models;
 using SchoolApp.DAL;
 using System.Web.Security;
+using SchoolApp.Extensions;
 
 namespace SchoolApp.Controllers
 {
@@ -177,9 +178,63 @@ namespace SchoolApp.Controllers
                     }
                     else
                     {
+                        if (currentAttendance.Present == AttendanceType.Absent || currentAttendance.Present == AttendanceType.Present)
+                        {
+                            if (kvp.Value == AttendanceType.AbsentWithExcuse || kvp.Value == AttendanceType.NA)
+                            {
+                                var Payment = new Payment()
+                                {
+                                    comments = "Посещение изменено с \"" +
+                                                    currentAttendance.Present.GetDescription() +
+                                                    "\" на \"" + kvp.Value.GetDescription() +
+                                                    "\"  " + InstanceDate +
+                                                    "- Возвращено через страницу посещений (" + Membership.GetUser().UserName + ")",
+                                    TransactionDateTime = DateTime.Now,
+                                    UserId = kvp.Key,
+                                    Amount = amount
+                                };
+                                db.Payments.Add(Payment);
+                                db.SaveChanges();
+                            }
+                        }
+                        if (currentAttendance.Present == AttendanceType.AbsentWithExcuse)
+                        {
+                            if (kvp.Value == AttendanceType.Absent || kvp.Value == AttendanceType.Present)
+                            {
+                                var Payment = new Payment()
+                                {
+                                    comments = "Посещение изменено с \"" +
+                                                    currentAttendance.Present.GetDescription() +
+                                                    "\" на \"" + kvp.Value.GetDescription() +
+                                                    "\"  " + InstanceDate +
+                                                    "- Списано через страницу посещений (" + Membership.GetUser().UserName + ")",
+                                    TransactionDateTime = DateTime.Now,
+                                    UserId = kvp.Key,
+                                    Amount = amount * -1
+                                };
+                                db.Payments.Add(Payment);
+                                db.SaveChanges();
+                            }
+                        }
+                        if (currentAttendance.Present == AttendanceType.NA)
+                        {
+                            if (kvp.Value == AttendanceType.Absent || kvp.Value == AttendanceType.Present)
+                            {
+                                var Payment = new Payment()
+                                {
+                                    comments = kvp.Value.GetDescription() + "  " + InstanceDate + "- Списано через страницу посещений (" + Membership.GetUser().UserName + ")",
+                                    TransactionDateTime = DateTime.Now,
+                                    UserId = kvp.Key,
+                                    Amount = amount * -1
+                                };
+                                db.Payments.Add(Payment);
+                                db.SaveChanges();
+                            }
+                        }
                         currentAttendance.Present = kvp.Value;
                         db.Entry(currentAttendance).State = EntityState.Modified;
                         db.SaveChanges();
+                        
                     }
                 }
                 else
@@ -195,7 +250,7 @@ namespace SchoolApp.Controllers
                     {
                         var Payment = new Payment()
                         {
-                            comments = "Списано через страницу посещений (" + Membership.GetUser().UserName + ")",
+                            comments =  kvp.Value.GetDescription() + "  " + InstanceDate + "- Списано через страницу посещений (" + Membership.GetUser().UserName + ")",
                             TransactionDateTime = DateTime.Now,
                             UserId = newInstance.UserId,
                             Amount = amount * -1
