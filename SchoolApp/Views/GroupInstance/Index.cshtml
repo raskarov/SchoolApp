@@ -383,13 +383,3 @@
         });
     });
 </script>
-
-
-                "Сохранить":
-                        html: 'Сохранить'
-                "Отменить":
-                        html: 'Отменить'
-        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
-        showDialogEdit("@Url.Action("Edit", "GroupInstance")", $(this).data('event-id'));
-    function showDialogEdit(href, id, StartTime, EndTime) {
-            setTimeout(function () { $('#calendar').fullCalendar('refetchEvents'); }, 0);
