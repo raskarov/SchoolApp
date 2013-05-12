@@ -155,27 +155,63 @@ namespace SchoolApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(Dictionary<string,string> groups)
+        public ActionResult Save(Dictionary<string,string> groups, int GroupInstanceId, string Date)
         {
+            var InstanceDate = Convert.ToDateTime(Date);
             //Jquery only sends string,string. 
             Dictionary<int, AttendanceType> groupsParsed = groups.ToDictionary(x => Convert.ToInt32(x.Key), x => (AttendanceType)Convert.ToInt32(x.Value));
-            var groupInstances = db.UserGroupInstances.Include(x=>x.User).Where(x => groupsParsed.Keys.Contains(x.UserGroupInstanceID));
+            var existingAttendance = db.UserGroupInstances.Include(x=>x.User)
+                                     .Where(x => x.GroupInstanceId == GroupInstanceId).ToList()
+                                     .Where(x => x.InstanceDateTime.Date == InstanceDate.Date);
+            var PaymentProfileId = db.GroupInstances.Include(x=>x.Group).Where(x => x.GroupInstanceId == GroupInstanceId).First().Group.PaymentProfileId;
+            var amount = db.PaymentRules.Where(x => x.PaymentProfileId == PaymentProfileId && x.EffectiveDate <= DateTime.Today).First().Amount;
             foreach (KeyValuePair<int, AttendanceType> kvp in groupsParsed)
             {
-                var groupInstance = groupInstances.Where(x => x.UserGroupInstanceID == kvp.Key).First();
-                var PaymentProfileId = db.GroupInstances.Include(x=>x.Group).Where(x => x.GroupInstanceId == groupInstance.GroupInstanceId).First().Group.PaymentProfileId;
-                var amount = db.PaymentRules.Where(x => x.PaymentProfileId == PaymentProfileId && x.EffectiveDate <= DateTime.Today).First().Amount;
-                groupInstance.Present = kvp.Value;
-                if (kvp.Value == AttendanceType.Absent || kvp.Value == AttendanceType.Present)
+                var currentAttendance = existingAttendance.Where(x => x.UserId == kvp.Key).FirstOrDefault();
+                if (currentAttendance!=null)
                 {
-                    Payment payment = new Payment();
-                    payment.Amount = amount*-1;
-                    payment.comments = "Списано через страницу посещений (" + Membership.GetUser().UserName + ")";
-                    payment.UserId = groupInstance.UserId;
-                    payment.TransactionDateTime = DateTime.Now;
-                    db.Payments.Add(payment);
+                    if (currentAttendance.Present == kvp.Value)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        currentAttendance.Present = kvp.Value;
+                        db.Entry(currentAttendance).State = EntityState.Modified;
+                    }
                 }
-                db.Entry(groupInstance).State = EntityState.Modified;
+                else
+                {
+                    var newInstance = new UserGroupInstance() { UserId = kvp.Key, 
+                                                                InstanceDateTime = InstanceDate, 
+                                                                Present = kvp.Value, 
+                                                                GroupInstanceId = GroupInstanceId };
+                    db.UserGroupInstances.Add(newInstance);
+                    db.SaveChanges();
+                    var Payment = new Payment()
+                    {
+                        comments = "Списано через страницу посещений (" + Membership.GetUser().UserName + ")",
+                        TransactionDateTime = DateTime.Now,
+                        UserId = newInstance.UserId,
+                        Amount = amount
+                    };
+                    db.Payments.Add(Payment);
+                    db.SaveChanges();
+                }
+                //var groupInstance = groupInstances.Where(x => x.UserGroupInstanceID == kvp.Key).First();
+                //var PaymentProfileId = db.GroupInstances.Include(x=>x.Group).Where(x => x.GroupInstanceId == groupInstance.GroupInstanceId).First().Group.PaymentProfileId;
+                //var amount = db.PaymentRules.Where(x => x.PaymentProfileId == PaymentProfileId && x.EffectiveDate <= DateTime.Today).First().Amount;
+                //groupInstance.Present = kvp.Value;
+                //if (kvp.Value == AttendanceType.Absent || kvp.Value == AttendanceType.Present)
+                //{
+                //    Payment payment = new Payment();
+                //    payment.Amount = amount*-1;
+                //    payment.comments = "Списано через страницу посещений (" + Membership.GetUser().UserName + ")";
+                //    payment.UserId = groupInstance.UserId;
+                //    payment.TransactionDateTime = DateTime.Now;
+                //    db.Payments.Add(payment);
+                //}
+                //db.Entry(groupInstance).State = EntityState.Modified;
             }
             db.SaveChanges();
             return Content(Boolean.TrueString);

@@ -19,7 +19,7 @@
             @if (Model.FuturePaymentRule != null)
             {
                 <tr class="error row-transparent">
-                    <td><span class="label label-error">Upcoming</span></td>
+                    <td><span class="label label-error">Будущий</span></td>
                     <td class="Amount">
                         @Html.DisplayFor(modelItem => Model.FuturePaymentRule.Amount)
                     </td>
@@ -27,7 +27,7 @@
                         @Html.DisplayFor(modelItem => Model.FuturePaymentRule.EffectiveDate)
                     </td>
                     <td>
-                         @Html.ActionLink("Edit", "Edit","PaymentRule",
+                         @Html.ActionLink("Редактировать","Edit","PaymentRule",
                                 new { id = Model.FuturePaymentRule.PaymentRuleId },
                                 new { @class = "editLink" }
                                 )
@@ -39,7 +39,7 @@
                 if (Model.CurrentPaymentRule != null)
                 {
                 <tr class="success">
-                  <td><span class="label label-success">Current</span></td>
+                  <td><span class="label label-success">Текущий</span></td>
                     <td class="Amount">
                         @Html.DisplayFor(modelItem => Model.CurrentPaymentRule.Amount)
                     </td>
@@ -47,7 +47,7 @@
                         @Html.DisplayFor(modelItem => Model.CurrentPaymentRule.EffectiveDate)
                     </td>
                       <td>
-                        @Html.ActionLink("Edit", "Edit","PaymentRule",
+                        @Html.ActionLink("Редактировать", "Edit","PaymentRule",
                                 new { id = Model.CurrentPaymentRule.PaymentRuleId, current=true },
                                 new { @class = "editLink", id="currentRule", rel="tooltip", data_toggle="tooltip", title="edit rule" }
                                 )
