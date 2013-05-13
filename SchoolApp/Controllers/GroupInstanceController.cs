@@ -286,7 +286,7 @@ namespace SchoolApp.Controllers
                         RecurrencePattern rp = new RecurrencePattern(instance.RecurrenceRule);
                         Event ev = new Event();
                         ev.RecurrenceRules.Add(rp);
-                        ev.Start = new iCalDateTime(recurrence.StartDateTime);
+                        ev.Start = new iCalDateTime(instance.StartDateTime);
                         var occ = ev.GetOccurrences(start.AddDays(-1), end);
 
 

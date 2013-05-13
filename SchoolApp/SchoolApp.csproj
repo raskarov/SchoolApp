@@ -516,7 +516,6 @@
     <Content Include="Views\PaymentRule\Create.cshtml" />
     <Content Include="Views\PaymentRule\Edit.cshtml" />
     <Content Include="Views\PaymentRule\Delete.cshtml" />
-    <Content Include="Views\GroupInstance\Index.cshtml" />
     <Content Include="Views\GroupInstance\Details.cshtml" />
     <Content Include="Views\GroupInstance\Create.cshtml" />
     <Content Include="Views\GroupInstance\Edit.cshtml" />
