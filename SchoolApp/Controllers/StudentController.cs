@@ -27,12 +27,12 @@ namespace SchoolApp.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            UserProfile userprofile = db.UserProfiles.Find(id);
-            if (userprofile == null)
+            var attendence = db.UserGroupInstances.Include(x=>x.User).Include(x=>x.GroupInstance).Include(x=>x.GroupInstance.Group).Where(x => x.UserId == id);
+            if (!attendence.Any())
             {
                 return HttpNotFound();
             }
-            return View(userprofile);
+            return View(attendence);
         }
 
         //

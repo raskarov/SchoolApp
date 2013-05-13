@@ -31,7 +31,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.PaymentProfile.Comments)
         </td>
-        <td>@Html.DisplayFor(modelItem=>item.CurrentPaymentRule.Amount)</td>
+        <td>@Html.DisplayFor(modelItem=>item.CurrentPaymentRule.Amount).ToString()</td>
         <td>
 			<a href="@Url.Action("Edit", new { id=item.PaymentProfile.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
             <a href="@Url.Action("Details", new { id=item.PaymentProfile.PaymentProfileId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
@@ -42,3 +42,9 @@
 
 </table>
 </div>
+<style type="text/css">
+    @@font-face { font-family: "Rubl Sign"; src: url(http://www.artlebedev.ru/;-)/ruble.eot); }
+    span.rur { font-family: "Rubl Sign"; text-transform: uppercase; // text-transform: none;}    
+    span.rur span { position: absolute; overflow: hidden; width: .45em; height: 1em; margin: .1ex 0 0 -.55em; // display: none; }
+    span.rur span:before { content: '\2013'; }
+</style>
