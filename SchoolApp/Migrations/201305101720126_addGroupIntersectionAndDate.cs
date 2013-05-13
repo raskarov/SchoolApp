@@ -7,7 +7,7 @@ namespace SchoolApp.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Groups", "CreatedDate", c => c.DateTime(nullable: false));
+            //AddColumn("dbo.Groups", "CreatedDate", c => c.DateTime(nullable: false));
             AddColumn("dbo.Groups", "ParentGroup_GroupId", c => c.Int());
             AddForeignKey("dbo.Groups", "ParentGroup_GroupId", "dbo.Groups", "GroupId");
             CreateIndex("dbo.Groups", "ParentGroup_GroupId");

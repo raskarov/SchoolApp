@@ -14,7 +14,6 @@ namespace SchoolApp.Migrations
            
             AutomaticMigrationsEnabled = true;
         }
-
         protected override void Seed(SchoolApp.DAL.SchoolContext context)
         {
             SeedRolesAndUsers();

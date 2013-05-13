@@ -203,37 +203,57 @@
     <Compile Include="Images\201302120311492_GroupIndexViewModel.Designer.cs">
       <DependentUpon>201302120311492_GroupIndexViewModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201303162043519_addStudentLevel.cs" />
+    <Compile Include="Migrations\201303162043519_addStudentLevel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201303162043519_addStudentLevel.Designer.cs">
       <DependentUpon>201303162043519_addStudentLevel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201303170249448_addParents.cs" />
+    <Compile Include="Migrations\201303170249448_addParents.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201303170249448_addParents.Designer.cs">
       <DependentUpon>201303170249448_addParents.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201303180210546_addREcurrenceRule.cs" />
+    <Compile Include="Migrations\201303180210546_addREcurrenceRule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201303180210546_addREcurrenceRule.Designer.cs">
       <DependentUpon>201303180210546_addREcurrenceRule.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201305042041340_AddStudentCreationDate.cs" />
+    <Compile Include="Migrations\201305042041340_AddStudentCreationDate.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201305042041340_AddStudentCreationDate.Designer.cs">
       <DependentUpon>201305042041340_AddStudentCreationDate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201305050307223_addInstanceDateTime.cs" />
+    <Compile Include="Migrations\201305050307223_addInstanceDateTime.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201305050307223_addInstanceDateTime.Designer.cs">
       <DependentUpon>201305050307223_addInstanceDateTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201305060047272_futureStudentBOok.cs" />
+    <Compile Include="Migrations\201305060047272_futureStudentBOok.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201305060047272_futureStudentBOok.Designer.cs">
       <DependentUpon>201305060047272_futureStudentBOok.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201305081914587_AddIsDeletedToModels.cs" />
+    <Compile Include="Migrations\201305081914587_AddIsDeletedToModels.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201305081914587_AddIsDeletedToModels.Designer.cs">
       <DependentUpon>201305081914587_AddIsDeletedToModels.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201305101720126_addGroupIntersectionAndDate.cs" />
+    <Compile Include="Migrations\201305101720126_addGroupIntersectionAndDate.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201305101720126_addGroupIntersectionAndDate.Designer.cs">
       <DependentUpon>201305101720126_addGroupIntersectionAndDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201305130430101_addParentGRoupF.cs" />
+    <Compile Include="Migrations\201305130430101_addParentGRoupF.Designer.cs">
+      <DependentUpon>201305130430101_addParentGRoupF.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -591,6 +611,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305101720126_addGroupIntersectionAndDate.resx">
       <DependentUpon>201305101720126_addGroupIntersectionAndDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305130430101_addParentGRoupF.resx">
+      <DependentUpon>201305130430101_addParentGRoupF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

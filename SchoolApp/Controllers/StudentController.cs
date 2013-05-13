@@ -28,10 +28,6 @@ namespace SchoolApp.Controllers
         public ActionResult Details(int id = 0)
         {
             var attendence = db.UserGroupInstances.Include(x=>x.User).Include(x=>x.GroupInstance).Include(x=>x.GroupInstance.Group).Where(x => x.UserId == id);
-            if (!attendence.Any())
-            {
-                return HttpNotFound();
-            }
             return View(attendence);
         }
 
