@@ -574,6 +574,9 @@
     <Content Include="Views\FutureStudent\Create.cshtml" />
     <Content Include="Views\FutureStudent\Edit.cshtml" />
     <Content Include="Views\FutureStudent\Delete.cshtml" />
+    <Content Include="Views\GroupInstance\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -153,7 +153,7 @@
                 element.find(".fc-event-time")
 
                 .append($("<div class='scheduleToolbar'>\
-                    <a href='/UserGroupInstance/Edit/"+ eventId + "' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon takeAttendance' data-toggle='tooltip' title='take attendance'>\
+                    <a href='/UserGroupInstance/Edit?id="+eventId + "&date="+$.fullCalendar.formatDate(event.start, "yyyy/MM/dd hh:mm:ss TT")+"' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon takeAttendance' data-toggle='tooltip' title='take attendance'>\
                     <i class='icon-list-alt'></i> \
                     </a> \
                     <a href='#' data-event-id='" + eventId + "' rel='tooltip' class='toolbarIcon removeEvent' data-toggle='tooltip' title='Remove event'>\
