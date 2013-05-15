@@ -206,7 +206,7 @@ function Calendar(element, options, eventSources) {
 	t.getView = getView;
 	t.option = option;
 	t.trigger = trigger;
-	
+	t.setOptions = setOptions;
 	
 	// imports
 	EventManager.call(t, options, eventSources);
@@ -310,11 +310,11 @@ function Calendar(element, options, eventSources) {
 	
 	/* View Rendering
 	-----------------------------------------------------------------------------*/
-	
+   
 	// TODO: improve view switching (still weird transition in IE, and FF has whiteout problem)
-	
-	function changeView(newViewName) {
-		if (!currentView || newViewName != currentView.name) {
+  
+	function changeView(newViewName, force_reload) {
+		if (force_reload || !currentView || newViewName != currentView.name) {
 			ignoreWindowResize++; // because setMinHeight might change the height before render (and subsequently setSize) is reached
 
 			unselect();
@@ -329,10 +329,14 @@ function Calendar(element, options, eventSources) {
 			}else{
 				setMinHeight(content, 1); // needs to be 1 (not 0) for IE7, or else view dimensions miscalculated
 			}
+            
 			content.css('overflow', 'hidden');
 			
 			currentView = viewInstances[newViewName];
-			if (currentView) {
+			if (force_reload) {
+			    currentView.element.remove();
+			}
+			if (currentView && !force_reload) {
 				currentView.element.show();
 			}else{
 				currentView = viewInstances[newViewName] = new fcViews[newViewName](
@@ -619,7 +623,13 @@ function Calendar(element, options, eventSources) {
 	/* Misc
 	-----------------------------------------------------------------------------*/
 	
-	
+    //raskarov:https://code.google.com/p/fullcalendar/issues/detail?id=293
+	function setOptions(new_options) {
+	    $.extend(options, new_options);
+	    var viewName = currentView.name;
+	    changeView(viewName, true);
+	}
+
 	function getView() {
 		return currentView;
 	}

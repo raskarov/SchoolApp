@@ -3,6 +3,17 @@
 @{
     ViewBag.Title = "Расписание";
 }
+<style type="text/css">
+    .fullscreen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 99;
+        background-color: #ffffff;
+    }
+</style>
 <div class="well">
     <div class="calendarTop">
         <div class="filter" style="float: left">
@@ -17,7 +28,13 @@
     </div>
 
     <div id="popverContainer"></div>
-    <div id="calendar"></div>
+    <div id="calendarContainer">
+    <div id="calendar">
+        <a href="#" id="fullscreen" runat="server">Полноэкранный режим</a>
+        <a href="#" id="zoomIn">[+]</a>
+        <a href="#" id="zoomOut">[-]</a>
+    </div>
+        </div>
     <div id="dialogContainer"></div>
     <div id="dialogContainerRemove"></div>
 </div>
@@ -34,6 +51,34 @@
     @Styles.Render("~/content/fullcalendar")
 }
 <script type="text/javascript">
+    $(window).resize(function () { $("#calendar").fullCalendar('option', 'contentHeight', $(window).height()-375)});
+    $("#zoomOut").click(function () {
+        var currentSlot = $("#calendar").fullCalendar('option', 'slotMinutes');
+        if (currentSlot <= 110) {
+            var Minutes = currentSlot + 10;
+            $('#calendar').fullCalendar('setOptions', { slotMinutes: Minutes })
+        }
+    });
+    $("#zoomIn").click(function () {
+        var currentSlot = $("#calendar").fullCalendar('option', 'slotMinutes');
+        if (currentSlot >= 20) {
+            var Minutes = currentSlot - 10;
+            $('#calendar').fullCalendar('setOptions', { slotMinutes: Minutes })
+        }
+    });
+    $("#fullscreen").click(function () {
+        if ($(this).text() == 'Полноэкранный режим') {
+            $("#calendar").appendTo("body");
+            $("#calendar").addClass("fullscreen");
+            $(this).text("Выйти из полноэкранного режима");
+            $('#calendar').fullCalendar('option', 'height', $(window).height());
+        }
+        else {
+            $("#calendar").removeClass("fullscreen");
+            $("#calendar").appendTo("#calendarContainer");
+            $(this).text("Полноэкранный режим");
+        }
+    });
     var formId;
     $(document).ready(function () {
         $('#calendar').fullCalendar({
@@ -68,8 +113,8 @@
             },
             firstDay: 1, //Start with Monday
             allDaySlot: false,
+            contentHeight:$(window).height()-375,
             slotMinutes: 10,
-            height: 500,
             editable: true,
             defaultView: 'agendaWeek',
             droppable: true,
