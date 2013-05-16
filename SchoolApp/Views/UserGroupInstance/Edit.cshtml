@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SchoolApp.Models.UserGroupInstance>
+﻿@model SchoolApp.ViewModels.UserGroupInstanceEditViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -18,9 +18,9 @@ http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edi
         </th>
         <th></th>
     </thead>
-    @Html.HiddenFor(x=>Model.FirstOrDefault().InstanceDateTime)
-    @Html.HiddenFor(modelItem=>Model.FirstOrDefault().GroupInstanceId)
-@foreach (var item in Model) {
+    @Html.HiddenFor(x=>Model.UserGroupInstances.FirstOrDefault().InstanceDateTime)
+    @Html.HiddenFor(modelItem=>Model.UserGroupInstances.FirstOrDefault().GroupInstanceId)
+@foreach (var item in Model.UserGroupInstances) {
     <tr class="attendanceRow">
         <td>
             @Html.DisplayFor(modelItem => item.User.FullName)
@@ -39,12 +39,45 @@ http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edi
         </td>
     </tr>
 }
-    </table>
+    <tfoot>
+        <td></td>
+        <td>
+            Выберите студента: @Html.DropDownList("UserId", new SelectList(Model.Students.Select(x => new { x.FullName, x.UserId }), "UserId", "FullName"),"Выбрать")
+            <button class="btn btn-mini" id="addStudent">Добавить</button>
+        </td>
+        <td></td>
+    </tfoot>
+
+</table>
 <button id="btnSave" class="btn btn-primary disabled" disabled="disabled" value="Save">Saved</button>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script type="text/javascript">
+    $("#addStudent").click(function () {
+        var selectBox = $("#UserId");
+        var selectedOption = $("#UserId option:selected");
+        var selectedText = selectedOption.text();
+        var selectedValue = selectBox.val();
+        if (selectedValue != '' && selectedValue > 0) {
+            var lastRow = $('#attendanceTable > tbody > tr:last');
+            var copy = lastRow.clone();
+            copy.find('td:first').text(selectedText);
+            copy.find('.btn-group').attr('data-usergroupinstance', selectedValue);
+            copy.find('.attendanceBtn').removeClass('active').removeClass('btn-success');
+            copy.find('.attendanceBtn:first').addClass('active').addClass('btn-success');
+            selectedOption.remove();
+            if (lastRow.hasClass('odd')) {
+                copy.insertAfter(lastRow);
+            }
+            else {
+                copy.insertAfter(lastRow);
+            }
+        }
+        else {
+            alert("Сначала нужно выбрать студента");
+        }
+    });
     $(document).on("click", ".attendanceBtn", function () {
         var btnSave = $("#btnSave");
         btnSave.removeAttr("disabled");

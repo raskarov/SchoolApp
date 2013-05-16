@@ -216,9 +216,9 @@ namespace SchoolApp.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id, string RemoveInstance, string StartDate, string EndDate)
         {
+            GroupInstance groupinstance = db.GroupInstances.Find(id);
             if (!String.IsNullOrEmpty(RemoveInstance))
             {
-                GroupInstance groupinstance = db.GroupInstances.Find(id);
                 if (Convert.ToBoolean(RemoveInstance) == false)
                 {
                     db.GroupInstances.Remove(groupinstance);
@@ -227,7 +227,7 @@ namespace SchoolApp.Controllers
                 {
                     RecurrencePattern rp = new RecurrencePattern(groupinstance.RecurrenceRule);
                     RecurringComponent rc = new RecurringComponent();
-                    
+
                     Event ev = new Event();
                     ev.RecurrenceRules.Add(rp);
                     PeriodList pl = new PeriodList();
@@ -243,6 +243,11 @@ namespace SchoolApp.Controllers
                     db.Entry(groupinstance).State = EntityState.Modified;
                 }
                 db.SaveChanges();
+            }
+            else
+            {
+                    db.GroupInstances.Remove(groupinstance);
+                    db.SaveChanges();
             }
             return Content(Boolean.TrueString);
         }

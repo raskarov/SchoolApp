@@ -272,6 +272,7 @@
     <Compile Include="ViewModels\StudentIndexViewModel.cs" />
     <Compile Include="ViewModels\EventDetails.cs" />
     <Compile Include="ViewModels\StudentEditViewModel.cs" />
+    <Compile Include="ViewModels\UserGroupInstanceEditViewModel.cs" />
     <Compile Include="ViewModels\UserIndexViewModel.cs" />
     <Compile Include="ViewModels\GroupCreateEditViewModel.cs" />
     <Compile Include="ViewModels\GroupIndexViewModel.cs" />

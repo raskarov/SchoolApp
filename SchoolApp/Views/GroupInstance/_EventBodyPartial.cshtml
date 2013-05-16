@@ -13,6 +13,6 @@
 </div>
 <div class="detailsButtons">
 <a href="#" class="btn editEvent" data-event-id="@Model.GroupInstanceId"><i class="icon-pencil"></i></a>
-<a href="@Url.Action("Edit", "UserGroupInstance", new { id = @Model.GroupInstanceId })" class="btn"><i class="icon-list-alt"></i></a>
+<a href="@Url.Action("Edit", "UserGroupInstance", new { id = @Model.GroupInstanceId, Date=@Model.StartDateTime  })" class="btn"><i class="icon-list-alt"></i></a>
 <a href="#" class="btn removeEvent" data-event-id="@Model.GroupInstanceId" data-startdate="@Model.StartDateTime" data-enddate="@Model.EndDateTime"><i class="icon-remove"></i></a>
 </div>

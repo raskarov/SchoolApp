@@ -9,6 +9,7 @@ using SchoolApp.Models;
 using SchoolApp.DAL;
 using System.Web.Security;
 using SchoolApp.Extensions;
+using SchoolApp.ViewModels;
 
 namespace SchoolApp.Controllers
 {
@@ -95,7 +96,11 @@ namespace SchoolApp.Controllers
                 }
                 ugi.AddRange(UserGroupInstances);
             }
-            return View(ugi);
+            var instances = new UserGroupInstanceEditViewModel();
+            instances.UserGroupInstances = ugi;
+            var students = ugi.Select(x => x.User);
+            instances.Students = db.Students.ToList().Except(students).ToList();
+            return View(instances);
         }
         public Group GetGroupByDate(IQueryable<Group> Groups, int GroupId, DateTime Date)
         {
