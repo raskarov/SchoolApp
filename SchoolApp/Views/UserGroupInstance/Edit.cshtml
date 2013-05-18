@@ -68,11 +68,14 @@ http://stackoverflow.com/questions/13483715/in-mvc4-how-to-save-multiple-row-edi
             copy.find('.attendanceBtn:first').addClass('active').addClass('btn-success');
             selectedOption.remove();
             if (lastRow.hasClass('odd')) {
-                copy.insertAfter(lastRow);
+                copy.removeClass('odd');
+                copy.addClass('even');
             }
             else {
-                copy.insertAfter(lastRow);
+                copy.removeClass('even');
+                copy.addClass('odd');
             }
+            copy.insertAfter(lastRow);
         }
         else {
             alert("Сначала нужно выбрать студента");

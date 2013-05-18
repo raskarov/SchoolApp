@@ -19,8 +19,8 @@ bool isCurrent = ViewBag.IsCurrent;
     @Html.Hidden("isCurrent", isCurrent)
     <div id="update-message"></div>
     <div class="btn-group" data-toggle="buttons-radio">
-           <button type="button" id="fixedRate" name="fixedRateToggle" class="btn active">Fixed Rate</button>
-           <button type="button" id="flexibleRate" name="flexibleRateToggle"  class="btn">Flexible Rate</button>
+           <button type="button" id="fixedRate" name="fixedRateToggle" class="btn active btn-small">Фиксированная Цена</button>
+           <button type="button" id="flexibleRate" name="flexibleRateToggle"  class="btn btn-small">Гибкая Цена</button>
        </div>
     if (!ViewBag.IsCurrent)
     {
@@ -45,8 +45,8 @@ bool isCurrent = ViewBag.IsCurrent;
     <div id="flexibleRatePlaceholder" hidden>
         <table id="tableRules" class="table table-condensed table-striped">
             <thead>
-                <th># Students</th>
-                <th>Price</th>
+                <th>Кол-во Студентов</th>
+                <th>Цена</th>
             </thead>
             <tbody>
                      <tr>

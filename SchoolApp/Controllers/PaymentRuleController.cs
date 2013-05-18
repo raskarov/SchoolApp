@@ -50,7 +50,7 @@ namespace SchoolApp.Controllers
         public ActionResult Create(bool isCurrent= false)
         {
             ViewBag.IsCurrent = isCurrent;
-            return PartialView();
+            return PartialView(new PaymentRule() { Amount = 0 });
         }
 
         //

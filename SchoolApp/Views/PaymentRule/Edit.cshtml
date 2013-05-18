@@ -19,8 +19,8 @@
     @Html.HiddenFor(model => model.PaymentProfileId)
     @Html.HiddenFor(model=> model.Variable, new { Variable = "Variable" } )
         <div class="btn-group" data-toggle="buttons-radio">
-           <button type="button" id="fixedRate" name="fixedRateToggle" class="btn btn-small">Fixed Rate</button>
-           <button type="button" id="flexibleRate" name="flexibleRateToggle"  class="btn btn-small">Flexible Rate</button>
+           <button type="button" id="fixedRate" name="fixedRateToggle" class="btn btn-small">Фиксированная Цена</button>
+           <button type="button" id="flexibleRate" name="flexibleRateToggle"  class="btn btn-small">Гибкая Цена</button>
        </div>
     if (!ViewBag.IsCurrent) //Cannot change effective date for current payment
     {
