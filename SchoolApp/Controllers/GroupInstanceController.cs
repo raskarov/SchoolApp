@@ -294,21 +294,29 @@ namespace SchoolApp.Controllers
                         ev.Start = new iCalDateTime(instance.StartDateTime);
                         var occ = ev.GetOccurrences(start.AddDays(-1), end);
 
-
-                        foreach (var occurence in occ)
+                        if (occ != null)
                         {
-                            list.Add(new
+                            foreach (var occurence in occ)
                             {
-                                title = instance.Group.Name,
-                                start = CreateNewDateTime(occurence.Period.StartTime, instance.StartDateTime).ToString("s"),
-                                end = CreateNewDateTime(occurence.Period.EndTime, instance.EndDateTime).ToString("s"),
-                                editable = false,
-                                GroupInstanceId = instance.GroupInstanceId,
-                                ClassroomId = instance.ClassroomId,
-                                GroupId = instance.GroupId,
-                                Color = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher")).HexColor,
-                                RecurrenceRule = recurrence.RecurrenceRule
-                            });
+                                var user = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher"));
+                                var color = "#FFFFFF";
+                                if (user != null)
+                                {
+                                    color = user.HexColor;
+                                }
+                                list.Add(new
+                                {
+                                    title = instance.Group.Name,
+                                    start = CreateNewDateTime(occurence.Period.StartTime, instance.StartDateTime).ToString("s"),
+                                    end = CreateNewDateTime(occurence.Period.EndTime, instance.EndDateTime).ToString("s"),
+                                    editable = false,
+                                    GroupInstanceId = instance.GroupInstanceId,
+                                    ClassroomId = instance.ClassroomId,
+                                    GroupId = instance.GroupId,
+                                    Color = color,
+                                    RecurrenceRule = recurrence.RecurrenceRule
+                                });
+                            }
                         }
                     }
                     else

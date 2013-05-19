@@ -13,7 +13,7 @@ namespace SchoolApp
                         "~/Scripts/jquery-migrate-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/noty").Include("~/Scripts/jquery.noty*"));
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui-{version}.custom.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
@@ -48,7 +48,8 @@ namespace SchoolApp
                         "~/Content/themes/base/jquery.ui.tabs.css",
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+                        //"~/Content/themes/base/jquery.ui.theme.css",
+                        "~/Content/themes/custom-theme/jquery-ui-1.10.2.custom.css"));
             bundles.Add(new StyleBundle("~/Content/font-awesome").Include("~/Content/font-awesome*"));
             bundles.Add(new StyleBundle("~/Content/multi-select").Include("~/Content/multi-select*"));
             bundles.Add(new StyleBundle("~/Content/fullcalendar").Include("~/Content/fullcalendar.css"));
