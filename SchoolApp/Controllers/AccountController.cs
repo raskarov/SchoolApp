@@ -94,13 +94,13 @@ namespace SchoolApp.Controllers
                 // Attempt to register the user
                 try
                 {
-                    if (!WebSecurity.UserExists(model.UserName))
+                    if (!WebSecurity.UserExists(model.UserName.Trim()))
                     {
                         //Create new user
-                        WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email });
+                        WebSecurity.CreateUserAndAccount(model.UserName.Trim(), model.Password, new { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email });
 
                         //And assign him to the default role
-                        Roles.AddUserToRole(model.UserName, Helpers.REGISTERED_USER_ROLE);
+                        Roles.AddUserToRole(model.UserName.Trim(), Helpers.REGISTERED_USER_ROLE);
                     }
                     return RedirectToAction("ApprovalRequired");
                 }
