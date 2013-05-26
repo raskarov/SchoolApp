@@ -74,8 +74,7 @@ namespace SchoolApp.Controllers
             {
                 //default recurrence once a week forever
                 RecurrencePattern rp = new RecurrencePattern(FrequencyType.Weekly);
-                groupinstance.RecurrenceRule = rp.ToString();
-
+                groupinstance.RecurrenceRule = "RRULE:" + rp.ToString();
                 db.GroupInstances.Add(groupinstance);
                 db.SaveChanges();
                 return Content(Boolean.TrueString);
