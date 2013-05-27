@@ -36,6 +36,9 @@ namespace SchoolApp.Models
         [Display(Name = "Адрес")]
         public string Address { get; set; }
 
+        [Display(Name="Заметки")]
+        public string Remarks { get; set; }
+
         [DataType(DataType.PhoneNumber)]
         [Display(Name="Телефон")]
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Invalid phone format")]

@@ -170,9 +170,9 @@ namespace SchoolApp.Controllers
                 {
                    
                     groupinstance.StartDateTime = inst.StartDateTime.Date + new TimeSpan(groupinstance.StartDateTime.Hour, groupinstance.StartDateTime.Minute, 0);
-                    groupinstance.EndDateTime = inst.EndDateTime.Date + new TimeSpan(groupinstance.EndDateTime.Hour, groupinstance.EndDateTime.Minute, 0);
-                    db.Entry(inst).State = EntityState.Detached;
+                    groupinstance.EndDateTime = inst.EndDateTime.Date + new TimeSpan(groupinstance.EndDateTime.Hour, groupinstance.EndDateTime.Minute, 0);  
                 }
+                db.Entry(inst).State = EntityState.Detached;
                 db.Entry(groupinstance).State = EntityState.Modified;
                 db.SaveChanges();
                 return Content(Boolean.TrueString);
@@ -224,20 +224,37 @@ namespace SchoolApp.Controllers
                 }
                 else
                 {
-                    RecurrencePattern rp = new RecurrencePattern(groupinstance.RecurrenceRule);
-                    RecurringComponent rc = new RecurringComponent();
+                    iCalendarSerializer serializer = new iCalendarSerializer();
+                    iCalendarCollection icalCollection = new iCalendarCollection();
+                    using (TextReader tr = new StringReader(groupinstance.RecurrenceRule))
+                    {
+                        icalCollection = (iCalendarCollection)serializer.Deserialize(tr);
+                    }
 
                     Event ev = new Event();
-                    ev.RecurrenceRules.Add(rp);
+                    if (icalCollection.Count == 0)
+                    {
+                        RecurrencePattern rp = new RecurrencePattern(groupinstance.RecurrenceRule);
+                        ev.RecurrenceRules.Add(rp);
+                    }
+                    else
+                    {
+                        ev = (Event)icalCollection.First().Events.First();
+                    }
+                 
                     PeriodList pl = new PeriodList();
-                    Convert.ToDateTime(StartDate);
-                    pl.Add(new iCalDateTime(StartDate));
-                    pl.Add(new iCalDateTime(EndDate));
-                    rc.ExceptionDates.Add(pl);
+                    if (ev.ExceptionDates.Count > 0)
+                    {
+                        pl.AddRange(ev.ExceptionDates.First());
+                    }
+                    var sd = Convert.ToDateTime(StartDate);
+                    var time = new iCalDateTime(sd);
+                   
+                    pl.Add(time);
                     ev.ExceptionDates.Add(pl);
                     iCalendar ical = new iCalendar();
                     ical.Events.Add(ev);
-                    iCalendarSerializer serializer = new iCalendarSerializer(ical);
+                    serializer = new iCalendarSerializer(ical);
                     groupinstance.RecurrenceRule = serializer.SerializeToString(ical);
                     db.Entry(groupinstance).State = EntityState.Modified;
                 }
@@ -285,36 +302,48 @@ namespace SchoolApp.Controllers
                 {
                     if (!String.IsNullOrWhiteSpace(instance.RecurrenceRule))
                     {
-                        iCalendar ical = new iCalendar();
-                        
-                        RecurrencePattern rp = new RecurrencePattern(instance.RecurrenceRule);
-                        Event ev = new Event();
-                        ev.RecurrenceRules.Add(rp);
+                        iCalendarSerializer serializer = new iCalendarSerializer();
+                        iCalendarCollection ical = new iCalendarCollection();
+                        using (TextReader tr = new StringReader(instance.RecurrenceRule))
+                        {
+                            ical = (iCalendarCollection)serializer.Deserialize(tr);
+                        }
+
+                            Event ev = new Event();
+                            if (ical.Count == 0)
+                            {
+                                RecurrencePattern rp = new RecurrencePattern(instance.RecurrenceRule);
+                                ev.RecurrenceRules.Add(rp);
+                            }
+                            else
+                            {
+                                ev = (Event)ical.First().Events.First();
+                            }
+                            var ex = ev.ExceptionDates;
                         ev.Start = new iCalDateTime(instance.StartDateTime);
                         var occ = ev.GetOccurrences(start.AddDays(-1), end);
-
                         if (occ != null)
                         {
                             foreach (var occurence in occ)
                             {
-                                var user = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher"));
-                                var color = "#FFFFFF";
-                                if (user != null)
-                                {
-                                    color = user.HexColor;
-                                }
-                                list.Add(new
-                                {
-                                    title = instance.Group.Name,
-                                    start = CreateNewDateTime(occurence.Period.StartTime, instance.StartDateTime).ToString("s"),
-                                    end = CreateNewDateTime(occurence.Period.EndTime, instance.EndDateTime).ToString("s"),
-                                    editable = false,
-                                    GroupInstanceId = instance.GroupInstanceId,
-                                    ClassroomId = instance.ClassroomId,
-                                    GroupId = instance.GroupId,
-                                    Color = color,
-                                    RecurrenceRule = recurrence.RecurrenceRule
-                                });
+                                    var user = instance.Group.Users.FirstOrDefault(y => Roles.IsUserInRole(y.UserName, "Teacher"));
+                                    var color = "#FFFFFF";
+                                    if (user != null)
+                                    {
+                                        color = user.HexColor;
+                                    }
+                                    list.Add(new
+                                    {
+                                        title = instance.Group.Name,
+                                        start = CreateNewDateTime(occurence.Period.StartTime, instance.StartDateTime).ToString("s"),
+                                        end = CreateNewDateTime(occurence.Period.EndTime, instance.EndDateTime).ToString("s"),
+                                        editable = false,
+                                        GroupInstanceId = instance.GroupInstanceId,
+                                        ClassroomId = instance.ClassroomId,
+                                        GroupId = instance.GroupId,
+                                        Color = color,
+                                        RecurrenceRule = recurrence.RecurrenceRule
+                                    });
                             }
                         }
                     }

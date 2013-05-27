@@ -75,10 +75,10 @@
         <td>
            <!--TODO: Replace with ViewModel -->
             @Html.DisplayFor(modelItem => item.Guardians.FirstOrDefault().Phone) 
-            (
+           
            @Html.DisplayFor(modelItem => item.Guardians.FirstOrDefault().FirstName)
             @Html.DisplayFor(modelItem => item.Guardians.FirstOrDefault().LastName)
-            )
+            
         </td>
         <td>
             @Html.HiddenFor(modelItem=>item.UserId)

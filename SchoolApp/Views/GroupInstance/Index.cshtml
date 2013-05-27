@@ -46,7 +46,7 @@
     @Scripts.Render("~/bundles/fullcalendar")
 }
 @section Styles{
-    <link href="~/Content/overlay.css" rel="stylesheet">
+    <link href="~/Content/overlay.css" rel="stylesheet">db.Entry(inst).State = EntityState.Detached;
     <link href="~/Content/jquery.recurrenceinput.css" rel="stylesheet" />
     @Styles.Render("~/content/fullcalendar")
 }
@@ -211,7 +211,8 @@
                             container: 'body',
                             template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
                         }).mouseenter(function (e) {
-                            $(this).popover('show');
+                            var ref = $(this);
+                            ref.popover('show');
                         }).mouseleave(function (e) {
                             var ref = $(this);
                             timeoutObj = setTimeout(function () {
@@ -301,6 +302,7 @@
                         class: 'btn btn-primary',
                         click: function () {
                             $("#update-message").html('');
+                            $("#RemoveInstance").val("true");
                             $("#" + formId).submit(); //Since we have two ajax forms, we use global var to record relevant formId.
                         },
                         html: 'Удалить выбранное'
@@ -326,7 +328,7 @@
     $(document).on("click", ".removeEvent", function () {
         $(this).closest(".popover").hide();
         formId = "deleteGroupInstanceForm";
-        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'));
+        showDialogRemove("/GroupInstance/Delete/" + $(this).data('event-id'), $(this).data('event-id'), $(this).attr('data-startdate'), $(this).attr('data-enddate'));
     });
     $(document).on("click", ".editEvent", function () {
         $(this).closest(".popover").hide();
@@ -361,8 +363,8 @@
             type: 'GET',
             data: {
                 id: id,
-                start: $.fullCalendar.formatDate(StartTime, "yyyy/MM/dd hh:mm:ss TT"),
-                end: $.fullCalendar.formatDate(EndTime, "yyyy/MM/dd hh:mm:ss TT")
+                start: StartTime,
+                end: EndTime
             },
             success: function (data) {
                 dialogDiv.html(data);

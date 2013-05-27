@@ -9,10 +9,10 @@
 <div class="span3">
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
-
-        @Html.HiddenFor(model => model.Student.UserId)
+    @Html.HiddenFor(model => model.Student.UserId)
     @Html.HiddenFor(model => model.Student.UserName)
-        
+    @Html.HiddenFor(model => model.Student.CreationDate)
+    @Html.HiddenFor(model=>model.Student.FutureStudent)
         <div class="editor-label">
             @Html.LabelFor(model => model.Student.FirstName)
         </div>

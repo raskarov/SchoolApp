@@ -56,6 +56,7 @@ namespace SchoolApp.Controllers
                 db.UserProfiles.Add(userprofile);
                 db.SaveChanges();
                 userprofile.UserName = "Student" + userprofile.UserId;
+                userprofile.CreationDate = DateTime.Now;
                 db.Entry(userprofile).State = EntityState.Modified;
                 db.SaveChanges();
                 Roles.AddUserToRole(userprofile.UserName, Helpers.STUDENT_ROLE);

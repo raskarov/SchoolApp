@@ -11,40 +11,10 @@
     },
     new { @id = "deleteGroupInstanceForm" }))
 {
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>GroupInstance</legend>
+<h4>Вы уверены что хотите удалить эту запись?</h4>
     @Html.Hidden("RemoveInstance")
     @Html.HiddenFor(x=>x.StartDate)
     @Html.HiddenFor(x=>x.EndDate)
     <div id="update-message"></div>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.GroupInstance.StartDateTime)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.GroupInstance.StartDateTime)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.GroupInstance.EndDateTime)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.GroupInstance.EndDateTime)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.GroupInstance.Group.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.GroupInstance.Group.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.GroupInstance.Classroom.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.GroupInstance.Classroom.Name)
-    </div>
-</fieldset>
 
 }

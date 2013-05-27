@@ -97,11 +97,11 @@ namespace SchoolApp.Controllers
         // POST: /FutureStudent/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(UserProfile userprofile)
+        public ActionResult Edit(StudentEditViewModel userprofile)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userprofile).State = EntityState.Modified;
+                db.Entry(userprofile.Student).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

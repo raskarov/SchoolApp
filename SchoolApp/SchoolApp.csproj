@@ -255,6 +255,10 @@
     <Compile Include="Migrations\201305130430101_addParentGRoupF.Designer.cs">
       <DependentUpon>201305130430101_addParentGRoupF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305262258340_addStudentRemarks.cs" />
+    <Compile Include="Migrations\201305262258340_addStudentRemarks.Designer.cs">
+      <DependentUpon>201305262258340_addStudentRemarks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
@@ -638,6 +642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305130430101_addParentGRoupF.resx">
       <DependentUpon>201305130430101_addParentGRoupF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305262258340_addStudentRemarks.resx">
+      <DependentUpon>201305262258340_addStudentRemarks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

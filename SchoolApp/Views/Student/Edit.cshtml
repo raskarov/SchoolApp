@@ -10,9 +10,9 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.Student.UserId)
+    @Html.HiddenFor(model => model.Student.UserId)
     @Html.HiddenFor(model => model.Student.UserName)
-        
+    @Html.HiddenFor(model => model.Student.CreationDate)
         <div class="editor-label">
             @Html.LabelFor(model => model.Student.FirstName)
         </div>
@@ -58,6 +58,13 @@
         <div class="editor-field">
             @Html.DropDownListFor(x=>x.Student.StudentLevel, Model.LevelsList)
             @Html.ValidationMessageFor(model=>model.Student.StudentLevel)
+        </div>
+     <div class="editor-label">
+            @Html.LabelFor(model => model.Student.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Student.Remarks, new { @rows = 10 })
+            @Html.ValidationMessageFor(model => model.Student.Remarks)
         </div>
         <p>
             <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
