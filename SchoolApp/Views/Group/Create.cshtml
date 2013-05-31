@@ -15,7 +15,7 @@
             @Html.EditorFor(model => model.Group.Name)
             @Html.ValidationMessageFor(model => model.Group.Name)
         </div>
-          <div class="editor-field">
+          <div class="editor-field" style="padding-bottom: 20px;">
         @Html.ListBoxFor(x=>x.SelectedTeacherIds, Model.Teachers, new{@id="teacherSelect", name="teacherSelect[]"})
         </div>
          <div class="editor-field">
@@ -29,6 +29,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/quicksearch")
 }
 <script>
     $('#teacherSelect').multiSelect({
@@ -36,7 +37,14 @@
         selectionHeader: "<div class='listbox-header'>Selected teachers</div>"
     });
     $('#studentSelect').multiSelect({
-        selectableHeader: "<div class='listbox-header'>Available students</div>",
-        selectionHeader: "<div class='listbox-header'>Selected students</div>"
+        selectableHeader: "<input type='text' id='search' style='width: 150px;' autocomplete='off' placeholder='Искать тут...'>",
+        selectionHeader: "<div class='listbox-header' style='padding-top: 20px;'>Выбранные студенты</div>"
+    });
+    $('#search').quicksearch($('.ms-elem-selectable', '#ms-studentSelect')).on('keydown', function (e) {
+        if (e.keyCode == 40) {
+            $(this).trigger('focusout');
+            $('#studentSelect').focus();
+            return false;
+        }
     });
 </script>
