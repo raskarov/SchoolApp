@@ -58,6 +58,11 @@ namespace SchoolApp
             bundles.Add(new ScriptBundle("~/bundles/colorpicker").Include("~/Scripts/bootstrap-colorpicker.js"));
             bundles.Add(new StyleBundle("~/content/colorpicker").Include("~/Content/bootstrap-colorpicker.css"));
             bundles.Add(new ScriptBundle("~/bundles/quicksearch").Include("~/Scripts/jquery.quicksearch.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/chosen").Include("~/Scripts/chosen.jquery.js"));
+            bundles.Add(new StyleBundle("~/content/chosen").Include("~/Content/chosen.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/blockUI").Include("~/Scripts/blockUI.js"));
         }
     }
 }

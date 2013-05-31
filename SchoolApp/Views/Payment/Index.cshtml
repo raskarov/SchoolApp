@@ -4,12 +4,24 @@
     ViewBag.Title = "Оплата";
 }
    Выберите студента: @Html.DropDownList("UserId", new SelectList(Model.Select(x => new { x.FullName, x.UserId }), "UserId", "FullName"),"Выбрать")
-    <div id="PaymentTableHolder">
-       
+    <div id="PaymentTableHolder" style="padding-top:20px">
     </div>
-
+@section Scripts {
+    @Scripts.Render("~/bundles/chosen")
+}
+@section Styles {
+    @Styles.Render("~/content/chosen")
+}
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#UserId").chosen();
+    });
+
     $("#UserId").change(function () {
+        $('#PaymentTableHolder').block({
+            message: '<h1>Работаем...</h1>',
+            css: { border: '3px solid #a00' }
+        });
         var selectList = $(this);
         $.ajax({
             type: "GET",
@@ -19,5 +31,10 @@
                 $("#PaymentTableHolder").html(result);
             }
         });
+        $('#PaymentTableHolder').unblock();
     });
+
+    //$(document).ready(function () {
+    //    $("#UserId").chosen();
+    //});
 </script>
