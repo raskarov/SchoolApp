@@ -12,15 +12,15 @@ namespace SchoolApp.ViewModels
         public int GroupId { get; set; }
         public string Name { get; set; }
 
-        public List<string> Teachers { get; set; }
-        public List<string> Students { get; set; }
+        public List<UserProfile> Teachers { get; set; }
+        public List<UserProfile> Students { get; set; }
 
         public GroupIndexViewModel(Group group)
         {
             this.GroupId = group.GroupId;
             this.Name = group.Name;
-            this.Teachers = group.Users.Where(x=>Roles.IsUserInRole(x.UserName, "Teacher")).Select(x => x.FullName).ToList();
-            this.Students = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Student") && x.FutureStudent==false).Select(x => x.FullName).ToList(); 
+            this.Teachers = group.Users.Where(x=>Roles.IsUserInRole(x.UserName, "Teacher")).ToList();
+            this.Students = group.Users.Where(x => Roles.IsUserInRole(x.UserName,"Student") && x.FutureStudent==false).ToList(); 
         }
     }
 }

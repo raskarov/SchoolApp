@@ -7,6 +7,7 @@
 <p>
     <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i> Добавить Группу</a>
 </p>
+<span id="dottedArea" class="label" style="background: none !important; border: 2px dashed gray; display:none; color:black; text-shadow:none;"></span>
 <div class="well">
 <table class="table table-striped datatable">
     <thead>
@@ -24,19 +25,20 @@
 
 @foreach (var item in Model) {
     <tr>
+        @Html.HiddenFor(modelItem => item.GroupId);
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-        <td>
+        <td  ondrop="dropStudent(this, event)" ondragenter="dragEnter(this,event)" ondragover="return false">
             @foreach (var student in item.Students)
             {
-                <span class="label label-info">@student</span>
+                <span class="label label-info draggableStudent" data-studentId="@student.UserId" draggable="true" ondragstart="dragStudent(this,event)">@student.FullName</span>
             }
         </td>
         <td>
             @foreach (var teacher in item.Teachers)
             {
-                <span class="label label-success">@teacher</span>
+                <span class="label label-success">@teacher.FullName</span>
             }
         </td>
         <td>
@@ -50,3 +52,72 @@
 
 </table>
 </div>
+<script type="text/javascript">
+    var elements = [];
+    var labelName;
+    var oldGroupId;
+    function dragStudent(student, event) {
+        oldGroupId = $(student).parent().parent().find("#item_GroupId").val();
+        var index = elements.indexOf(student);
+        if (index == -1) {
+            // not already existing in the array, add it now
+            elements.push(student);
+            index = elements.length - 1;
+        }
+        labelName = student.innerHTML;
+        event.dataTransfer.setData('Student', index);
+    }
+    function dropStudent(target, event) {
+        var newGroupId = $(target).parent().find("#item_GroupId").val();
+        $(target).find('#dottedArea').hide();
+        var element = elements[event.dataTransfer.getData('Student')];
+        var studentId = $(element).data('studentid');
+        target.appendChild(element);
+        if (newGroupId != oldGroupId) {
+            $.ajax({
+                url: '@Url.Action("MoveStudent")',
+                 type: 'GET',
+                 data: {
+                     oldGroupId: oldGroupId,
+                     newGroupId: newGroupId,
+                     studentId: studentId
+                 },
+                 success: function (data) {
+                     noty({
+                         text: "Сохранено",
+                         type: "success",
+                         timeout: 1000
+                     });
+                 },
+                 error: function () {
+                     noty({
+                         text: "Ошибка при сохранении",
+                         type: "error",
+                         timeout: 1000
+                     });
+                 }
+             });
+        }
+    }
+    function dragEnter(target, event) {
+        var el = document.getElementById('dottedArea');
+        $(el).show();
+        $(el).text(labelName);
+        target.appendChild(el);
+    }
+</script>
+<style type="text/css">
+    [draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.draggableStudent {
+  cursor: move;
+}
+
+</style>
