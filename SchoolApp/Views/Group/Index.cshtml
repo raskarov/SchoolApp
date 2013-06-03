@@ -25,7 +25,7 @@
 
 @foreach (var item in Model) {
     <tr>
-        @Html.HiddenFor(modelItem => item.GroupId);
+        @Html.HiddenFor(modelItem => item.GroupId)
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>

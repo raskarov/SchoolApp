@@ -1,0 +1,16 @@
+﻿@model SchoolApp.ViewModels.StudentPhotoViewModel
+
+@{
+    ViewBag.Title = "Фотография";
+}
+<img src="@Url.Action("GetPhoto", new { Id = Model.UserId })" />
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        @Html.HiddenFor(x=>x.UserId)
+        @Html.LabelFor(x => x.Photo)
+        @Html.TextBoxFor(x => x.Photo, new { type = "file" })
+        @Html.ValidationMessageFor(x => x.Photo)
+    </div>
+    <button type="submit">Upload</button>
+}

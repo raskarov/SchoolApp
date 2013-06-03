@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using SchoolApp.ViewModels;
 using System.Collections.Generic;
+using System.IO;
 namespace SchoolApp.Controllers
 {
     public class StudentController : Controller
@@ -127,6 +128,43 @@ namespace SchoolApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddPhoto(int id = 0)
+        {
+            StudentPhotoViewModel vm = new StudentPhotoViewModel();
+            var user = db.UserProfiles.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            vm.FullName = user.FullName;
+            vm.UserId = user.UserId;
+            return View(vm);
+        }
+        [HttpPost]
+        public ActionResult AddPhoto(StudentPhotoViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+           var student = db.UserProfiles.Find(model.UserId);
+           MemoryStream target = new MemoryStream();
+           model.Photo.InputStream.CopyTo(target);
+           byte[] data = target.ToArray();
+           student.Photo = data;
+           db.Entry(student).State = EntityState.Modified;
+           db.SaveChanges();
+           return View(model);
+        }
+        public ActionResult GetPhoto(int id = 0)
+        {
+            var student = db.UserProfiles.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return File(student.Photo, "image/jpeg");
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

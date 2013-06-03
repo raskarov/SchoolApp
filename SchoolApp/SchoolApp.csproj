@@ -262,6 +262,10 @@
     <Compile Include="Migrations\201305262258340_addStudentRemarks.Designer.cs">
       <DependentUpon>201305262258340_addStudentRemarks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306032141067_addPhotoToUser.cs" />
+    <Compile Include="Migrations\201306032141067_addPhotoToUser.Designer.cs">
+      <DependentUpon>201306032141067_addPhotoToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
@@ -275,6 +279,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Content Include="Scripts\blockUI.js" />
+    <Compile Include="ViewModels\StudentPhotoViewModel.cs" />
     <Compile Include="ViewModels\GroupDetailsViewModel.cs" />
     <Compile Include="ViewModels\GroupInstanceDeleteViewModel.cs" />
     <Compile Include="ViewModels\StudentIndexViewModel.cs" />
@@ -608,6 +613,7 @@
     <Content Include="Views\GroupInstance\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Student\AddPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -651,6 +657,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305262258340_addStudentRemarks.resx">
       <DependentUpon>201305262258340_addStudentRemarks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306032141067_addPhotoToUser.resx">
+      <DependentUpon>201306032141067_addPhotoToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

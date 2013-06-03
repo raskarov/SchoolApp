@@ -67,6 +67,9 @@ namespace SchoolApp.Models
         [Display(Name="Попечитель")]
         public ICollection<Guardian> Guardians { get; set; }
 
+        [Display(Name="Фото")]
+        public byte[] Photo { get; set; }
+
         public bool FutureStudent { get; set; }
 
         #region Interceptors
