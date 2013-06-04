@@ -53,7 +53,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <a href="#"><i class="icon-picture @if (item.Photo != null) { <text>hasPhoto</text> }" style="color:gray"></i></a> 
+            <a href="#"><i class="icon-picture @if (item.Photo != null) { <text>hasPhoto</text> }" style="color:gray; opacity:0.5;"></i></a> 
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
@@ -96,6 +96,7 @@
 </div>
 <style type="text/css">
     .hasPhoto {
-    color:green;
+    color:green !important;
+    opacity:1 !important;
     }
 </style>

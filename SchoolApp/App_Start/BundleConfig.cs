@@ -63,6 +63,8 @@ namespace SchoolApp
             bundles.Add(new StyleBundle("~/content/chosen").Include("~/Content/chosen.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/blockUI").Include("~/Scripts/blockUI.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/webcam").Include("~/Scripts/jquery.webcam.js"));
         }
     }
 }

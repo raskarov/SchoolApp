@@ -8,9 +8,32 @@
 {
     <div>
         @Html.HiddenFor(x=>x.UserId)
-        @Html.LabelFor(x => x.Photo)
+        <span>Добавить\Заменить фото</span>
         @Html.TextBoxFor(x => x.Photo, new { type = "file" })
         @Html.ValidationMessageFor(x => x.Photo)
+         <button type="submit">Upload</button>
+    <input type="button" value="Shoot!" onclick="webcam.capture();" />
+<div id="Camera"></div>
     </div>
-    <button type="submit">Upload</button>
+    
+   
 }
+@section Scripts {
+    @Scripts.Render("~/bundles/webcam")
+    }
+<script type="text/javascript">
+    $("#Camera").webcam({
+        width: 320,
+        height: 240,
+        mode: "save",
+        swffile: "@Url.Content("~/Scripts/jscam.swf")",
+             onTick: function () { },
+             onSave: function () {
+             },
+             onCapture: function () {
+                 webcam.save("@Url.Content("~/Home/Capture")/");
+             },
+         debug: function () { },
+         onLoad: function () { }
+     });
+     </script>
