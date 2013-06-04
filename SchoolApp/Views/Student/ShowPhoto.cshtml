@@ -1,0 +1,5 @@
+﻿@model SchoolApp.Models.UserProfile
+<div style="width:200px">
+<img src="@Url.Action("GetPhoto", new { Id = Model.UserId })" />
+    </div>
+<a href="@Url.Action("AddPhoto", new { Id = Model.UserId })" class="btn btn-small">Редактировать</a>

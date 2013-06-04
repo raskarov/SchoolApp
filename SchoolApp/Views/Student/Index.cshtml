@@ -52,8 +52,9 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            <a href="#"><i class="icon-picture @if (item.Photo != null) { <text>hasPhoto</text> }" style="color:gray; opacity:0.5;"></i></a> 
+        @Html.HiddenFor(modelItem=>item.UserId)
+        <td class="pic">
+            <a href="javascript:void(0);" data-poload="@Url.Action("ShowPhoto", new {id= item.UserId})"><i class="icon-picture @if (item.Photo != null) { <text>hasPhoto</text> }" style="color:gray; opacity:0.5;"></i></a> 
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
@@ -94,6 +95,15 @@
 
 </table>
 </div>
+<script type="text/ecmascript">
+    $('*[data-poload]').bind('click', function () {
+        var e = $(this);
+        e.unbind('click');
+        $.get(e.data('poload'), function (d) {
+            e.popover({ content: d, html:true }).popover('show');
+        });
+    });
+</script>
 <style type="text/css">
     .hasPhoto {
     color:green !important;

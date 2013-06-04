@@ -3,37 +3,70 @@
 @{
     ViewBag.Title = "Фотография";
 }
+<a href="@Url.Action("index")" class="btn btn-info">Назад к списку</a>
+<div class="row" style="margin-left:20px">
+<div class="span3">
+    <h3>Текущая фотография</h3>
+    <div class="photo">
 <img src="@Url.Action("GetPhoto", new { Id = Model.UserId })" />
+        </div>
+</div>
+<div class="span2">
+    <div class="row">
+<p id="status" style="height:22px; color:#c00;font-weight:bold;"> … </p>
+<div id="Camera"></div>
+<button type="submit" class="btn" onclick="webcam.capture(3);" style="float:left">Сфотографировать</button>
+    </div>
+    <div class="row">
+        <h3>Или</h3>
+    </div>
+<div class="row">   
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div>
         @Html.HiddenFor(x=>x.UserId)
         <span>Добавить\Заменить фото</span>
-        @Html.TextBoxFor(x => x.Photo, new { type = "file" })
+        @Html.TextBoxFor(x => x.Photo, new {type = "file"})
+
         @Html.ValidationMessageFor(x => x.Photo)
-         <button type="submit">Upload</button>
-    <input type="button" value="Shoot!" onclick="webcam.capture();" />
-<div id="Camera"></div>
-    </div>
-    
-   
+         <button type="submit" class="btn">Загрузить</button>
 }
+</div>
+        </div>
+    </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/webcam")
     }
 <script type="text/javascript">
     $("#Camera").webcam({
-        width: 320,
-        height: 240,
+        width: 220,
+        height: 200,
         mode: "save",
         swffile: "@Url.Content("~/Scripts/jscam.swf")",
-             onTick: function () { },
-             onSave: function () {
+        onTick: function (remain) {
+            if (0 == remain) {
+                jQuery("#status").text("Cheese!");
+            } else {
+                jQuery("#status").text("осталось " + remain + " секунды...");
+            }
+        },
+        onSave: function () {
+            location.reload();
              },
              onCapture: function () {
-                 webcam.save("@Url.Content("~/Home/Capture")/");
+                 $("#flash").css("display", "block");
+                 $("#flash").fadeOut("fast", function () {
+                     $("#flash").css("opacity", 1);
+                 });
+                 webcam.save("@Url.Action("Capture", this.Model)");
              },
          debug: function () { },
          onLoad: function () { }
      });
      </script>
+<style type="text/css">
+    .photo {
+    width:250px;
+    height:250px;
+    }
+</style>

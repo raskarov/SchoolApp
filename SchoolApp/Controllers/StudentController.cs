@@ -143,6 +143,15 @@ namespace SchoolApp.Controllers
         [HttpPost]
         public ActionResult AddPhoto(StudentPhotoViewModel model)
         {
+
+            var stream = Request.InputStream;
+            string dump;
+
+            using (var reader = new StreamReader(stream))
+                dump = reader.ReadToEnd();
+
+            var path = Server.MapPath("~/test.jpg");
+            System.IO.File.WriteAllBytes(path, String_To_Bytes2(dump));
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -163,8 +172,56 @@ namespace SchoolApp.Controllers
             {
                 return HttpNotFound();
             }
-            return File(student.Photo, "image/jpeg");
+            if (student.Photo != null)
+            {
+                return File(student.Photo, "image/jpeg");
+            }
+            else
+            {
+                return File("~/content/images/anon.jpg", "image/jpeg");
+            }
         }
+        public ActionResult ShowPhoto(int id = 0)
+        {
+            var student = db.UserProfiles.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(student);
+        }
+        [HttpPost]
+        public ActionResult Capture(StudentPhotoViewModel model)
+        {
+            var stream = Request.InputStream;
+            string dump;
+
+            using (var reader = new StreamReader(stream))
+            {
+                dump = reader.ReadToEnd();
+            }
+
+            var bytes = String_To_Bytes2(dump);
+            var student = db.UserProfiles.Find(model.UserId);
+            student.Photo = bytes;
+            db.Entry(student).State = EntityState.Modified;
+            db.SaveChanges();
+            return View(model);
+        }
+
+        private byte[] String_To_Bytes2(string strInput)
+        {
+            int numBytes = (strInput.Length) / 2;
+            byte[] bytes = new byte[numBytes];
+
+            for (int x = 0; x < numBytes; ++x)
+            {
+                bytes[x] = Convert.ToByte(strInput.Substring(x * 2, 2), 16);
+            }
+
+            return bytes;
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

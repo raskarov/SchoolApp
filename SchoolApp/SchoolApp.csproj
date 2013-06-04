@@ -188,6 +188,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\chosen.css" />
+    <Content Include="Content\images\anon.jpg" />
     <Content Include="Content\images\chosen-sprite%402x.png" />
     <Content Include="Content\images\chosen-sprite.png" />
     <Content Include="Content\login.css" />
@@ -617,6 +618,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Student\AddPhoto.cshtml" />
+    <Content Include="Views\Student\ShowPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
