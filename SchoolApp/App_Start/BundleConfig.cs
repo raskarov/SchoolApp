@@ -21,11 +21,11 @@ namespace SchoolApp
 
             bundles.Add(new ScriptBundle("~/bundles/fullcalendar").Include(
                     "~/Scripts/fullcalendar*"));
-            bundles.Add(new ScriptBundle("~/bundles/site").Include(
-                "~/Scripts/Site.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/site").Include(
+            //    "~/Scripts/Site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
-                    "~/scripts/jquery.dataTables*",
+                   "~/scripts/jquery.dataTables*",
                     "~/scripts/datatables.bootstrap*"));
 
             bundles.Add(new ScriptBundle("~/bundles/multi-select").Include("~/scripts/jquery.multi-select*"));
@@ -34,7 +34,7 @@ namespace SchoolApp
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/custom.css", "~/Content/theme.css"));
+            //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/custom.css", "~/Content/theme.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -53,7 +53,7 @@ namespace SchoolApp
             bundles.Add(new StyleBundle("~/Content/font-awesome").Include("~/Content/font-awesome*"));
             bundles.Add(new StyleBundle("~/Content/multi-select").Include("~/Content/multi-select*"));
             bundles.Add(new StyleBundle("~/Content/fullcalendar").Include("~/Content/fullcalendar.css"));
-            bundles.Add(new StyleBundle("~/Content/datatables").Include("~/content/datatables.bootstrap.css"));
+            //bundles.Add(new StyleBundle("~/Content/datatables").Include("~/content/datatables.bootstrap.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/colorpicker").Include("~/Scripts/bootstrap-colorpicker.js"));
             bundles.Add(new StyleBundle("~/content/colorpicker").Include("~/Content/bootstrap-colorpicker.css"));

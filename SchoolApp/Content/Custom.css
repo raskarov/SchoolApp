@@ -56,3 +56,14 @@ padding-bottom:20px;
 display: inline;
 float:right;
 }
+
+/*new skin below...*/
+.dropdown-menu li > form> a {
+display: block;
+padding: 3px 20px;
+clear: both;
+font-weight: normal;
+line-height: 20px;
+color: #333333;
+white-space: nowrap;
+}

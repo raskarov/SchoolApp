@@ -3,19 +3,20 @@
     var adminsOnly = new[] { SchoolApp.Extensions.Helpers.ADMIN_ROLE };
     var menus = new[]
                 {
-                   new { LinkText="Расписание", ActionName="Index",ControllerName="GroupInstance",Roles=defaultRoles  },
-                   new { LinkText="Комнаты", ActionName="Index",ControllerName="Classroom",Roles=adminsOnly},
-                   new { LinkText="Студенты", ActionName="Index",ControllerName="Student",Roles=defaultRoles },
-                   new { LinkText ="Будущие Студенты", ActionName="Index", ControllerName="FutureStudent", Roles=defaultRoles},
-                   new { LinkText="Учителя", ActionName="Index",ControllerName="Teacher",Roles=adminsOnly },
-                   new { LinkText="Группы", ActionName="Index",ControllerName="Group",Roles=defaultRoles },
-                   new { LinkText="Профили Оплаты", ActionName="Index",ControllerName="PaymentProfile",Roles=adminsOnly  },
-                   new { LinkText="Оплата", ActionName="Index",ControllerName="Payment",Roles=defaultRoles  },
-                   new { LinkText="Управление Пользователями", ActionName="Index",ControllerName="User",Roles=adminsOnly  },
+                   new { LinkText="Дэшборд", ActionName="Index",ControllerName="Dashboard", IconClass="icon-dashboard", Roles=defaultRoles  },
+                   new { LinkText="Расписание", ActionName="Index",ControllerName="GroupInstance", IconClass="icon-calendar", Roles=defaultRoles  },
+                   new { LinkText="Комнаты", ActionName="Index",ControllerName="Classroom", IconClass="icon-building",Roles=adminsOnly},
+                   new { LinkText="Студенты", ActionName="Index",ControllerName="Student", IconClass="icon-user",Roles=defaultRoles },
+                   new { LinkText ="Будущие Студенты", ActionName="Index", ControllerName="FutureStudent", IconClass="icon-user", Roles=defaultRoles},
+                   new { LinkText="Учителя", ActionName="Index",ControllerName="Teacher", IconClass="icon-user",Roles=adminsOnly },
+                   new { LinkText="Группы", ActionName="Index",ControllerName="Group", IconClass="icon-group",Roles=defaultRoles },
+                   new { LinkText="Профили Оплаты", ActionName="Index",ControllerName="PaymentProfile", IconClass=" icon-credit-card",Roles=adminsOnly  },
+                   new { LinkText="Оплата", ActionName="Index",ControllerName="Payment", IconClass="icon-money",Roles=defaultRoles  },
+                   new { LinkText="Управление Пользователями", ActionName="Index",ControllerName="User", IconClass="icon-list-alt",Roles=adminsOnly  },
                   
                 };
 }
-<ul id="dashboard-menu" class="nav nav-list collapse in">
+<ul class="nav nav-list">
     @if (HttpContext.Current.User.Identity.IsAuthenticated)
     {
         String[] roles = Roles.GetRolesForUser();
@@ -23,7 +24,8 @@
 
         foreach (var link in links)
         {
-        @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+        @:<li><a href="@Url.Action(link.ActionName, link.ControllerName)"><i class="@link.IconClass"></i><span>@link.LinkText</span></a></li>
+       
     }
 
     }

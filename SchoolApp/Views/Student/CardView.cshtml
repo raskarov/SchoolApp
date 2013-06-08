@@ -1,0 +1,68 @@
+﻿@model List<SchoolApp.ViewModels.StudentCardViewModel>
+@{
+    ViewBag.Title = "CardView";
+}
+<div class="container-fluid">
+    <div class="row-fluid">
+@foreach (var item in Model)
+{
+<div  class="card">
+        @Html.HiddenFor(modelItem => item.UserId)
+<div class="span5 profilePicWrapper">
+    <img src="@Url.Action("GetPhoto", new { Id = item.UserId })" />
+    </div>
+<div class="span5">
+    <span class="name">@item.FullName</span>
+    <span class="cardRows">@item.Phone</span>
+    <span class="cardRows">@item.Email</span>
+    <span class="cardRows">@item.Level</span>
+    <a href="@Url.Action("Edit",new {id = item.UserId})" class="btn btn-danger btn-mini cardEdit"><i class="icon-pencil"></i></a>
+</div>    
+</div>
+
+}</div>
+</div>
+<style type="text/css">
+    span.cardRows {
+    display:block;
+    color:gray;
+    }
+    .card {
+        width: 300px;
+        overflow: hidden;
+        position: relative;
+        -webkit-box-shadow: 0 1px 2px 0 #ccc;
+        box-shadow: 0 1px 2px 0 #ccc;
+        border-top: 1px solid #eee;
+        margin-bottom: 24px;
+        -webkit-transform: rotateX(0deg);
+        -moz-transform: rotateX(0deg);
+        float: left;
+        margin-right: 20px;
+        height: 100px;
+    }
+    span.name {
+    font-size:14px;
+    font-weight:bold;
+    margin-top:5px;
+    }
+    .cardEdit {
+    right: 0;
+    top: 0;
+    position: absolute;
+    display:none;
+    }
+    .card:hover{
+        cursor:context-menu;
+        -webkit-box-shadow:0 1px 3px #3a6e8f;
+        box-shadow:0 1px 3px #3a6e8f;
+    }
+</style>
+<script type="text/javascript">
+    $(".card").hover(function () {
+        $(this).find(".cardEdit").show();
+    },
+    function () {
+        $(this).find(".cardEdit").hide();
+    });
+</script>

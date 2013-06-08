@@ -18,7 +18,10 @@ namespace SchoolApp.Controllers
 
         //
         // GET: /Student/
-
+        public ActionResult Card()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View(db.Students.Include(x=>x.Guardians));
@@ -208,7 +211,22 @@ namespace SchoolApp.Controllers
             db.SaveChanges();
             return View(model);
         }
-
+        public ActionResult CardView()
+        {
+            var vm = new List<StudentCardViewModel>();
+            var students = db.Students;
+            foreach (var student in students)
+            {
+                var studentView = new StudentCardViewModel();
+                studentView.Email = student.Email;
+                studentView.FullName = student.FullName;
+                studentView.Phone = student.Phone;
+                studentView.UserId = student.UserId;
+                studentView.Level = student.StudentLevel.ToString();
+                vm.Add(studentView);
+            }
+            return View(vm);
+        }
         private byte[] String_To_Bytes2(string strInput)
         {
             int numBytes = (strInput.Length) / 2;

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Card";
+    Layout = null;
+}
+
+<div class="container-fluid">
+    <div class="row">
+<div  class="card">
+<div class="span5 profilePicWrapper"><img class="profilePic" src="//lh4.googleusercontent.com/-1OOfMH_N0j0/AAAAAAAAAAI/AAAAAAAAAAA/RKMfnJGsctQ/s96-c/photo.jpg" alt="Ruslan Askarov"></div>
+<div class="span5">
+    <span class="name">Ruslan Askarov</span>
+    <span class="cardRows">+1907-602-8685</span>
+    <span class="cardRows">askarru@gmail.com</span>
+    <span class="cardRows">upperIntermediate</span>
+    <span class="btn btn-danger btn-mini cardEdit"><i class="icon-pencil"></i></span>
+</div>    
+</div>
+        </div>
+    </div>
+
+<style type="text/css">
+    span.cardRows {
+    display:block;
+    color:gray;
+    }
+    .card {
+        width:300px;
+overflow: hidden;
+position: relative;
+-webkit-box-shadow: 0 1px 2px 0 #ccc;
+box-shadow: 0 1px 2px 0 #ccc;
+border-top: 1px solid #eee;
+margin-bottom: 24px;
+-webkit-transform: rotateX(0deg);
+-moz-transform: rotateX(0deg);
+}
+    span.name {
+    font-size:14px;
+    font-weight:bold;
+    margin-top:5px;
+    }
+    .cardEdit {
+    right: 0;
+    top: 0;
+    position: absolute;
+    display:none;
+    }
+    .card:hover{
+        -webkit-box-shadow:0 1px 3px #3a6e8f;
+        box-shadow:0 1px 3px #3a6e8f;
+        cursor:pointer;
+    }
+</style>
+<script type="text/javascript">
+    $(".card").hover(function () {
+        $(this).find(".cardEdit").show();
+    },
+    function () {
+        $(this).find(".cardEdit").hide();
+    });
+    $('.card').click(function (e) {
+        $('.card').addClass('flip');
+        e.preventDefault();
+    });
+</script>

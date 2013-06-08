@@ -4,7 +4,7 @@
     ViewBag.Title = "Управление пользователями";
 }
 
-<div class="well">
+<div class="table-header">Управление пользователями</div>
     <table class="table table-striped datatable">
         <thead>
             <tr role="row">
@@ -44,7 +44,6 @@
             </tr>
         }
     </table>
-</div>
 <script>
     $('.switch').on('switch-change', function (e, data) {
         var username = $(this).closest('tr').find(".UserName").val();

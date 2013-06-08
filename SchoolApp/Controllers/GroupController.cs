@@ -127,6 +127,7 @@ namespace SchoolApp.Controllers
         }
         //
         // POST: /Group/Edit/5
+        [HttpPost]
         public String MoveStudent(int oldGroupId, int newGroupId, int studentId)
         {
             if (oldGroupId > 0 && newGroupId > 0 && studentId > 0)
@@ -145,6 +146,20 @@ namespace SchoolApp.Controllers
             {
                 return Boolean.FalseString;
             }
+        }
+        [HttpPost]
+        public String RemoveStudent(int GroupId, int studentId)
+        {
+            if (GroupId > 0 && studentId > 0)
+            {
+                var oldGroup = db.Groups.Include(x => x.Users).Where(x => x.GroupId == GroupId).First();
+                var student = db.UserProfiles.Find(studentId);
+                oldGroup.Users.Remove(student);
+                db.Entry(oldGroup).State = EntityState.Modified;
+                db.SaveChanges();
+                return Boolean.TrueString;
+            }
+            return Boolean.FalseString;
         }
         [HttpPost]
         public ActionResult Edit(GroupCreateEditViewModel groupView, FormCollection collection)

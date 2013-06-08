@@ -19,7 +19,7 @@
 <p>
     <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i> Добавить студента</a>
 </p>
-<div class="well">
+<div class="table-header">Список будущих студентов</div>
 <table class="table table-striped datatable-custom">
     <thead>
         <th>
@@ -90,7 +90,6 @@
 }
 
 </table>
-</div>
 <script type="text/javascript">
     $("#btnMakeStudent").click(function () {
         var userId = $(this).closest("td").find("#item_UserId").val();

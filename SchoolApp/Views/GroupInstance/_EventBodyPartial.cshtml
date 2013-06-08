@@ -12,7 +12,23 @@
     }
 </div>
 <div class="detailsButtons">
-<a href="#" class="btn editEvent" data-event-id="@Model.GroupInstanceId"><i class="icon-pencil"></i></a>
-<a href="@Url.Action("Edit", "UserGroupInstance", new { id = @Model.GroupInstanceId, Date=@Model.StartDateTime  })" class="btn"><i class="icon-list-alt"></i></a>
-<a href="#" class="btn removeEvent" data-event-id="@Model.GroupInstanceId" data-startdate="@Model.StartDateTime" data-enddate="@Model.EndDateTime"><i class="icon-remove"></i></a>
+<a href="#" class="btn btn-app btn-micro btn-info editEvent" data-event-id="@Model.GroupInstanceId"><i class="icon-pencil"></i></a>
+<a href="@Url.Action("Edit", "UserGroupInstance", new { id = @Model.GroupInstanceId, Date=@Model.StartDateTime  })" class="btn btn-app btn-info btn-micro"><i class="icon-list-alt"></i></a>
+<a href="#" class="btn btn-app btn-micro btn-info removeEvent" data-event-id="@Model.GroupInstanceId" data-startdate="@Model.StartDateTime" data-enddate="@Model.EndDateTime"><i class="icon-remove"></i></a>
 </div>
+
+<style type="text/css">
+    .btn.btn-app.btn-micro  {
+width: 48px;
+font-size: 10px;
+border-radius: 6px;
+padding-bottom: 5px;
+padding-top: 6px;
+    }
+    .btn.btn-app.btn-micro> [class*=icon] {
+    display: block;
+font-size: 14px;
+line-height: 18px;
+margin: 0;
+    }
+    </style>

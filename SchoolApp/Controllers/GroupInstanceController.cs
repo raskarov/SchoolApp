@@ -22,7 +22,23 @@ namespace SchoolApp.Controllers
     public class GroupInstanceController : Controller
     {
         private SchoolContext db = new SchoolContext();
-
+        
+        [HttpPost]
+        public String SaveDroppedGroup(int GroupId, string Date)
+        {
+            if (GroupId > 0 && !String.IsNullOrEmpty(Date))
+            {
+                var GroupInstance = new GroupInstance();
+                DateTime dt = Convert.ToDateTime(Date);
+                GroupInstance.StartDateTime = dt;
+                GroupInstance.EndDateTime = dt.AddHours(1);
+                GroupInstance.GroupId = GroupId;
+                db.GroupInstances.Add(GroupInstance);
+                db.SaveChanges();
+                return Boolean.TrueString;
+            }
+            return Boolean.FalseString;
+        }
         //
         // GET: /GroupInstance/
 
@@ -32,13 +48,19 @@ namespace SchoolApp.Controllers
             model.GroupInstances = db.GroupInstances.Include(g => g.Group).Include(g => g.Classroom).ToList();
             List<SelectListItem> sli = new List<SelectListItem>();
             sli.Add(new SelectListItem { Text = "Все", Value = "0", Selected = true });
-            var teachers = db.Teachers.ToList();
+            var teachers = db.Teachers.Include(x=>x.Groups).Where(x=>x.Groups.Count>0).ToList();
+            var cl = new List<ColorLegend>();
             foreach (var teacher in teachers)
             {
+                var colorListItem = new ColorLegend();
+                colorListItem.Color = teacher.HexColor;
+                colorListItem.FullName = teacher.FullName;
+                colorListItem.GroupList = teacher.Groups.Select(x=> new GroupList{Name = x.Name, GroupId = x.GroupId}).ToList();
+                cl.Add(colorListItem);
                 sli.Add(new SelectListItem { Text = teacher.FullName, Value = teacher.UserId.ToString() });
             }
             model.TeachersList = sli;
-            model.ColorLegend = teachers.Select(x => new ColorLegend { FullName = x.FullName, Color = x.HexColor }).ToList();
+            model.ColorLegend = cl;
             return View(model);
         }
 

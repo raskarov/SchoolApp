@@ -1,112 +1,312 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>@ViewBag.Title - School App</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    @*Font used for logo*@
-    <link href='http://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Styles.Render("~/Content/bootstrap")
-    @Scripts.Render("~/Bundles/bootstrap")
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/font-awesome")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/Bundles/datatables")
-    @Scripts.Render("~/bundles/multi-select")
-    @Scripts.Render("~/bundles/noty")
-    @Styles.Render("~/Content/datatables")
-    @Styles.Render("~/Content/multi-select")
-    @Styles.Render("~/Content/themes/base/css")
-    @Styles.Render("~/Content/colorpicker")
-    @Scripts.Render("~/bundles/colorpicker")
-    @Scripts.Render("~/bundles/blockUI")
-    @RenderSection("scripts", required: false)
-    @RenderSection("styles", required:false)
-    <script type="text/javascript">
-        $(function () {
-            $("[rel='tooltip']").tooltip();
-        });
+	<head>
+		<meta charset="utf-8" />
+		<title>@ViewBag.Title - School App</title>
+
+		<meta name="description" content="Minimal empty page" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!--basic styles-->
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!--page specific plugin styles-->
+		<!--fonts-->
+
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+
+		
+         @Scripts.Render("~/bundles/jquery")
+         @Scripts.Render("~/bundles/jqueryui")
+         @Scripts.Render("~/bundles/jqueryval")
+         @Styles.Render("~/Content/bootstrap")
+         @Scripts.Render("~/Bundles/bootstrap")
+         @Styles.Render("~/Content/font-awesome")
+         @Scripts.Render("~/bundles/modernizr")
+         @Scripts.Render("~/Bundles/datatables")
+         @Scripts.Render("~/bundles/multi-select")
+         @Scripts.Render("~/bundles/noty")
+         @Styles.Render("~/Content/datatables")
+         @Styles.Render("~/Content/multi-select")
+         @Styles.Render("~/Content/themes/base/css")
+         @Styles.Render("~/Content/colorpicker")
+         @Scripts.Render("~/bundles/colorpicker")
+         @Scripts.Render("~/bundles/blockUI")
+        <!--ace styles-->
+
+		<link rel="stylesheet" href="~/content/ace.min.css" />
+		<link rel="stylesheet" href="~/content/ace-responsive.min.css" />
+		<link rel="stylesheet" href="~/content/ace-skins.min.css" />
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+         @RenderSection("scripts", required: false)
+         @RenderSection("styles", required:false)
+            <script type="text/javascript">
+                $(function () {
+                    $("[rel='tooltip']").tooltip();
+                });
     </script>
-</head>
+	</head>
 
-<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
-<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
-<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
-<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
-<body class="">
-    <!--<![endif]-->
-    <header>
-        <div class="navbar">
-            <div class="navbar-inner">
-                <ul class="nav pull-right">
+	<body>
+		<div class="navbar navbar-inverse">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a href="#" class="brand">
+						<small>
+							<i class="icon-leaf"></i>
+							Speak English
+						</small>
+					</a><!--/.brand-->
 
-                    <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">Settings</a></li>
-                    @Html.Partial("_LoginPartial")
-                </ul>
-                <a class="brand" href="/Home/Index">Speak English!</a>
-            </div>
-        </div>
-    </header>
-    <div class="sidebar-nav">
-        <form class="search form-inline">
-            <input type="text" placeholder="Поиск...">
-        </form>
+					<ul class="nav ace-nav pull-right">
+						<li class="grey">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="icon-tasks"></i>
+								<span class="badge badge-grey">4</span>
+							</a>
 
-        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Основное Меню</a>
-        @if (Session["MyMenu"] == null)
+							<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
+								<li class="nav-header">
+									<i class="icon-ok"></i>
+									4 Tasks to complete
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">Task Name</span>
+											<span class="pull-right">65%</span>
+										</div>
+
+										<div class="progress progress-mini ">
+											<div style="width:65%" class="bar"></div>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										See tasks with details
+										<i class="icon-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="icon-bell-alt icon-only icon-animated-bell"></i>
+								<span class="badge badge-important">8</span>
+							</a>
+
+							<ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-closer">
+								<li class="nav-header">
+									<i class="icon-warning-sign"></i>
+									8 Notifications
+								</li>
+
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">
+												<i class="btn btn-mini no-hover btn-pink icon-comment"></i>
+												New Comments
+											</span>
+											<span class="pull-right badge badge-info">+12</span>
+										</div>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										See all notifications
+										<i class="icon-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="icon-envelope-alt icon-only icon-animated-vertical"></i>
+								<span class="badge badge-success">5</span>
+							</a>
+
+							<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
+								<li class="nav-header">
+									<i class="icon-envelope"></i>
+									5 Messages
+								</li>
+
+								<li>
+									<a href="#">
+										<img src="content/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+										<span class="msg-body">
+											<span class="msg-title">
+												<span class="blue">Alex:</span>
+												Message Summary
+											</span>
+
+											<span class="msg-time">
+												<i class="icon-time"></i>
+												<span>Message Time</span>
+											</span>
+										</span>
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										See all messages
+										<i class="icon-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+                        @Html.Partial("_LoginPartial")
+					</ul><!--/.ace-nav-->
+				</div><!--/.container-fluid-->
+			</div><!--/.navbar-inner-->
+		</div>
+
+		<div class="container-fluid" id="main-container">
+			<a id="menu-toggler" href="#">
+				<span></span>
+			</a>
+
+			<div id="sidebar">
+				<div id="sidebar-shortcuts">
+					<div id="sidebar-shortcuts-large">
+						<button class="btn btn-small btn-success">
+							<i class="icon-signal"></i>
+						</button>
+
+						<button class="btn btn-small btn-info">
+							<i class="icon-pencil"></i>
+						</button>
+
+						<button class="btn btn-small btn-warning">
+							<i class="icon-group"></i>
+						</button>
+
+						<button class="btn btn-small btn-danger">
+							<i class="icon-cogs"></i>
+						</button>
+					</div>
+
+					<div id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+					</div>
+				</div><!--#sidebar-shortcuts-->
+
+				
+                    @if (Session["MyMenu"] == null)
         {
             Session["MyMenu"] = Html.Partial("~/Views/Shared/_Menu.cshtml");
         }
         @Session["MyMenu"]
-        <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>Legal</a>
-        <ul id="legal-menu" class="nav nav-list collapse">
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-        </ul>
+                @*<ul class="nav nav-list">
+					<li>
+						<a href="index.html">
+							<i class="icon-dashboard"></i>
+							<span>Dashboard</span>
+						</a>
+					</li>
 
-        <a href="help.html" class="nav-header"><i class="icon-question-sign"></i>Help</a>
-        <a href="faq.html" class="nav-header"><i class="icon-comment"></i>Faq</a>
-    </div>
-    <div class="content">
-        <div class="header">
-            <div class="stats">
+					<li>
+						<a href="#" class="dropdown-toggle">
+							<i class="icon-desktop"></i>
+							<span>UI Elements</span>
 
-                @*Optional stats to display on page.*@
-                @{if (ViewBag.Stats!=null)
-                    {
-                    foreach(var stat in ViewBag.Stats)
-                    {
-                        <p class="stat"><span class="number">@stat.Value</span>@stat.Label</p>
-                    }
-                    }
-                }
-            </div>
-            @* Title of a page is defined in a view*@
-            <h1 class="page-title">@ViewBag.Title</h1>
-        </div>
+							<b class="arrow icon-angle-down"></b>
+						</a>
 
-        <ul class="breadcrumb">
-          
-        </ul>
-        <div class="container-fluid">
-            <div class="row-fluid">
-                @RenderSection("featured", false)
-                @RenderBody()
+						<ul class="submenu">
+							<li>
+								<a href="elements.html">
+									<i class="icon-double-angle-right"></i>
+									Elements
+								</a>
+							</li>
 
-                <footer>
-                    <hr style="margin: 0;" />
-                    <p class="pull-right">&copy; @DateTime.Today.Year <a href="http://speakenglish27.ru/" target="_blank">Speak English Хабаровск</a></p>
-                </footer>
-                </div>
-        </div>
-    </div>
-</body>
+							<li>
+								<a href="buttons.html">
+									<i class="icon-double-angle-right"></i>
+									Buttons &amp; Icons
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul><!--/.nav-list-->*@
+
+				<div id="sidebar-collapse">
+					<i class="icon-double-angle-left"></i>
+				</div>
+			</div>
+
+			<div id="main-content" class="clearfix">
+				<div id="page-content" class="clearfix">
+					<div class="row-fluid">
+						<!--PAGE CONTENT BEGINS HERE-->
+                         @RenderSection("featured", false)
+                         @RenderBody()
+						<!--PAGE CONTENT ENDS HERE-->
+					</div><!--/row-->
+				</div><!--/#page-content-->
+
+				<div id="ace-settings-container">
+					<div class="btn btn-app btn-mini btn-warning" id="ace-settings-btn">
+						<i class="icon-cog"></i>
+					</div>
+
+					<div id="ace-settings-box">
+						<div>
+							<div class="pull-left">
+								<select id="skin-colorpicker" class="hidden">
+									<option data-class="default" value="#438EB9">#438EB9</option>
+									<option data-class="skin-1" value="#222A2D">#222A2D</option>
+									<option data-class="skin-2" value="#C6487E">#C6487E</option>
+									<option data-class="skin-3" value="#D0D0D0">#D0D0D0</option>
+								</select>
+							</div>
+							<span>&nbsp; Choose Skin</span>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace-checkbox-2" id="ace-settings-header" />
+							<label class="lbl" for="ace-settings-header"> Fixed Header</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace-checkbox-2" id="ace-settings-sidebar" />
+							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+						</div>
+					</div>
+				</div><!--/#ace-settings-container-->
+			</div><!--/#main-content-->
+		</div><!--/.fluid-container#main-container-->
+
+		<!--basic scripts-->
+
+		@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery-1.9.1.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="scripts/bootstrap.min.js"></script>*@
+
+		<!--ace scripts-->
+
+		<script src="~/scripts/ace-elements.min.js"></script>
+		<script src="~/scripts/ace.min.js"></script>
+	</body>
 </html>

@@ -19,7 +19,8 @@
 <p>
     <a href="@Url.Action("Create")" class="btn btn-primary"><i class="icon-plus"></i> Добавить студента</a>
 </p>
-<div class="well">
+<div class="table-header">Список текущих студентов</div>
+
 <table class="table table-striped datatable-custom">
     <thead>
         <th></th>
@@ -94,8 +95,7 @@
 }
 
 </table>
-</div>
-<script type="text/ecmascript">
+<script type="text/javascript">
     $('*[data-poload]').bind('click', function () {
         var e = $(this);
         e.unbind('click');

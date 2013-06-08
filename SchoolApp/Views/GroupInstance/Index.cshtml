@@ -13,8 +13,18 @@
         z-index: 99;
         background-color: #ffffff;
     }
+    .teacherLabel {
+    cursor: context-menu;
+    }
+    .teacherLabel:hover {
+     text-decoration:underline;
+     cursor:pointer;
+    }
+    .draggableGroup {
+        cursor:pointer;
+    }
 </style>
-<div class="well">
+<div >
     <div class="calendarTop">
         <div class="filter" style="float: left">
             Фильтровать по учителю: @Html.DropDownList("UserId", Model.TeachersList)
@@ -22,7 +32,17 @@
         <div class="legend" style="float: right">
             @foreach (var item in Model.ColorLegend)
             {
-                <span class="label" style="background-color: @item.Color">@item.FullName</span>
+                <span style="position:relative">
+                <span class="label teacherLabel" style="background-color: @item.Color">@item.FullName</span>
+                    <div style="display:none; position:absolute; z-index: 3;" class="well teacherGroups">
+                        <ul style="list-style-type:circle">
+                            @foreach(var group in item.GroupList)
+                            {
+                        <li class="draggableGroup" data-groupId="@group.GroupId">@group.Name</li>
+                            }
+                             </ul>
+                    </div>
+                </span>
             }
         </div>
     </div>
@@ -46,12 +66,28 @@
     @Scripts.Render("~/bundles/fullcalendar")
 }
 @section Styles{
-    <link href="~/Content/overlay.css" rel="stylesheet">db.Entry(inst).State = EntityState.Detached;
+    <link href="~/Content/overlay.css" rel="stylesheet">
     <link href="~/Content/jquery.recurrenceinput.css" rel="stylesheet" />
     @Styles.Render("~/content/fullcalendar")
 }
 <script type="text/javascript">
-    $(window).resize(function () { $("#calendar").fullCalendar('option', 'contentHeight', $(window).height()-375)});
+    $(".draggableGroup").draggable({
+        revert: true,      // immediately snap back to original position
+        revertDuration: 0  //
+    });
+    $(".teacherLabel").click(function () {
+        var parent = $(this).parent().find('div');
+        var isVisible = parent.is(":visible");
+        $(".teacherGroups").hide();
+        if (isVisible) {
+            parent.hide();
+        }
+        else {
+            parent.show();
+        }
+
+    });
+    $(window).resize(function () { $("#calendar").fullCalendar('option', 'height', $(window).height()-175)});
     $("#zoomOut").click(function () {
         var currentSlot = $("#calendar").fullCalendar('option', 'slotMinutes');
         if (currentSlot <= 110) {
@@ -82,6 +118,51 @@
     var formId;
     $(document).ready(function () {
         $('#calendar').fullCalendar({
+            droppable: true,
+            drop: function (date, allDay) {
+                
+                $.ajax({
+                    url: '@Url.Action("SaveDroppedGroup")',
+                    type: 'POST',
+                    data: {
+                        GroupId: $(this).data("groupid"),
+                        Date: $.fullCalendar.formatDate(date, "yyyy/MM/dd hh:mm:ss TT")
+                    },
+                    success: function (data) {
+                        $('#calendar').fullCalendar('refetchEvents');
+                        noty({
+                            text: "Saved successfully",
+                            type: "success",
+                            timeout: 1000
+                        });
+                    },
+                    error: function () {
+                        noty({
+                            text: "Update failed",
+                            type: "error",
+                            timeout: 1000
+                        });
+                    }
+                });
+
+
+
+                //// retrieve the dropped element's stored Event Object
+                //var originalEventObject = $(this).data('eventObject');
+                //$.ajax({
+                    
+                //})
+                //// we need to copy it, so that multiple events don't have a reference to the same object
+                //var copiedEventObject = $.extend({}, originalEventObject);
+
+                //// assign it the date that was reported
+                //copiedEventObject.start = date;
+                //copiedEventObject.allDay = allDay;
+
+                //// render the event on the calendar
+                //// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+            },
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -113,7 +194,7 @@
             },
             firstDay: 1, //Start with Monday
             allDaySlot: false,
-            contentHeight:$(window).height()-375,
+            height: $(window).height()-175,
             slotMinutes: 10,
             editable: true,
             defaultView: 'agendaWeek',
@@ -165,10 +246,12 @@
                 showDialogEditRemove("@Url.Action("Edit", "GroupInstance")", calEvent.GroupInstanceId, calEvent.start, calEvent.end);*@
             },
             eventDrop: function (event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+                $(".popover").hide();
                 postEditCalendar(event);
                 $('#calendar').fullCalendar('refetchEvents');
             },
             eventResize: function (event, dayDelta, minuteDelta, revertFunc) {
+                $(".popover").hide();
                 postEditCalendar(event);
                 var events = $('#calendar').fullCalendar('clientEvents', event.id);
                 $.each(events, function () {
@@ -209,10 +292,12 @@
                             content: data,
                             trigger: 'manual',
                             container: 'body',
-                            template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+                            template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"><a href="#">close</a></h3><div class="popover-content"><p></p></div></div></div>'
                         }).mouseenter(function (e) {
+                            $(".popover").hide();
                             var ref = $(this);
                             ref.popover('show');
+                           
                         }).mouseleave(function (e) {
                             var ref = $(this);
                             timeoutObj = setTimeout(function () {
@@ -221,7 +306,6 @@
                         });
                     },
                     error: function () {
-                        alert("error");
                     }
                 });
                 var eventId = event.GroupInstanceId;
@@ -351,7 +435,7 @@
                 dialogDiv.dialog('open');
             },
             error: function () {
-                alert("error");
+                alert("error2");
             }
         });
     }
@@ -371,7 +455,7 @@
                 dialogDiv.dialog('open');
             },
             error: function () {
-                alert("error");
+                alert("error3");
             }
         });
     }
@@ -402,7 +486,7 @@
                 dialogDiv.dialog('open');
             },
             error: function () {
-                alert("error");
+                alert("error4");
             }
         });
     }

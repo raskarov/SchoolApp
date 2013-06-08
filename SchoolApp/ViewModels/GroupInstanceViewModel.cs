@@ -17,5 +17,11 @@ namespace SchoolApp.ViewModels
     {
         public string FullName { get; set; }
         public string Color { get; set; }
+        public List<GroupList> GroupList { get; set; }
+    }
+    public class GroupList
+    {
+        public string Name { get; set; }
+        public int GroupId { get; set; }
     }
 }

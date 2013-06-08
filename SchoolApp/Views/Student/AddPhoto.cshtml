@@ -45,9 +45,9 @@
         swffile: "@Url.Content("~/Scripts/jscam.swf")",
         onTick: function (remain) {
             if (0 == remain) {
-                jQuery("#status").text("Cheese!");
+                $("#status").text("Cheese!");
             } else {
-                jQuery("#status").text("осталось " + remain + " секунды...");
+                $("#status").text("осталось " + remain + " секунды...");
             }
         },
         onSave: function () {
