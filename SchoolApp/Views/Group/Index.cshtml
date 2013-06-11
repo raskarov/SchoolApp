@@ -50,9 +50,10 @@
             }
         </td>
         <td>
-			<a href="@Url.Action("Edit", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Edit group"><i class="icon-pencil"></i></a>
-            <a href="@Url.Action("Details", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
-            <a href="@Url.Action("Delete", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Remove group"><i class="icon-remove"></i></a>
+            <a href="mailto:@String.Join(@",",item.Students.Select(x=>x.Email))" rel="tooltip" data-toggle="tooltip" title="Отправить письмо группе"><i class="icon-envelope"></i></a>
+			<a href="@Url.Action("Edit", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Редактировать группу"><i class="icon-pencil"></i></a>
+            <a href="@Url.Action("Details", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Просмотреть детали"><i class="icon-tasks"></i></a>
+            <a href="@Url.Action("Delete", new { id=item.GroupId })" rel="tooltip" data-toggle="tooltip" title="Удалить группу"><i class="icon-remove"></i></a>
         </td>
     </tr>
 }
