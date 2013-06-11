@@ -302,14 +302,15 @@ namespace SchoolApp.Controllers
             IEnumerable<GroupInstance> groupInstances;
             if (id > 0)
             {
-                groupInstances = db.GroupInstances.Include(e => e.Group)
+                var filteredGroups  =db.GroupInstances.Include(e => e.Group)
                                                   .Include(e => e.Group.Users)
                                                   .ToList()
                                                   .Where(x => x.Group.Users.Where(y => y.UserId == id
-                                                       &&((x.StartDateTime>=start 
+                                                       &&(((x.StartDateTime>=start 
                                                            ||x.EndDateTime<=end)
                                                        &&x.RecurrenceRule==null)
-                                                      ||x.RecurrenceRule!=null).Any());
+                                                      ||x.RecurrenceRule!=null)).Any());
+                groupInstances = filteredGroups;
             }
             else
             {

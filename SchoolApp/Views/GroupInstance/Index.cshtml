@@ -263,7 +263,7 @@
                 $('#calendar').fullCalendar('rerenderEvents');
             },
             eventRender: function (event, element) {
-
+                $(".popover").hide();
                 //Render html in event body O_O not supported by default: 
                 //https://code.google.com/p/fullcalendar/issues/detail?id=152
                 var titleElement = element.find('div.fc-event-title');
