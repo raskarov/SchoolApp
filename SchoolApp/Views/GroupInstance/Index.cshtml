@@ -34,7 +34,7 @@
             {
                 <span style="position:relative">
                 <span class="label teacherLabel" style="background-color: @item.Color">@item.FullName</span>
-                    <div style="display:none; position:absolute; z-index: 3;" class="well teacherGroups">
+                    <div style="display:none; position:absolute; z-index: 12;" class="well teacherGroups">
                         <ul style="list-style-type:circle">
                             @foreach(var group in item.GroupList)
                             {
@@ -71,6 +71,9 @@
     @Styles.Render("~/content/fullcalendar")
 }
 <script type="text/javascript">
+    $(".popoverClose").live("click", function () {
+        $(this).closest(".popover").hide();
+    });
     $(".draggableGroup").draggable({
         revert: true,      // immediately snap back to original position
         revertDuration: 0  //
@@ -286,24 +289,24 @@
                     },
                     success: function (data) {
                         element.popover({
-                            title: event.title,
+                            title: event.title + '<a href="javascript:void(0)" style="float: right;" class="popoverClose"><i class="icon-remove"></i></a>',
                             html: true,
                             placement: 'right',
                             content: data,
                             trigger: 'manual',
                             container: 'body',
-                            template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"><a href="#">close</a></h3><div class="popover-content"><p></p></div></div></div>'
-                        }).mouseenter(function (e) {
+                            template: '<div class="popover" onmouseover="clearTimeout(timeoutObj);$(this).mouseleave(function() {$(this).hide();});"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+                        }).click(function (e) {
                             $(".popover").hide();
                             var ref = $(this);
                             ref.popover('show');
-                           
-                        }).mouseleave(function (e) {
-                            var ref = $(this);
-                            timeoutObj = setTimeout(function () {
-                                ref.popover('hide');
-                            }, 150);
                         });
+                        //}).click(function (e) {
+                        //    var ref = $(this);
+                        //    timeoutObj = setTimeout(function () {
+                        //        ref.popover('hide');
+                        //    }, 150);
+                        //});
                     },
                     error: function () {
                     }
@@ -535,9 +538,9 @@
     $("#UserId").change(function () {
         $("#calendar").fullCalendar('refetchEvents');
     });
-    $('*[data-ajaxload]').bind('hover', function () {
+    $('*[data-ajaxload]').bind('click', function () {
         var e = $(this);
-        e.unbind('hover');
+        e.unbind('click');
         $.get(e.data('poload'), function (d) {
             e.popover({ content: d }).popover('show');
         });
