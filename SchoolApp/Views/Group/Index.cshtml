@@ -46,7 +46,7 @@
         <td>
             @foreach (var teacher in item.Teachers)
             {
-                <span class="label label-success">@teacher.FullName</span>
+                <span class="label" style="background-color:@teacher.HexColor">@teacher.FullName</span>
             }
         </td>
         <td>
