@@ -191,6 +191,7 @@
     <Content Include="Content\ace-responsive.css" />
     <Content Include="Content\ace-skins.css" />
     <Content Include="Content\ace.css" />
+    <Content Include="Content\avatars\anonymous-icon.jpg" />
     <Content Include="Content\avatars\avatar.png" />
     <Content Include="Content\avatars\avatar1.png" />
     <Content Include="Content\avatars\avatar2.png" />

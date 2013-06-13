@@ -3,7 +3,7 @@
     var adminsOnly = new[] { SchoolApp.Extensions.Helpers.ADMIN_ROLE };
     var menus = new[]
                 {
-                   new { LinkText="Дэшборд", ActionName="Index",ControllerName="Dashboard", IconClass="icon-dashboard", Roles=defaultRoles  },
+                   //new { LinkText="Дэшборд", ActionName="Index",ControllerName="Dashboard", IconClass="icon-dashboard", Roles=defaultRoles  },
                    new { LinkText="Расписание", ActionName="Index",ControllerName="GroupInstance", IconClass="icon-calendar", Roles=defaultRoles  },
                    new { LinkText="Комнаты", ActionName="Index",ControllerName="Classroom", IconClass="icon-building",Roles=adminsOnly},
                    new { LinkText="Студенты", ActionName="Index",ControllerName="Student", IconClass="icon-user",Roles=defaultRoles },

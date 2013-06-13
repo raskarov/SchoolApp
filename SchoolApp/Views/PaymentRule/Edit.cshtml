@@ -18,7 +18,7 @@
     @Html.HiddenFor(model => model.CreatedDate)
     @Html.HiddenFor(model => model.PaymentProfileId)
     @Html.HiddenFor(model=> model.Variable, new { Variable = "Variable" } )
-        <div class="btn-group" data-toggle="buttons-radio">
+        <div class="btn-group" style="display:none" data-toggle="buttons-radio">
            <button type="button" id="fixedRate" name="fixedRateToggle" class="btn btn-small">Фиксированная Цена</button>
            <button type="button" id="flexibleRate" name="flexibleRateToggle"  class="btn btn-small">Гибкая Цена</button>
        </div>

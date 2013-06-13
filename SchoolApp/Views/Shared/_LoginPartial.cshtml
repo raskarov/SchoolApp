@@ -1,12 +1,11 @@
 ﻿@if (Request.IsAuthenticated) {
     						<li class="light-blue user-profile">
 							<a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
-								<img class="nav-user-photo" src="content/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="~/content/avatars/anonymous-icon.jpg" alt="Jason's Photo" />
 								<span id="user_info">
 									<small>Привет,</small>
 									@User.Identity.Name
 								</span>
-
 								<i class="icon-caret-down"></i>
 							</a>
 
