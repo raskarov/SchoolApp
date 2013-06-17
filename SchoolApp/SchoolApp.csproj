@@ -309,6 +309,10 @@
     <Compile Include="Migrations\201306032141067_addPhotoToUser.Designer.cs">
       <DependentUpon>201306032141067_addPhotoToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306171938526_removeAuditGuardian.cs" />
+    <Compile Include="Migrations\201306171938526_removeAuditGuardian.Designer.cs">
+      <DependentUpon>201306171938526_removeAuditGuardian.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
@@ -323,6 +327,7 @@
     </Compile>
     <Content Include="Content\prettify.css" />
     <Content Include="Scripts\ace-elements.min.js" />
+    <Content Include="Scripts\ace.js" />
     <Content Include="Scripts\ace.min.js" />
     <Content Include="Scripts\additional-methods.min.js" />
     <Content Include="Scripts\blockUI.js" />
@@ -793,6 +798,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306032141067_addPhotoToUser.resx">
       <DependentUpon>201306032141067_addPhotoToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306171938526_removeAuditGuardian.resx">
+      <DependentUpon>201306171938526_removeAuditGuardian.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

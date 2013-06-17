@@ -6,7 +6,7 @@ using System.Web;
 using Isg.Domain;
 namespace SchoolApp.Models
 {
-    public class Guardian : ISoftDelete, IAuditable
+    public class Guardian : ISoftDelete
     {
         public int GuardianId { get; set; }
 
@@ -26,10 +26,10 @@ namespace SchoolApp.Models
 
         #region Interceptors
         public bool IsDeleted { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreateUser { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdateUser { get; set; }
+        //public DateTime CreateDate { get; set; }
+        //public string CreateUser { get; set; }
+        //public DateTime UpdateDate { get; set; }
+        //public string UpdateUser { get; set; }
         #endregion
     }
 }

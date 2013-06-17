@@ -59,6 +59,7 @@ namespace SchoolApp.Controllers
             {
                 if (UserId > 0)
                 {
+                 
                     db.Guardians.Add(guardian);
                     db.SaveChanges();
                     var student = db.UserProfiles.Include(x=>x.Guardians).Where(x => x.UserId == UserId).FirstOrDefault();
