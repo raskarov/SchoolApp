@@ -63,20 +63,38 @@
         <td>
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
+        @if (!String.IsNullOrWhiteSpace(item.Email))
+        {
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
+        }
+        else
+        {
+        <td class="emptyRequired"> 
+            <i class="icon-warning-sign"></i>
+        </td>
+        }
         <td class="remarks">
             @Html.DisplayFor(modelItem => item.Remarks)
         </td>
+        @if(!String.IsNullOrWhiteSpace(item.Phone))
+        {
         <td>
             @Html.DisplayFor(modelItem => item.Phone)
         </td>
+        }
+        else
+        {
+             <td class="emptyRequired"> 
+                 <i class="icon-warning-sign"></i>
+             </td>
+        }
         <td>
             @Html.DisplayFor(modelItem => item.StudentLevel)
         </td>
         <td>
-            @Html.DisplayFor(modelItem=> item.CreationDate)
+            @Html.DisplayFor(modelItem => item.CreationDate)
         </td>
         <td>
            <!--TODO: Replace with ViewModel -->
@@ -87,9 +105,9 @@
             
         </td>
         <td>
-			<a href="@Url.Action("Edit", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
-            <a href="@Url.Action("Details", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
-            <a href="@Url.Action("Delete", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+			<a href="@Url.Action("Edit", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
+            <a href="@Url.Action("Details", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
+            <a href="@Url.Action("Delete", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
         </td>
     </tr>
 }
@@ -108,5 +126,8 @@
     .hasPhoto {
     color:green !important;
     opacity:1 !important;
+    }
+    .emptyRequired {
+    background-color:#ffb752 !important;
     }
 </style>

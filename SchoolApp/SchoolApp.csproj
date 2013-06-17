@@ -313,6 +313,10 @@
     <Compile Include="Migrations\201306171938526_removeAuditGuardian.Designer.cs">
       <DependentUpon>201306171938526_removeAuditGuardian.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306172112225_removeEmailRequired.cs" />
+    <Compile Include="Migrations\201306172112225_removeEmailRequired.Designer.cs">
+      <DependentUpon>201306172112225_removeEmailRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Guardian.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\UserGroupInstance.cs" />
@@ -801,6 +805,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306171938526_removeAuditGuardian.resx">
       <DependentUpon>201306171938526_removeAuditGuardian.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306172112225_removeEmailRequired.resx">
+      <DependentUpon>201306172112225_removeEmailRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -29,7 +29,7 @@ namespace SchoolApp.Models
         [StringLength(50, ErrorMessage = "Must be under 50 characters")]
         public string LastName { get; set; }
 
-        [Required]
+        //[Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -66,7 +66,7 @@ namespace SchoolApp.Models
 
 
         [Display(Name="Попечитель")]
-        public ICollection<Guardian> Guardians { get; set; }
+        public  ICollection<Guardian> Guardians { get; set; }
 
         [Display(Name="Фото")]
         public byte[] Photo { get; set; }

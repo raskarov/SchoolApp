@@ -24,7 +24,15 @@ namespace SchoolApp.Controllers
         }
         public ActionResult Index()
         {
-            return View(db.Students.Include(x=>x.Guardians));
+            var students = db.Students.Include(x => x.Guardians);
+            foreach (var student in students)
+            {
+                if (student.Remarks != null && student.Remarks.Length>100)
+                {
+                    student.Remarks = student.Remarks.Substring(0, 100) + "...";
+                }
+            }
+            return View(students);
         }
         //
         // GET: /Student/Details/5
