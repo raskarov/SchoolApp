@@ -64,6 +64,7 @@ namespace SchoolApp.Models
         [Display(Name = "Дата создания")]
         public DateTime CreationDate { get; set; }
 
+
         [Display(Name="Попечитель")]
         public ICollection<Guardian> Guardians { get; set; }
 

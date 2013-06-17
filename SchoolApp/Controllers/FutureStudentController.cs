@@ -125,10 +125,10 @@ namespace SchoolApp.Controllers
         // POST: /FutureStudent/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             UserProfile userprofile = db.UserProfiles.Find(id);
+            Roles.RemoveUserFromRoles(userprofile.UserName, Roles.GetRolesForUser(userprofile.UserName));
             db.UserProfiles.Remove(userprofile);
             db.SaveChanges();
             return RedirectToAction("Index");
