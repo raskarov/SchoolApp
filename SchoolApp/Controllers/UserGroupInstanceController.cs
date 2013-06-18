@@ -102,6 +102,20 @@ namespace SchoolApp.Controllers
             instances.Students = db.Students.ToList().Except(students).ToList();
             return View(instances);
         }
+        public Group GetLatestGroup(int GroupId)
+        {
+            var r = db.Groups.Include(x => x.ParentGroup).Include(x => x.Users).Where(x => x.GroupId == GroupId).FirstOrDefault();
+            if (r != null)
+            {
+                var child = db.Groups.Include(x => x.ParentGroup).Include(x => x.Users).Where(x => x.ParentGroup.GroupId == GroupId).FirstOrDefault();
+                if (child != null)
+                {
+                    var group = GetLatestGroup(child.GroupId);
+                    return group;
+                }
+            }
+            return r;
+        }
         public Group GetGroupByDate(IQueryable<Group> Groups, int GroupId, DateTime Date)
         {
             var r = Groups.FirstOrDefault(g => g.GroupId == GroupId);
@@ -170,8 +184,16 @@ namespace SchoolApp.Controllers
             var existingAttendance = db.UserGroupInstances.Include(x=>x.User)
                                      .Where(x => x.GroupInstanceId == GroupInstanceId).ToList()
                                      .Where(x => x.InstanceDateTime.Date == InstanceDate.Date);
-            var PaymentProfileId = db.GroupInstances.Include(x=>x.Group).Where(x => x.GroupInstanceId == GroupInstanceId).First().Group.PaymentProfileId;
-            var amount = db.PaymentRules.Where(x => x.PaymentProfileId == PaymentProfileId && x.EffectiveDate <= DateTime.Today).First().Amount;
+
+            var GroupInstance = db.GroupInstances.Include(x=>x.Group).Where(x => x.GroupInstanceId == GroupInstanceId).First();
+            var group = GetLatestGroup(GroupInstance.GroupId);
+            var PaymentProfileId = group.PaymentProfileId;
+            var paymentRule = db.PaymentRules.Where(x => x.PaymentProfileId == PaymentProfileId && x.EffectiveDate <= DateTime.Today).FirstOrDefault();
+            var amount = 0.0m;
+            if (paymentRule != null)
+            {
+                amount = paymentRule.Amount;
+            }
             foreach (KeyValuePair<int, AttendanceType> kvp in groupsParsed)
             {
                 var currentAttendance = existingAttendance.Where(x => x.UserId == kvp.Key).FirstOrDefault();

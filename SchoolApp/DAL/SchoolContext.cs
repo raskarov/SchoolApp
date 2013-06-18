@@ -67,6 +67,7 @@ namespace SchoolApp.DAL
                 return query;
             }
         }
+
         public DbSet<Guardian> Guardians { get; set; }
     }
 }
