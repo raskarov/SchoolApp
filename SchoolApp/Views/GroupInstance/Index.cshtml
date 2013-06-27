@@ -96,6 +96,7 @@
         if (currentSlot <= 110) {
             var Minutes = currentSlot + 10;
             $('#calendar').fullCalendar('setOptions', { slotMinutes: Minutes })
+            $.cookie('zoom_value', Minutes);
         }
     });
     $("#zoomIn").click(function () {
@@ -103,6 +104,7 @@
         if (currentSlot >= 20) {
             var Minutes = currentSlot - 10;
             $('#calendar').fullCalendar('setOptions', { slotMinutes: Minutes })
+            $.cookie('zoom_value', Minutes);
         }
     });
     $("#fullscreen").click(function () {
@@ -120,6 +122,10 @@
     });
     var formId;
     $(document).ready(function () {
+        var Minutes = 10;
+        if ($.cookie('zoom_value') != undefined) {
+            Minutes = $.cookie('zoom_value');
+        }
         $('#calendar').fullCalendar({
             droppable: true,
             drop: function (date, allDay) {
@@ -198,7 +204,7 @@
             firstDay: 1, //Start with Monday
             allDaySlot: false,
             height: $(window).height()-175,
-            slotMinutes: 10,
+            slotMinutes: parseInt(Minutes),
             editable: true,
             defaultView: 'agendaWeek',
             droppable: true,
