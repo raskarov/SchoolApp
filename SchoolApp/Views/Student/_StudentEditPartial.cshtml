@@ -1,0 +1,113 @@
+﻿@model SchoolApp.ViewModels.StudentEditViewModel
+
+@using (Html.BeginForm()) {
+    <div class="span3">
+        <div class="imageContainer">
+            <a href="@Url.Action("AddPhoto", new { Id = Model.Student.UserId })" style="position:absolute; display:none" class="btn btn-small">Редактировать</a>
+            <img src="@Url.Action("GetPhoto", new { Id = Model.Student.UserId })" />
+        </div>
+    </div>
+    <div class="span5">
+
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => model.Student.UserId)
+        @Html.HiddenFor(model => model.Student.UserName)
+        @Html.HiddenFor(model => model.Student.CreationDate)
+
+        <div class="span4">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Student.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Student.FirstName)
+                @Html.ValidationMessageFor(model => model.Student.FirstName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Student.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Student.LastName)
+                @Html.ValidationMessageFor(model => model.Student.LastName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Student.Email)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Student.Email)
+                @Html.ValidationMessageFor(model => model.Student.Email)
+            </div>
+        </div>
+        <div class="span4">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Student.Address)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Student.Address)
+                @Html.ValidationMessageFor(model => model.Student.Address)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Student.Phone)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Student.Phone)
+                @Html.ValidationMessageFor(model => model.Student.Phone)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Student.StudentLevel)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(x=>x.Student.StudentLevel, Model.LevelsList)
+                @Html.ValidationMessageFor(model=>model.Student.StudentLevel)
+            </div>
+        </div>
+        <div class="span8">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Student.Remarks)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Student.Remarks, new { @rows = 10})
+                @Html.ValidationMessageFor(model => model.Student.Remarks)
+            </div>
+        </div>
+        <div class="span8">
+            <p>
+                <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Сохранить</button>
+                <a href="@Url.Action("Index")" class="btn">Назад к списку</a>
+            </p>
+        </div>
+    </div>
+}
+
+<style type="text/css">
+    .imageContainer {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 7px;
+    box-shadow: 0 0 5px 1px #ccc;
+    -webkit-box-shadow: 0 0 5px 1px #ccc;
+    -moz-box-shadow: 0 0 5px 1px #ccc;
+    float: left;
+    max-width:300px;
+    }
+    #Student_Remarks {
+        width:100%;
+    }
+    .panel {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    }
+</style>
+<script type="text/javascript">
+    $(".imageContainer").hover(function () {
+        $(this).find("a").show();
+    },
+    function () {
+        $(this).find("a").hide();
+    });
+</script>

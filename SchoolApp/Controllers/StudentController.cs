@@ -48,30 +48,44 @@ namespace SchoolApp.Controllers
 
         public ActionResult Create()
         {
+            StudentEditViewModel vm = new StudentEditViewModel();
+
               var levels = from Level d in Enum.GetValues(typeof(Level))
                              select new { Name = Enum.GetName(typeof(Level), d), Value = Enum.GetName(typeof(Level),d) };
 
-              ViewBag.Level = levels;
-            return View();
+              vm.LevelsList = new SelectList(levels, "Name", "Value");
+
+              vm.Student = new UserProfile();
+
+              return View(vm);
         }
 
         //
         // POST: /Student/Create
 
         [HttpPost]
-        public ActionResult Create(UserProfile userprofile)
+        public ActionResult Create(StudentEditViewModel userprofile)
         {
             if (ModelState.IsValid)
             {
-                userprofile.CreationDate = DateTime.Now;
+                var student = userprofile.Student;
+                student.CreationDate = DateTime.Now;
                 //Todo: currently requires two trips to db to autogenerate username.
-                db.UserProfiles.Add(userprofile);
+                db.UserProfiles.Add(student);
                 db.SaveChanges();
-                userprofile.UserName = "Student" + userprofile.UserId;
-                userprofile.CreationDate = DateTime.Now;
-                db.Entry(userprofile).State = EntityState.Modified;
+                student.UserName = "Student" + student.UserId;
+                student.CreationDate = DateTime.Now;
+                db.Entry(student).State = EntityState.Modified;
+
+                var photo = this.Session["Photo"] as byte[];
+                if (photo != null)
+                {
+                    userprofile.Student.Photo = photo;
+                }
+                
                 db.SaveChanges();
-                Roles.AddUserToRole(userprofile.UserName, Helpers.STUDENT_ROLE);
+                Roles.AddUserToRole(userprofile.Student.UserName, Helpers.STUDENT_ROLE);
+                this.Session["Photo"] = null;
                 return RedirectToAction("Index");
             }
 
@@ -143,7 +157,12 @@ namespace SchoolApp.Controllers
         public ActionResult AddPhoto(int id = 0)
         {
             StudentPhotoViewModel vm = new StudentPhotoViewModel();
-            var user = db.UserProfiles.Find(id);
+
+            var user = new UserProfile();
+            if (id != 0)
+            {
+                user = db.UserProfiles.Find(id);
+            }
             if (user == null)
             {
                 return HttpNotFound();
@@ -155,7 +174,6 @@ namespace SchoolApp.Controllers
         [HttpPost]
         public ActionResult AddPhoto(StudentPhotoViewModel model)
         {
-
             var stream = Request.InputStream;
             string dump;
 
@@ -177,21 +195,23 @@ namespace SchoolApp.Controllers
            db.SaveChanges();
            return View(model);
         }
+
+        //
+        // GET: /Student/GetPhoto
+
         public ActionResult GetPhoto(int id = 0)
         {
             var student = db.UserProfiles.Find(id);
-            if (student == null)
-            {
-                return HttpNotFound();
-            }
-            if (student.Photo != null)
+            if (student != null && student.Photo != null)
             {
                 return File(student.Photo, "image/jpeg");
             }
-            else
+            var photo = this.Session["Photo"] as byte[];
+            if (photo != null)
             {
-                return File("~/content/images/anon.jpg", "image/jpeg");
+                return File(photo, "image/jpeg");
             }
+            return File("~/content/images/anon.jpg", "image/jpeg");
         }
         public ActionResult ShowPhoto(int id = 0)
         {
@@ -202,6 +222,10 @@ namespace SchoolApp.Controllers
             }
             return PartialView(student);
         }
+
+        //
+        // POST: /Student/Capture
+
         [HttpPost]
         public ActionResult Capture(StudentPhotoViewModel model)
         {
@@ -214,10 +238,17 @@ namespace SchoolApp.Controllers
             }
 
             var bytes = String_To_Bytes2(dump);
-            var student = db.UserProfiles.Find(model.UserId);
-            student.Photo = bytes;
-            db.Entry(student).State = EntityState.Modified;
-            db.SaveChanges();
+            if (model.UserId == 0)
+            {
+                this.Session["Photo"] = bytes;
+            }
+            else
+            {
+                var student = db.UserProfiles.Find(model.UserId);
+                student.Photo = bytes;
+                db.Entry(student).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return View(model);
         }
         public ActionResult CardView()
