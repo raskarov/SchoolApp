@@ -97,8 +97,10 @@ function general_things() {
 		
 		if($('#ace-settings-sidebar').get(0).checked) $('#ace-settings-sidebar').click();
 	}
+
+	$.cookie('fixed_header', this.checked, { expires: 10 * 365 });
  });
- 
+  
  $('#ace-settings-sidebar').removeAttr('checked').on('click', function(){
 	if(this.checked) {
 		$('#sidebar').addClass('fixed');
@@ -107,8 +109,18 @@ function general_things() {
 	else {
 		$('#sidebar').removeClass('fixed');
 	}
+
+	$.cookie('fixed_sidebar', this.checked, { expires: 10 * 365 });
  });
 
+ var fixed_header = $.cookie('fixed_header');
+ if (fixed_header == 'true') {
+     $('#ace-settings-header').click();
+ }
+ var fixed_sidebar = $.cookie('fixed_sidebar');
+ if (fixed_sidebar == 'true') {
+     $('#ace-settings-sidebar').click();
+ }
 
  $('#btn-scroll-up').on('click', function(){
 	var duration = Math.max(100, parseInt($('html').scrollTop() / 3));
