@@ -148,10 +148,15 @@ function general_things() {
 	} else {
 		$('.ace-nav > li.grey').removeClass('red').find('.badge').removeClass('badge-yellow');
 	}
- });
- 
-}
 
+	$.cookie('skin', $(this).find('option:selected').val(), { expires: 10 * 365 });
+  });
+
+  var skin = $.cookie('skin');
+  if (skin != null) {
+    $('#skin-colorpicker').val(skin).change();
+  }
+}
 
 
 function widget_boxes() {
