@@ -84,15 +84,16 @@
             @Html.HiddenFor(modelItem=>item.UserId)
 			<a href="@Url.Action("Edit", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
             <a href="@Url.Action("Delete", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
-            <button id="btnMakeStudent" class="btn btn-mini btn-info">Сделать Студентом</button>
+            <button id="btnMakeStudent" class="btnMakeStudent btn btn-mini btn-info">Сделать Студентом</button>
         </td>
     </tr>
 }
 
 </table>
 <script type="text/javascript">
-    $("#btnMakeStudent").click(function () {
+    $(".btnMakeStudent").click(function () {
         var userId = $(this).closest("td").find("#item_UserId").val();
+        var tr = $(this).closest("tr");
         $.ajax({
             type: "POST",
             url: '@Url.Action("MakeStudent")',
@@ -100,9 +101,9 @@
                 UserId: userId
             },
             success: function () {
-                $("#btnMakeStudent").closest("tr").remove();
+                tr.remove();
                 noty({
-                    text: "Attendance updated successfully",
+                    text: "Студент успешно перенесен",
                     type: "success"
                 });
             },

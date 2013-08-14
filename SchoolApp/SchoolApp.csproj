@@ -580,7 +580,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\speakenglish2 - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\speakenglish2 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\speakenglish2 - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\speakenglish2 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
