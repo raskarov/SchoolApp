@@ -196,6 +196,8 @@
     <Content Include="Content\avatars\avatar3.png" />
     <Content Include="Content\avatars\avatar4.png" />
     <Content Include="Content\avatars\user.jpg" />
+    <Content Include="Content\ColVis.css" />
+    <Content Include="Content\ColVisAlt.css" />
     <Content Include="Content\font-awesome-ie7.css" />
     <Content Include="Content\img\alpha.png" />
     <Content Include="Content\img\hue.png" />
@@ -328,6 +330,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Content Include="Content\prettify.css" />
+    <Content Include="Images\button.png" />
     <Content Include="Scripts\ace-elements.min.js" />
     <Content Include="Scripts\ace.js" />
     <Content Include="Scripts\ace.min.js" />
@@ -409,6 +412,8 @@
     <Content Include="Scripts\bootstrapSwitch.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\ColVis.js" />
+    <Content Include="Scripts\ColVis.min.js" />
     <Content Include="Scripts\datatables.bootstrap.js" />
   </ItemGroup>
   <ItemGroup>
