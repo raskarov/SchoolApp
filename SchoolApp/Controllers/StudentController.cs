@@ -279,7 +279,15 @@ namespace SchoolApp.Controllers
 
             return bytes;
         }
-
+        [HttpPost]
+        public ActionResult MakeStudent(int UserId)
+        {
+            var user = db.UserProfiles.Find(UserId);
+            user.FutureStudent = true;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            return Content(Boolean.TrueString);
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

@@ -224,11 +224,11 @@
             dayNamesShort: ['Вс', 'Пон', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
             select: function (start, end, allDay) {
                 var now = new Date();
-                if (start < now) {
-                    alert("Ай-яй-яй. Нельзя создавать уроки в прошлом!");
-                    $(this).fullCalendar('unselect');
-                    return;
-                }
+                //if (start < now) {
+                //    alert("Ай-яй-яй. Нельзя создавать уроки в прошлом!");
+                //    $(this).fullCalendar('unselect');
+                //    return;
+                //}
                 formId = "createGroupInstanceForm";
                 showDialog("@Url.Action("Create")", $.fullCalendar.formatDate(start, "yyyy/MM/dd hh:mm:ss TT"), $.fullCalendar.formatDate(end, "yyyy/MM/dd hh:mm:ss TT"));
 

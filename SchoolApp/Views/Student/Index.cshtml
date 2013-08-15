@@ -110,9 +110,11 @@
             
         </td>
         <td>
+            @Html.HiddenFor(modelItem=>item.UserId)
 			<a href="@Url.Action("Edit", new { id = item.UserId })" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
             <a href="@Url.Action("Details", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="View details"><i class="icon-tasks"></i></a>
             <a href="@Url.Action("Delete", new { id = item.UserId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
+            <button id="btnMakeStudent" class="btnMakeStudent btn btn-mini btn-info">Перенести в будущих</button>
         </td>
     </tr>
 }
@@ -124,6 +126,27 @@
         e.unbind('click');
         $.get(e.data('poload'), function (d) {
             e.popover({ content: d, html:true }).popover('show');
+        });
+    });
+    $(".btnMakeStudent").click(function () {
+        var userId = $(this).closest("td").find("#item_UserId").val();
+        var tr = $(this).closest("tr");
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("MakeStudent")',
+            data: {
+                UserId: userId
+            },
+            success: function () {
+                tr.remove();
+                noty({
+                    text: "Студент успешно перенесен",
+                    type: "success"
+                });
+            },
+            error: function () {
+                noty({ text: "Произошла ошибка", type: "error" });
+            }
         });
     });
 </script>

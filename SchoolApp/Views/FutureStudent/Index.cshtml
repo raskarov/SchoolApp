@@ -84,7 +84,7 @@
             @Html.HiddenFor(modelItem=>item.UserId)
 			<a href="@Url.Action("Edit", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Edit record"><i class="icon-pencil"></i></a>
             <a href="@Url.Action("Delete", new { id=item.UserId })" rel="tooltip" data-toggle="tooltip" title="Remove record"><i class="icon-remove"></i></a>
-            <button id="btnMakeStudent" class="btnMakeStudent btn btn-mini btn-info">Сделать Студентом</button>
+            <button id="btnMakeStudent" class="btnMakeStudent btn btn-mini btn-info">Перенести в студентов</button>
         </td>
     </tr>
 }
@@ -108,7 +108,7 @@
                 });
             },
             error: function () {
-                noty({ text: "Update failed", type: "error" });
+                noty({ text: "Произошла ошибка", type: "error" });
             }
         });
     });
